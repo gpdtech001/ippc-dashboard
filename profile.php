@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PPC | Profile</title>
+    <title>IPPC | Profile</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="dashboard.php" class="brand-link">
-            <span class="brand-text font-weight-light">PPC Management</span>
+            <span class="brand-text font-weight-light">IPPC Dashboard</span>
         </a>
 
         <!-- Sidebar -->
@@ -341,7 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2024 <a href="#">PPC Management</a>.</strong>
+        <strong>Copyright &copy; 2024 <a href="#">IPPC Dashboard</a>.</strong>
         All rights reserved.
     </footer>
 </div>

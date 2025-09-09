@@ -27,7 +27,7 @@ if (function_exists('getReports')) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PPC | Dashboard</title>
+    <title>IPPC | Dashboard</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -98,7 +98,7 @@ if (function_exists('getReports')) {
                         <div class="card card-primary card-outline">
                             <div class="card-body">
                                 <div class="text-center">
-                                    <h1 class="display-4">Welcome to PPC Management System</h1>
+                                    <h1 class="display-4">Welcome to IPPC - Reporting and Analytics Dashboard</h1>
                                     <p class="lead">Hello <strong><?php echo htmlspecialchars($user['name']); ?></strong>!</p>
                                     <p class="mb-4">You are logged in as <strong><?php echo htmlspecialchars(ucfirst($user['role'])); ?></strong></p>
 
@@ -255,7 +255,7 @@ if (function_exists('getReports')) {
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2024 <a href="#">PPC Management</a>.</strong>
+        <strong>Copyright &copy; 2024 <a href="#">IPPC Dashboard</a>.</strong>
         All rights reserved.
     </footer>
 </div>

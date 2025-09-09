@@ -44,7 +44,7 @@ $backups = listBackups();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PPC | Backup Manager</title>
+    <title>IPPC | Backup Manager</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css">
@@ -227,7 +227,7 @@ $backups = listBackups();
     </div>
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2024 <a href="#">PPC Management</a>.</strong>
+        <strong>Copyright &copy; 2024 <a href="#">IPPC Dashboard</a>.</strong>
         All rights reserved.
     </footer>
 </div>

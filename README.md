@@ -1,6 +1,6 @@
-# PPC Management System
+# IPPC - Reporting and Analytics Dashboard
 
-A PHP-based user management system for PPC (Presumably some organization) with role-based access control using AdminLTE for styling.
+A comprehensive PHP-based reporting and analytics dashboard for IPPC with advanced user management, role-based access control, and data visualization capabilities using AdminLTE for styling.
 
 ## Features
 
