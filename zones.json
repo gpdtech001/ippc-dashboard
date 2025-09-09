@@ -1,0 +1,3317 @@
+{
+    "Region 1": {
+        "SA Zone 1": {
+            "name": "SA Zone 1",
+            "groups": [
+                {
+                    "name": "RANDBURG GROUP",
+                    "id": "RANDBURG_GROUP"
+                },
+                {
+                    "name": "SANDTON GROUP",
+                    "id": "SANDTON_GROUP"
+                },
+                {
+                    "name": "EAST LONDON",
+                    "id": "EAST_LONDON"
+                },
+                {
+                    "name": "PORT ELIZABETH GROUP",
+                    "id": "PORT_ELIZABETH_GROUP"
+                },
+                {
+                    "name": "LIMPOMPO GROUP",
+                    "id": "LIMPOMPO_GROUP"
+                },
+                {
+                    "name": "NEWLANDS GROUP",
+                    "id": "NEWLANDS_GROUP"
+                },
+                {
+                    "name": "RUSTENBURG GROUP",
+                    "id": "RUSTENBURG_GROUP"
+                },
+                {
+                    "name": "ALEXANDRA GROUP",
+                    "id": "ALEXANDRA_GROUP"
+                },
+                {
+                    "name": "MIDRAND GROUP",
+                    "id": "MIDRAND_GROUP"
+                },
+                {
+                    "name": "JABULANI GROUP",
+                    "id": "JABULANI_GROUP"
+                },
+                {
+                    "name": "RANDBURG EXTENSION",
+                    "id": "RANDBURG_EXTENSION"
+                },
+                {
+                    "name": "KRUGERSDORP GROUP",
+                    "id": "KRUGERSDORP_GROUP"
+                }
+            ]
+        },
+        "SA Zone 2": {
+            "name": "SA Zone 2",
+            "groups": [
+                {
+                    "name": "PRETORIA GROUP",
+                    "id": "PRETORIA_GROUP"
+                },
+                {
+                    "name": "CE SUNNINGHILL GROUP",
+                    "id": "CE_SUNNINGHILL_GROUP"
+                },
+                {
+                    "name": "CE KEMPTON PARK GROUP",
+                    "id": "CE_KEMPTON_PARK_GROUP"
+                },
+                {
+                    "name": "CE GERMINSTON GROUP",
+                    "id": "CE_GERMINSTON_GROUP"
+                },
+                {
+                    "name": "CE SOUTH GROUP",
+                    "id": "CE_SOUTH_GROUP"
+                },
+                {
+                    "name": "CE KENSINGTON GROUP",
+                    "id": "CE_KENSINGTON_GROUP"
+                },
+                {
+                    "name": "CE NAMIBIA GROUP",
+                    "id": "CE_NAMIBIA_GROUP"
+                },
+                {
+                    "name": "CE KIMBERLY GROUP",
+                    "id": "CE_KIMBERLY_GROUP"
+                },
+                {
+                    "name": "CE ANGOLA",
+                    "id": "CE_ANGOLA"
+                },
+                {
+                    "name": "CE YEOVILLE GROUP",
+                    "id": "CE_YEOVILLE_GROUP"
+                },
+                {
+                    "name": "CE WITBANK",
+                    "id": "CE_WITBANK"
+                }
+            ]
+        },
+        "SA Zone 3": {
+            "name": "SA Zone 3",
+            "groups": [
+                {
+                    "name": "MALAWI NORTH GROUP",
+                    "id": "MALAWI_NORTH_GROUP"
+                },
+                {
+                    "name": "MALAWI SOUTH GROUP",
+                    "id": "MALAWI_SOUTH_GROUP"
+                },
+                {
+                    "name": "SWAZILAND GROUP",
+                    "id": "SWAZILAND_GROUP"
+                },
+                {
+                    "name": "MOZAMBIQUE GROUP",
+                    "id": "MOZAMBIQUE_GROUP"
+                },
+                {
+                    "name": "LESOTHO GROUP",
+                    "id": "LESOTHO_GROUP"
+                },
+                {
+                    "name": "ZAMBIA GROUP",
+                    "id": "ZAMBIA_GROUP"
+                },
+                {
+                    "name": "BOTSWANA GROUP",
+                    "id": "BOTSWANA_GROUP"
+                }
+            ]
+        },
+        "CAPETOWN ZONE 1": {
+            "name": "CAPETOWN ZONE 1",
+            "groups": [
+                {
+                    "name": "WATERFRONT GROUP",
+                    "id": "WATERFRONT_GROUP"
+                }
+            ]
+        },
+        "DURBAN ZONE": {
+            "name": "DURBAN ZONE",
+            "groups": [
+                {
+                    "name": "DURBAN CENTRAL GROUP",
+                    "id": "DURBAN_CENTRAL_GROUP"
+                }
+            ]
+        },
+        "MIDDLE EAST ZONE": {
+            "name": "MIDDLE EAST ZONE",
+            "groups": [
+                {
+                    "name": "CE DUBAI 1 GROUP",
+                    "id": "CE_DUBAI_1_GROUP"
+                },
+                {
+                    "name": "CE ABUDHABI GROUP",
+                    "id": "CE_ABUDHABI_GROUP"
+                },
+                {
+                    "name": "CE SHARJAH GROUP",
+                    "id": "CE_SHARJAH_GROUP"
+                },
+                {
+                    "name": "CE QATAR GROUP",
+                    "id": "CE_QATAR_GROUP"
+                },
+                {
+                    "name": "CE DUBAI 2 GROUP",
+                    "id": "CE_DUBAI_2_GROUP"
+                }
+            ]
+        },
+        "SA Zone 5": {
+            "name": "SA Zone 5",
+            "groups": []
+        },
+        "BLW Asia & North Africa Region": {
+            "name": "BLW Asia & North Africa Region",
+            "groups": []
+        },
+        "CE India": {
+            "name": "CE India",
+            "groups": []
+        },
+        "Capetown Zone 2": {
+            "name": "Capetown Zone 2",
+            "groups": [
+                {
+                    "name": "NORTH GROUP",
+                    "id": "NORTH_GROUP"
+                },
+                {
+                    "name": "STELLENBOSCH GROUP",
+                    "id": "STELLENBOSCH_GROUP"
+                }
+            ]
+        }
+    },
+    "Region 2": {
+        "Western Europe Zone 1": {
+            "name": "Western Europe Zone 1",
+            "groups": [
+                {
+                    "name": "France Group",
+                    "id": "FRANCE_GROUP"
+                }
+            ]
+        },
+        "Western Europe Zone 2": {
+            "name": "Western Europe Zone 2",
+            "groups": [
+                {
+                    "name": "Cyprus Group",
+                    "id": "CYPRUS_GROUP"
+                }
+            ]
+        },
+        "Western Europe Zone 3": {
+            "name": "Western Europe Zone 3",
+            "groups": [
+                {
+                    "name": "Geneva Group",
+                    "id": "GENEVA_GROUP"
+                },
+                {
+                    "name": "Bologna Group",
+                    "id": "BOLOGNA_GROUP"
+                },
+                {
+                    "name": "Brescia Group",
+                    "id": "BRESCIA_GROUP"
+                },
+                {
+                    "name": "Thun Group",
+                    "id": "THUN_GROUP"
+                },
+                {
+                    "name": "Milan Group",
+                    "id": "MILAN_GROUP"
+                },
+                {
+                    "name": "Bergamo Group",
+                    "id": "BERGAMO_GROUP"
+                },
+                {
+                    "name": "Napoli Group",
+                    "id": "NAPOLI_GROUP"
+                },
+                {
+                    "name": "Berlin-Frankfurt Group",
+                    "id": "BERLIN_FRANKFURT_GROUP"
+                }
+            ]
+        },
+        "Western Europe Zone 4": {
+            "name": "Western Europe Zone 4",
+            "groups": [
+                {
+                    "name": "Bremen Group",
+                    "id": "BREMEN_GROUP"
+                }
+            ]
+        },
+        "USA Zone 1 Region 1": {
+            "name": "USA Zone 1 Region 1",
+            "groups": [
+                {
+                    "name": "Maryland Group 1",
+                    "id": "MARYLAND_GROUP_1"
+                },
+                {
+                    "name": "West Group 2",
+                    "id": "WEST_GROUP_2"
+                },
+                {
+                    "name": "Maryland Group 2",
+                    "id": "MARYLAND_GROUP_2"
+                }
+            ]
+        },
+        "USA Zone 1 Region 2\/Pacific Islands Region\/New Zealand": {
+            "name": "USA Zone 1 Region 2\/Pacific Islands Region\/New Zealand",
+            "groups": [
+                {
+                    "name": "NY Megalopolis Group 1",
+                    "id": "NY_MEGALOPOLIS_GROUP_1"
+                },
+                {
+                    "name": "NY Megalopolis Group 2",
+                    "id": "NY_MEGALOPOLIS_GROUP_2"
+                },
+                {
+                    "name": "Pacific Group",
+                    "id": "PACIFIC_GROUP"
+                }
+            ]
+        },
+        "USA Zone 2 Region 1": {
+            "name": "USA Zone 2 Region 1",
+            "groups": [
+                {
+                    "name": "Dallas Group",
+                    "id": "DALLAS_GROUP"
+                },
+                {
+                    "name": "Atlanta Group",
+                    "id": "ATLANTA_GROUP"
+                },
+                {
+                    "name": "Philadelphia Group",
+                    "id": "PHILADELPHIA_GROUP"
+                },
+                {
+                    "name": "Chicago Group",
+                    "id": "CHICAGO_GROUP"
+                },
+                {
+                    "name": "Charlotte Group",
+                    "id": "CHARLOTTE_GROUP"
+                },
+                {
+                    "name": "Dallas Central Group",
+                    "id": "DALLAS_CENTRAL_GROUP"
+                },
+                {
+                    "name": "Arlington Group",
+                    "id": "ARLINGTON_GROUP"
+                }
+            ]
+        },
+        "Dallas Zone USA Region 2": {
+            "name": "Dallas Zone USA Region 2",
+            "groups": [
+                {
+                    "name": "Northshore Group",
+                    "id": "NORTHSHORE_GROUP"
+                },
+                {
+                    "name": "Ohio Group",
+                    "id": "OHIO_GROUP"
+                },
+                {
+                    "name": "Houston Group",
+                    "id": "HOUSTON_GROUP"
+                }
+            ]
+        },
+        "Toronto Zone": {
+            "name": "Toronto Zone",
+            "groups": [
+                {
+                    "name": "Toronto Group",
+                    "id": "TORONTO_GROUP"
+                },
+                {
+                    "name": "Calgary Group",
+                    "id": "CALGARY_GROUP"
+                },
+                {
+                    "name": "Scarborough Group",
+                    "id": "SCARBOROUGH_GROUP"
+                },
+                {
+                    "name": "Edmonton Group",
+                    "id": "EDMONTON_GROUP"
+                },
+                {
+                    "name": "Don valley Group",
+                    "id": "DON_VALLEY_GROUP"
+                },
+                {
+                    "name": "Mississauga Group",
+                    "id": "MISSISSAUGA_GROUP"
+                },
+                {
+                    "name": "CE HAMILTON GROUP 2",
+                    "id": "CE_HAMILTON_GROUP_2"
+                }
+            ]
+        },
+        "Ottawa Zone": {
+            "name": "Ottawa Zone",
+            "groups": [
+                {
+                    "name": "Walkley Group",
+                    "id": "WALKLEY_GROUP"
+                },
+                {
+                    "name": "Ottawa Main Group",
+                    "id": "OTTAWA_MAIN_GROUP"
+                },
+                {
+                    "name": "Ottawa South-East Group",
+                    "id": "OTTAWA_SOUTH_EAST_GROUP"
+                },
+                {
+                    "name": "Ottawa West Group",
+                    "id": "OTTAWA_WEST_GROUP"
+                },
+                {
+                    "name": "Western Group",
+                    "id": "WESTERN_GROUP"
+                }
+            ]
+        },
+        "Australia Zone": {
+            "name": "Australia Zone",
+            "groups": []
+        },
+        "CE Amsterdam DSP": {
+            "name": "CE Amsterdam DSP",
+            "groups": [
+                {
+                    "name": "Angel Global Call Center Group",
+                    "id": "ANGEL_GLOBAL_CALL_CENTER_GROUP"
+                }
+            ]
+        },
+        "UK Zone 4 Region 1": {
+            "name": "UK Zone 4 Region 1",
+            "groups": []
+        },
+        "USA Region 3": {
+            "name": "USA Region 3",
+            "groups": []
+        },
+        "BLW USA Region 1": {
+            "name": "BLW USA Region 1",
+            "groups": []
+        },
+        "BLW USA Region 2": {
+            "name": "BLW USA Region 2",
+            "groups": []
+        },
+        "BLW Canada Sub-Region": {
+            "name": "BLW Canada Sub-Region",
+            "groups": []
+        },
+        "BLW Europe Region": {
+            "name": "BLW Europe Region",
+            "groups": []
+        },
+        "BLW Europe Zone DSP": {
+            "name": "BLW Europe Zone DSP",
+            "groups": []
+        },
+        "Eastern Europe": {
+            "name": "Eastern Europe",
+            "groups": [
+                {
+                    "name": "Poland Group",
+                    "id": "POLAND_GROUP"
+                },
+                {
+                    "name": "CE Moscow Group",
+                    "id": "CE_MOSCOW_GROUP"
+                },
+                {
+                    "name": "CE Isles of Man",
+                    "id": "CE_ISLES_OF_MAN"
+                }
+            ]
+        },
+        "UK Zone 1 DSP": {
+            "name": "UK Zone 1 DSP",
+            "groups": [
+                {
+                    "name": "Thamesmead Group",
+                    "id": "THAMESMEAD_GROUP"
+                },
+                {
+                    "name": "Dublin Group",
+                    "id": "DUBLIN_GROUP"
+                },
+                {
+                    "name": "Leeds Group",
+                    "id": "LEEDS_GROUP"
+                },
+                {
+                    "name": "Nottingham Group",
+                    "id": "NOTTINGHAM_GROUP"
+                },
+                {
+                    "name": "Birmingham Group",
+                    "id": "BIRMINGHAM_GROUP"
+                },
+                {
+                    "name": "Scotland Group",
+                    "id": "SCOTLAND_GROUP"
+                },
+                {
+                    "name": "Ballymun Group",
+                    "id": "BALLYMUN_GROUP"
+                },
+                {
+                    "name": "Central Group",
+                    "id": "CENTRAL_GROUP"
+                }
+            ]
+        },
+        "UK Zone 2 DSP": {
+            "name": "UK Zone 2 DSP",
+            "groups": [
+                {
+                    "name": "Lisbon Group",
+                    "id": "LISBON_GROUP"
+                },
+                {
+                    "name": "Northampton Group",
+                    "id": "NORTHAMPTON_GROUP"
+                },
+                {
+                    "name": "Hounslow Group",
+                    "id": "HOUNSLOW_GROUP"
+                },
+                {
+                    "name": "Norwood Group",
+                    "id": "NORWOOD_GROUP"
+                },
+                {
+                    "name": "Essex Group",
+                    "id": "ESSEX_GROUP"
+                },
+                {
+                    "name": "Elite Group",
+                    "id": "ELITE_GROUP"
+                },
+                {
+                    "name": "Croydon Group",
+                    "id": "CROYDON_GROUP"
+                },
+                {
+                    "name": "Brentwood Group",
+                    "id": "BRENTWOOD_GROUP"
+                },
+                {
+                    "name": "Reading Group",
+                    "id": "READING_GROUP"
+                },
+                {
+                    "name": "Slough Group",
+                    "id": "SLOUGH_GROUP"
+                },
+                {
+                    "name": "Dagenham Group",
+                    "id": "DAGENHAM_GROUP"
+                },
+                {
+                    "name": "Peckham Group",
+                    "id": "PECKHAM_GROUP"
+                },
+                {
+                    "name": "Cambridge Group",
+                    "id": "CAMBRIDGE_GROUP"
+                },
+                {
+                    "name": "Central Group",
+                    "id": "CENTRAL_GROUP_2"
+                },
+                {
+                    "name": "Bolton Group",
+                    "id": "BOLTON_GROUP"
+                },
+                {
+                    "name": "Sheffield Group",
+                    "id": "SHEFFIELD_GROUP"
+                },
+                {
+                    "name": "Coventry Group",
+                    "id": "COVENTRY_GROUP"
+                },
+                {
+                    "name": "Chesterfield Group",
+                    "id": "CHESTERFIELD_GROUP"
+                }
+            ]
+        },
+        "UK Zone 1 Region 2": {
+            "name": "UK Zone 1 Region 2",
+            "groups": [
+                {
+                    "name": "Catford Group",
+                    "id": "CATFORD_GROUP"
+                },
+                {
+                    "name": "Bedfeyhealth Group",
+                    "id": "BEDFEYHEALTH_GROUP"
+                },
+                {
+                    "name": "Crystal Palace Group",
+                    "id": "CRYSTAL_PALACE_GROUP"
+                },
+                {
+                    "name": "Penfold Group",
+                    "id": "PENFOLD_GROUP"
+                }
+            ]
+        },
+        "UK Zone 3 Region 1": {
+            "name": "UK Zone 3 Region 1",
+            "groups": []
+        },
+        "UK Zone 3 Region 2": {
+            "name": "UK Zone 3 Region 2",
+            "groups": [
+                {
+                    "name": "Watford Group",
+                    "id": "WATFORD_GROUP"
+                },
+                {
+                    "name": "Hillingdon Group",
+                    "id": "HILLINGDON_GROUP"
+                },
+                {
+                    "name": "Streatham Group",
+                    "id": "STREATHAM_GROUP"
+                }
+            ]
+        },
+        "UK Zone 4 Region 2": {
+            "name": "UK Zone 4 Region 2",
+            "groups": [
+                {
+                    "name": "Barking Group",
+                    "id": "BARKING_GROUP"
+                },
+                {
+                    "name": "BRISTOL GROUP",
+                    "id": "BRISTOL_GROUP"
+                },
+                {
+                    "name": "Docklands Group",
+                    "id": "DOCKLANDS_GROUP"
+                },
+                {
+                    "name": "Harlow Group",
+                    "id": "HARLOW_GROUP"
+                },
+                {
+                    "name": "Madrid Group",
+                    "id": "MADRID_GROUP"
+                }
+            ]
+        },
+        "Quebec Zone": {
+            "name": "Quebec Zone",
+            "groups": [
+                {
+                    "name": "Saint- Laurent Group",
+                    "id": "SAINT_LAURENT_GROUP"
+                },
+                {
+                    "name": "NDG Group",
+                    "id": "NDG_GROUP"
+                }
+            ]
+        },
+        "Australia": {
+            "name": "Australia",
+            "groups": [
+                {
+                    "name": "Perth Group",
+                    "id": "PERTH_GROUP"
+                },
+                {
+                    "name": "Brisbane Group",
+                    "id": "BRISBANE_GROUP"
+                },
+                {
+                    "name": "Sydney Group",
+                    "id": "SYDNEY_GROUP"
+                }
+            ]
+        },
+        "UK Zone 1 Region 1": {
+            "name": "UK Zone 1 Region 1",
+            "groups": []
+        }
+    },
+    "Region 3": {
+        "SOUTH WEST ZONE 1": {
+            "name": "SOUTH WEST ZONE 1",
+            "groups": [
+                {
+                    "name": "IBADAN GROUP",
+                    "id": "IBADAN_GROUP"
+                },
+                {
+                    "name": "ABEOKUTA GROUP",
+                    "id": "ABEOKUTA_GROUP"
+                },
+                {
+                    "name": "OGBOMOSHO GROUP",
+                    "id": "OGBOMOSHO_GROUP"
+                },
+                {
+                    "name": "OSOGBO GROUP",
+                    "id": "OSOGBO_GROUP"
+                },
+                {
+                    "name": "AKURE GROUP",
+                    "id": "AKURE_GROUP"
+                },
+                {
+                    "name": "ADO-EKITI GROUP",
+                    "id": "ADO_EKITI_GROUP"
+                },
+                {
+                    "name": "IFE GROUP",
+                    "id": "IFE_GROUP"
+                },
+                {
+                    "name": "ILESHA GROUP",
+                    "id": "ILESHA_GROUP"
+                },
+                {
+                    "name": "IJEBU-ODE GROUP",
+                    "id": "IJEBU_ODE_GROUP"
+                }
+            ]
+        },
+        "SOUTH WEST ZONE 2": {
+            "name": "SOUTH WEST ZONE 2",
+            "groups": [
+                {
+                    "name": "CE OSOGBO 1",
+                    "id": "CE_OSOGBO_1"
+                },
+                {
+                    "name": "CE EKITI 1",
+                    "id": "CE_EKITI_1"
+                },
+                {
+                    "name": "CE EKITI 2",
+                    "id": "CE_EKITI_2"
+                },
+                {
+                    "name": "CE ILE-IFE",
+                    "id": "CE_ILE_IFE"
+                },
+                {
+                    "name": "CE ILESHA",
+                    "id": "CE_ILESHA"
+                },
+                {
+                    "name": "CE OSOGBO 2",
+                    "id": "CE_OSOGBO_2"
+                }
+            ]
+        },
+        "SOUTH WEST ZONE 3": {
+            "name": "SOUTH WEST ZONE 3",
+            "groups": [
+                {
+                    "name": "CE ABEOKUTA GROUP",
+                    "id": "CE_ABEOKUTA_GROUP"
+                },
+                {
+                    "name": "CE IJEBU ODE GROUP",
+                    "id": "CE_IJEBU_ODE_GROUP"
+                }
+            ]
+        },
+        "LAGOS ZONE 1": {
+            "name": "LAGOS ZONE 1",
+            "groups": [
+                {
+                    "name": "LCC6",
+                    "id": "LCC6"
+                },
+                {
+                    "name": "AA1",
+                    "id": "AA1"
+                },
+                {
+                    "name": "OKE IRA",
+                    "id": "OKE_IRA"
+                },
+                {
+                    "name": "OGBA",
+                    "id": "OGBA"
+                },
+                {
+                    "name": "PUNE, INDIA",
+                    "id": "PUNE_INDIA"
+                },
+                {
+                    "name": "SHANGISHA",
+                    "id": "SHANGISHA"
+                },
+                {
+                    "name": "AA2",
+                    "id": "AA2"
+                },
+                {
+                    "name": "IFAKO",
+                    "id": "IFAKO"
+                },
+                {
+                    "name": "MARYLAND",
+                    "id": "MARYLAND"
+                },
+                {
+                    "name": "AKUTE",
+                    "id": "AKUTE"
+                },
+                {
+                    "name": "AGEGE",
+                    "id": "AGEGE"
+                },
+                {
+                    "name": "AVIATION",
+                    "id": "AVIATION"
+                },
+                {
+                    "name": "KETU",
+                    "id": "KETU"
+                },
+                {
+                    "name": "AHG",
+                    "id": "AHG"
+                },
+                {
+                    "name": "GREAT MAINLAND 1",
+                    "id": "GREAT_MAINLAND_1"
+                },
+                {
+                    "name": "MAFOLUKU",
+                    "id": "MAFOLUKU"
+                },
+                {
+                    "name": "ISHERI MAGODO",
+                    "id": "ISHERI_MAGODO"
+                },
+                {
+                    "name": "IKD NORTH",
+                    "id": "IKD_NORTH"
+                },
+                {
+                    "name": "OJODU",
+                    "id": "OJODU"
+                },
+                {
+                    "name": "IKD CENTRAL",
+                    "id": "IKD_CENTRAL"
+                },
+                {
+                    "name": "IKD EAST",
+                    "id": "IKD_EAST"
+                },
+                {
+                    "name": "MAINLAND 2",
+                    "id": "MAINLAND_2"
+                },
+                {
+                    "name": "IKD WEST",
+                    "id": "IKD_WEST"
+                },
+                {
+                    "name": "SG2",
+                    "id": "SG2"
+                }
+            ]
+        },
+        "LAGOS SUB ZONE A": {
+            "name": "LAGOS SUB ZONE A",
+            "groups": [
+                {
+                    "name": "GBAGADA GROUP",
+                    "id": "group_681231e8efcf3"
+                },
+                {
+                    "name": "OWORO GROUP",
+                    "id": "group_6812327a78501"
+                },
+                {
+                    "name": "BARIGA GROUP",
+                    "id": "group_68123290a0cf4"
+                },
+                {
+                    "name": "ORIOKE-ALAPERE GROUP",
+                    "id": "group_681232b9709db"
+                },
+                {
+                    "name": "OGUDU GROUP",
+                    "id": "group_681232cc76ed9"
+                },
+                {
+                    "name": "LADILAK GROUP",
+                    "id": "group_681232f47e518"
+                },
+                {
+                    "name": "SHOLUYI GROUP",
+                    "id": "group_6812330d0fc90"
+                }
+            ]
+        },
+        "Ibadan Zone 1": {
+            "name": "Ibadan Zone 1",
+            "groups": [
+                {
+                    "name": "ZONAL CHURCH",
+                    "id": "ZONAL_CHURCH"
+                },
+                {
+                    "name": "AKOBO",
+                    "id": "AKOBO"
+                },
+                {
+                    "name": "CE AJIBODE JUNCTION",
+                    "id": "CE_AJIBODE_JUNCTION"
+                },
+                {
+                    "name": "CE BODIJA",
+                    "id": "CE_BODIJA"
+                },
+                {
+                    "name": "ELEYELE GROUP",
+                    "id": "ELEYELE_GROUP"
+                },
+                {
+                    "name": "AIRPORT GROUP",
+                    "id": "AIRPORT_GROUP"
+                },
+                {
+                    "name": "MONIYA GROUP",
+                    "id": "MONIYA_GROUP"
+                }
+            ]
+        },
+        "MC Abeokuta": {
+            "name": "MC Abeokuta",
+            "groups": [
+                {
+                    "name": "WORLD CHANGERS GROUP",
+                    "id": "WORLD_CHANGERS_GROUP"
+                },
+                {
+                    "name": "CE CITADEL",
+                    "id": "CE_EAST"
+                }
+            ]
+        },
+        "Mid-West Zone": {
+            "name": "Mid-West Zone",
+            "groups": [
+                {
+                    "name": "C.E BOWEN",
+                    "id": "CE_BOWEN"
+                },
+                {
+                    "name": "SILUKO",
+                    "id": "SILUKO"
+                },
+                {
+                    "name": "NEW BENIN",
+                    "id": "NEW_BENIN"
+                },
+                {
+                    "name": "CE UGBOWO",
+                    "id": "CE_UGBOWO"
+                },
+                {
+                    "name": "CE TEXTILEMILL",
+                    "id": "CE_TEXTILEMILL"
+                },
+                {
+                    "name": "EKPAN",
+                    "id": "EKPAN"
+                },
+                {
+                    "name": "SILUKO MODEL",
+                    "id": "SILUKO_MODEL"
+                },
+                {
+                    "name": "IGUOSA",
+                    "id": "IGUOSA"
+                },
+                {
+                    "name": "GREATER WARRI",
+                    "id": "GREATER_WARRI"
+                },
+                {
+                    "name": "OKADA",
+                    "id": "OKADA"
+                },
+                {
+                    "name": "OGIDA",
+                    "id": "OGIDA"
+                },
+                {
+                    "name": "OLUKU",
+                    "id": "OLUKU"
+                },
+                {
+                    "name": "RIVER LINE",
+                    "id": "RIVER_LINE"
+                },
+                {
+                    "name": "CONSOLIDATED",
+                    "id": "CONSOLIDATED"
+                },
+                {
+                    "name": "WARRI CENTRAL",
+                    "id": "WARRI_CENTRAL"
+                },
+                {
+                    "name": "MEGA",
+                    "id": "MEGA"
+                }
+            ]
+        },
+        "EWCA Zone 2": {
+            "name": "EWCA Zone 2",
+            "groups": [
+                {
+                    "name": "CE C\u00d4T\u00c9 D'IVOIRE",
+                    "id": "CE_COTE_DIVOIRE"
+                },
+                {
+                    "name": "CE TOGO 1",
+                    "id": "CE_TOGO_1"
+                },
+                {
+                    "name": "CE BENIN REPUBLIC",
+                    "id": "CE_BENIN_REPUBLIC"
+                },
+                {
+                    "name": "CE SENEGAL",
+                    "id": "CE_SENEGAL"
+                },
+                {
+                    "name": "CE GUINEA",
+                    "id": "CE_GUINEA"
+                },
+                {
+                    "name": "CE MALI",
+                    "id": "CE_MALI"
+                },
+                {
+                    "name": "CE TOGO 2",
+                    "id": "CE_TOGO_2"
+                },
+                {
+                    "name": "CE NIAMEY",
+                    "id": "CE_NIAMEY"
+                },
+                {
+                    "name": "CE BURKINA FASO",
+                    "id": "CE_BURKINA_FASO"
+                }
+            ]
+        },
+        "EWCA Zone 3": {
+            "name": "EWCA Zone 3",
+            "groups": [
+                {
+                    "name": "CE Main Church Group",
+                    "id": "CE_MAIN_CHURCH_GROUP"
+                },
+                {
+                    "name": "CE Mukono Group",
+                    "id": "CE_MUKONO_GROUP"
+                },
+                {
+                    "name": "CE Hai Jebel Croup",
+                    "id": "CE_HAI_JEBEL_GROUP"
+                },
+                {
+                    "name": "CE Entebbe Group",
+                    "id": "CE_ENTEBBE_GROUP"
+                },
+                {
+                    "name": "CE Seychelles Group",
+                    "id": "CE_SEYCHELLES_GROUP"
+                },
+                {
+                    "name": "CE Juba 1 Group",
+                    "id": "CE_JUBA_1_GROUP"
+                },
+                {
+                    "name": "CE Nyanama Group",
+                    "id": "CE_NYANAMA_GROUP"
+                },
+                {
+                    "name": "CE Kireka Group",
+                    "id": "CE_KIREKA_GROUP"
+                },
+                {
+                    "name": "CE Rwanda 2 Group",
+                    "id": "CE_RWANDA_2_GROUP"
+                },
+                {
+                    "name": "CE Airport Road Group",
+                    "id": "CE_AIRPORT_ROAD_GROUP"
+                },
+                {
+                    "name": "CE Arua Group",
+                    "id": "CE_ARUA_GROUP"
+                },
+                {
+                    "name": "CE Soroti Group",
+                    "id": "CE_SOROTI_GROUP"
+                },
+                {
+                    "name": "CE Ndeeba Group",
+                    "id": "CE_NDEEBA_GROUP"
+                },
+                {
+                    "name": "CE Rwanda 1 Group",
+                    "id": "CE_RWANDA_1_GROUP"
+                },
+                {
+                    "name": "CE Luzira Group",
+                    "id": "CE_LUZIRA_GROUP"
+                },
+                {
+                    "name": "CE Mbale Group",
+                    "id": "CE_MBALE_GROUP"
+                },
+                {
+                    "name": "CE Wandegeya Group",
+                    "id": "CE_WANDEGEYA_GROUP"
+                },
+                {
+                    "name": "CE Ggaba Group",
+                    "id": "CE_GGABA_GROUP"
+                },
+                {
+                    "name": "CE Mbarara Group",
+                    "id": "CE_MBARARA_GROUP"
+                },
+                {
+                    "name": "CE Lologo Group",
+                    "id": "CE_LOLOGO_GROUP"
+                },
+                {
+                    "name": "CE Suriname Group",
+                    "id": "CE_SURINAME_GROUP"
+                }
+            ]
+        },
+        "EWCA Zone 4": {
+            "name": "EWCA Zone 4",
+            "groups": [
+                {
+                    "name": "DOUALA 1",
+                    "id": "DOUALA_1"
+                },
+                {
+                    "name": "DOUALA 2",
+                    "id": "DOUALA_2"
+                },
+                {
+                    "name": "CE YAOUNDE 2",
+                    "id": "CE_YAOUNDE_2"
+                },
+                {
+                    "name": "BUEA",
+                    "id": "BUEA"
+                },
+                {
+                    "name": "GABON PORT GENTIL",
+                    "id": "GABON_PORT_GENTIL"
+                },
+                {
+                    "name": "GABON LIBREVILLE",
+                    "id": "GABON_LIBREVILLE"
+                },
+                {
+                    "name": "BAMENDA",
+                    "id": "BAMENDA"
+                },
+                {
+                    "name": "BONABERI",
+                    "id": "BONABERI"
+                },
+                {
+                    "name": "LIMBE",
+                    "id": "LIMBE"
+                },
+                {
+                    "name": "KUMBA",
+                    "id": "KUMBA"
+                },
+                {
+                    "name": "EQUATORIAL GUINEA",
+                    "id": "EQUATORIAL_GUINEA"
+                }
+            ]
+        },
+        "EWCA Zone 5": {
+            "name": "EWCA Zone 5",
+            "groups": [
+                {
+                    "name": "CE NUNGUA GROUP",
+                    "id": "CE_NUNGUA_GROUP"
+                },
+                {
+                    "name": "CE PAYNESVILLE",
+                    "id": "CE_PAYNESVILLE"
+                },
+                {
+                    "name": "CE GAMBIA",
+                    "id": "CE_GAMBIA"
+                },
+                {
+                    "name": "CE CENTRAL, SIERRA LEONE",
+                    "id": "CE_CENTRAL_SIERRA_LEONE"
+                },
+                {
+                    "name": "CE KISSY",
+                    "id": "CE_KISSY"
+                },
+                {
+                    "name": "CE EAST LEGON",
+                    "id": "CE_EAST_LEGON"
+                },
+                {
+                    "name": "CE BO",
+                    "id": "CE_BO"
+                },
+                {
+                    "name": "CE SOMALIA DRIVE, LIBERIA",
+                    "id": "CE_SOMALIA_DRIVE_LIBERIA"
+                },
+                {
+                    "name": "TEMA 1",
+                    "id": "TEMA_1"
+                },
+                {
+                    "name": "CE LASHIBI",
+                    "id": "CE_LASHIBI"
+                },
+                {
+                    "name": "CE ASHAIMAN",
+                    "id": "CE_ASHAIMAN"
+                },
+                {
+                    "name": "CE MICHEL NATION",
+                    "id": "CE_MICHEL_NATION"
+                },
+                {
+                    "name": "CE WATERLOO",
+                    "id": "CE_WATERLOO"
+                },
+                {
+                    "name": "CE DANSOMAN",
+                    "id": "CE_DANSOMAN"
+                },
+                {
+                    "name": "CE DENU",
+                    "id": "CE_DENU"
+                },
+                {
+                    "name": "TWI CHURCH",
+                    "id": "TWI_CHURCH"
+                },
+                {
+                    "name": "CE TRIUMPHANT CHURCH",
+                    "id": "CE_TRIUMPHANT_CHURCH"
+                },
+                {
+                    "name": "CE MONROVIA",
+                    "id": "CE_MONROVIA"
+                },
+                {
+                    "name": "CE ADENTA 2",
+                    "id": "CE_ADENTA_2"
+                },
+                {
+                    "name": "CE CONGO CROSS",
+                    "id": "CE_CONGO_CROSS"
+                },
+                {
+                    "name": "CE MAKENI",
+                    "id": "CE_MAKENI"
+                },
+                {
+                    "name": "TESHIE MAIN",
+                    "id": "TESHIE_MAIN"
+                }
+            ]
+        },
+        "EWCA Zone 6": {
+            "name": "EWCA Zone 6",
+            "groups": [
+                {
+                    "name": "CE DRC CONGO",
+                    "id": "CE_DRC_CONGO"
+                },
+                {
+                    "name": "CE TANZANIA",
+                    "id": "CE_TANZANIA"
+                },
+                {
+                    "name": "CE MAURITIUS",
+                    "id": "CE_MAURITIUS"
+                },
+                {
+                    "name": "CE BURUNDI",
+                    "id": "CE_BURUNDI"
+                }
+            ]
+        },
+        "Northern Nigeria Central Zone 1": {
+            "name": "Northern Nigeria Central Zone 1",
+            "groups": [
+                {
+                    "name": "Zonal Church",
+                    "id": "group_67fd3902784d1"
+                }
+            ]
+        },
+        "Northern Nigeria Central Zone 2": {
+            "name": "Northern Nigeria Central Zone 2",
+            "groups": [
+                {
+                    "name": "MAKURDI ENVIRONS",
+                    "id": "group_6800db4d8738c"
+                },
+                {
+                    "name": "CENTRAL GROUP",
+                    "id": "group_6800db61188f4"
+                },
+                {
+                    "name": "MAKURDI OUTSTATIONS GROUP",
+                    "id": "group_6800db72c4c65"
+                },
+                {
+                    "name": "GBOKO GROUP",
+                    "id": "group_6800dbaa4aa4d"
+                },
+                {
+                    "name": "TEENS\/YOUTH",
+                    "id": "group_6800dbc8906db"
+                },
+                {
+                    "name": "LOKOJA GROUP",
+                    "id": "group_6800dbdd9cac6"
+                }
+            ]
+        },
+        "North East Zone 1": {
+            "name": "North East Zone 1",
+            "groups": [
+                {
+                    "name": "ABUNDANCE GRACE",
+                    "id": "ABUNDANCE_GRACE"
+                },
+                {
+                    "name": "MAIDUGURI",
+                    "id": "MAIDUGURI"
+                },
+                {
+                    "name": "GOMBE GROUP",
+                    "id": "GOMBE_GROUP"
+                },
+                {
+                    "name": "BARRACKS ROAD",
+                    "id": "BARRACKS_ROAD"
+                },
+                {
+                    "name": "FEDERAL HOUSING",
+                    "id": "FEDERAL_HOUSING"
+                },
+                {
+                    "name": "MUBI GROUP",
+                    "id": "MUBI_GROUP"
+                },
+                {
+                    "name": "NUMAN GROUP",
+                    "id": "NUMAN_GROUP"
+                }
+            ]
+        },
+        "CE Chad": {
+            "name": "CE Chad",
+            "groups": [
+                {
+                    "name": "CC GROUP",
+                    "id": "CC_GROUP"
+                },
+                {
+                    "name": "KONDOL GROUP",
+                    "id": "KONDOL_GROUP"
+                },
+                {
+                    "name": "MADAGASCAR GROUP",
+                    "id": "MADAGASCAR_GROUP"
+                }
+            ]
+        },
+        "Kenya Zone": {
+            "name": "Kenya Zone",
+            "groups": [
+                {
+                    "name": "NAIROBI GROUP",
+                    "id": "NAIROBI_GROUP"
+                },
+                {
+                    "name": "CE NAIROBI NORTH GROUP",
+                    "id": "CE_NAIROBI_NORTH_GROUP"
+                },
+                {
+                    "name": "YOUTH MINISTRY",
+                    "id": "YOUTH_MINISTRY"
+                },
+                {
+                    "name": "CE WESTLANDS GROUP",
+                    "id": "CE_WESTLANDS_GROUP"
+                },
+                {
+                    "name": "CE EASTLANDS",
+                    "id": "CE_EASTLANDS"
+                },
+                {
+                    "name": "CE THIKA",
+                    "id": "CE_THIKA"
+                },
+                {
+                    "name": "CE WESTERN NYANZA GROUP",
+                    "id": "CE_WESTERN_NYANZA_GROUP"
+                },
+                {
+                    "name": "DONHOLM CHURCH",
+                    "id": "DONHOLM_CHURCH"
+                },
+                {
+                    "name": "CE KAREN GROUP",
+                    "id": "CE_KAREN_GROUP"
+                },
+                {
+                    "name": "CE NYANYUKI GROUP",
+                    "id": "CE_NYANYUKI_GROUP"
+                },
+                {
+                    "name": "CE MOMBASA GROUP",
+                    "id": "CE_MOMBASA_GROUP"
+                }
+            ]
+        },
+        "Accra Zone": {
+            "name": "Accra Zone",
+            "groups": [
+                {
+                    "name": "AVENOR \/ LAA",
+                    "id": "AVENOR_LAA"
+                },
+                {
+                    "name": "GROUP 1",
+                    "id": "GROUP_1"
+                },
+                {
+                    "name": "CE TAIFA",
+                    "id": "CE_TAIFA"
+                },
+                {
+                    "name": "CE HO",
+                    "id": "CE_HO"
+                },
+                {
+                    "name": "CE RACE COURSE TAKORADI",
+                    "id": "CE_RACE_COURSE_TAKORADI"
+                },
+                {
+                    "name": "CE ASOKORE MAMPONG",
+                    "id": "CE_ASOKORE_MAMPONG"
+                },
+                {
+                    "name": "CE TECHIMAN",
+                    "id": "CE_TECHIMAN"
+                },
+                {
+                    "name": "CE KUMASI MAKRO JUNCTION",
+                    "id": "CE_KUMASI_MAKRO_JUNCTION"
+                },
+                {
+                    "name": "CE ATOMIC",
+                    "id": "CE_ATOMIC"
+                },
+                {
+                    "name": "CE WEST LEGON",
+                    "id": "CE_WEST_LEGON"
+                },
+                {
+                    "name": "CE MATAHEKO",
+                    "id": "CE_MATAHEKO"
+                },
+                {
+                    "name": "CE SPINTEX",
+                    "id": "CE_SPINTEX"
+                },
+                {
+                    "name": "CE OLD WEIJA",
+                    "id": "CE_OLD_WEIJA"
+                },
+                {
+                    "name": "CE TEMA",
+                    "id": "CE_TEMA"
+                },
+                {
+                    "name": "CE MADINA",
+                    "id": "CE_MADINA"
+                },
+                {
+                    "name": "CE LEGON CENTRAL",
+                    "id": "CE_LEGON_CENTRAL"
+                },
+                {
+                    "name": "CE WEIJA",
+                    "id": "CE_WEIJA"
+                },
+                {
+                    "name": "CE KASOA",
+                    "id": "CE_KASOA"
+                },
+                {
+                    "name": "CE FIGAI TAKORADI",
+                    "id": "CE_FIGAI_TAKORADI"
+                },
+                {
+                    "name": "CE TARKWA",
+                    "id": "CE_TARKWA"
+                },
+                {
+                    "name": "CE CAPE COAST",
+                    "id": "CE_CAPE_COAST"
+                },
+                {
+                    "name": "CE AKIM ODA",
+                    "id": "CE_AKIM_ODA"
+                },
+                {
+                    "name": "CE KUMASI",
+                    "id": "CE_KUMASI"
+                },
+                {
+                    "name": "KUMASI 1 CENTRAL",
+                    "id": "KUMASI_1_CENTRAL"
+                },
+                {
+                    "name": "CE BEREKUM",
+                    "id": "CE_BEREKUM"
+                },
+                {
+                    "name": "CE KOFORIDUA",
+                    "id": "CE_KOFORIDUA"
+                },
+                {
+                    "name": "CE AFLAO",
+                    "id": "CE_AFLAO"
+                },
+                {
+                    "name": "CE TAMALE",
+                    "id": "CE_TAMALE"
+                },
+                {
+                    "name": "CE KORLE BU",
+                    "id": "CE_KORLE_BU"
+                },
+                {
+                    "name": "CE ACHIMOTA",
+                    "id": "CE_ACHIMOTA"
+                },
+                {
+                    "name": "CE OSU",
+                    "id": "CE_OSU"
+                },
+                {
+                    "name": "ZONAL YOUTH CHURCHES",
+                    "id": "ZONAL_YOUTH_CHURCHES"
+                }
+            ]
+        },
+        "Lagos Zone 4": {
+            "name": "Lagos Zone 4",
+            "groups": [
+                {
+                    "name": "IYANA-IPAJA GROUP",
+                    "id": "group_68657068dd207"
+                },
+                {
+                    "name": "ZONAL CHURCH",
+                    "id": "group_6865709840a87"
+                },
+                {
+                    "name": "EGBEDA GROUP",
+                    "id": "group_686570e98714e"
+                },
+                {
+                    "name": "ALAKUKO GROUP",
+                    "id": "group_686570fb13f99"
+                }
+            ]
+        },
+        "MC Warri": {
+            "name": "MC Warri",
+            "groups": [
+                {
+                    "name": "CENTRAL GROUP",
+                    "id": "group_687c0ab557156"
+                },
+                {
+                    "name": "CHAMPIONS GROUP",
+                    "id": "group_687c0af44d0cb"
+                },
+                {
+                    "name": "AGBARHO GROUP",
+                    "id": "group_687c0b014779d"
+                },
+                {
+                    "name": "EDJEBA GROUP",
+                    "id": "group_687c0b3bf3fda"
+                },
+                {
+                    "name": "ENERHEN",
+                    "id": "group_687c0c9eefceb"
+                },
+                {
+                    "name": "UGBORIKOKO",
+                    "id": "group_687c0cc0da580"
+                },
+                {
+                    "name": "OKUMAGBA",
+                    "id": "group_687c0ce9d2bc3"
+                },
+                {
+                    "name": "APEX",
+                    "id": "group_687c0cff14a10"
+                },
+                {
+                    "name": "UDU",
+                    "id": "group_687c0d0f8a81e"
+                },
+                {
+                    "name": "JAKPA",
+                    "id": "group_687c0d21ec756"
+                },
+                {
+                    "name": "EFFURUN",
+                    "id": "group_687c0d34520a8"
+                },
+                {
+                    "name": "EBRUMEDE",
+                    "id": "group_687c0d43da5e9"
+                },
+                {
+                    "name": "TEENS & YOUTH MINISTRY",
+                    "id": "group_687c0d5298e54"
+                }
+            ]
+        }
+    },
+    "Region 4": {
+        "ABUJA ZONE 1": {
+            "name": "ABUJA ZONE 1",
+            "groups": [
+                {
+                    "name": "ZONAL CHURCH GROUP",
+                    "id": "group_6806952c3326c"
+                },
+                {
+                    "name": "HEAVENLY PANTHEON GROUP",
+                    "id": "group_680695450b0b1"
+                },
+                {
+                    "name": "WUYE GROUP",
+                    "id": "group_680695543f294"
+                },
+                {
+                    "name": "FRUITFUL VINE GROUP",
+                    "id": "group_68069561bd779"
+                },
+                {
+                    "name": "GRACEFIELD GROUP",
+                    "id": "group_6806957656ae8"
+                },
+                {
+                    "name": "KUBWA GROUP",
+                    "id": "group_6806958bab3ac"
+                },
+                {
+                    "name": "BROOKS OF BLISS GROUP",
+                    "id": "group_68069599d34aa"
+                },
+                {
+                    "name": "BOUNDLESS GRACE GROUP",
+                    "id": "group_680695a841efa"
+                },
+                {
+                    "name": "BWARI GROUP",
+                    "id": "group_680695b5a1a19"
+                },
+                {
+                    "name": "NEW HORIZON GROUP",
+                    "id": "group_680695cb51ea9"
+                },
+                {
+                    "name": "GLORY GROUP",
+                    "id": "group_680695d6a5495"
+                },
+                {
+                    "name": "GARKI GROUP",
+                    "id": "group_680695e248e51"
+                },
+                {
+                    "name": "LOKOGOMA GROUP",
+                    "id": "group_680695ff1c63e"
+                },
+                {
+                    "name": "KUJE GROUP",
+                    "id": "group_6806960d47e65"
+                },
+                {
+                    "name": "LUGBE SUB-GROUP",
+                    "id": "group_68069618cdb5c"
+                },
+                {
+                    "name": "TEENS & YOUTH MINISTRY",
+                    "id": "group_680696291c0a7"
+                }
+            ]
+        },
+        "LAGOS SUB ZONE B": {
+            "name": "LAGOS SUB ZONE B",
+            "groups": [
+                {
+                    "name": "LCC 2 GROUP",
+                    "id": "group_68078053507ab"
+                },
+                {
+                    "name": "VICTORIOUS GROUP",
+                    "id": "group_6807805f4a378"
+                },
+                {
+                    "name": "LIGHTHOUSE GROUP",
+                    "id": "group_6807806aa84d3"
+                },
+                {
+                    "name": "PROLIFIC GROUP",
+                    "id": "group_68078074f2aea"
+                }
+            ]
+        },
+        "SOUTH-SOUTH ZONE 1": {
+            "name": "SOUTH-SOUTH ZONE 1",
+            "groups": [
+                {
+                    "name": "ADINO GROUP",
+                    "id": "ADINO_GROUP"
+                },
+                {
+                    "name": "UYO GROUP",
+                    "id": "UYO_GROUP"
+                },
+                {
+                    "name": "UGIELLI",
+                    "id": "UGIELLI"
+                },
+                {
+                    "name": "EXCELLENT GROUP",
+                    "id": "EXCELLENT_GROUP"
+                },
+                {
+                    "name": "MIMSHACK GROUP",
+                    "id": "MIMSHACK_GROUP"
+                },
+                {
+                    "name": "CORNERSTONE GROUP",
+                    "id": "CORNERSTONE_GROUP"
+                },
+                {
+                    "name": "MAINLAND GROUP",
+                    "id": "MAINLAND_GROUP"
+                },
+                {
+                    "name": "LIGHTHOUSE GROUP",
+                    "id": "LIGHTHOUSE_GROUP"
+                },
+                {
+                    "name": "PHRONESIS GROUP",
+                    "id": "PHRONESIS_GROUP"
+                },
+                {
+                    "name": "CITADEL GROUP",
+                    "id": "CITADEL_GROUP"
+                },
+                {
+                    "name": "ISLAND GROUP",
+                    "id": "ISLAND_GROUP"
+                },
+                {
+                    "name": "EASTWEST GROUP",
+                    "id": "EASTWEST_GROUP"
+                },
+                {
+                    "name": "SUNSHINE GROUP",
+                    "id": "SUNSHINE_GROUP"
+                },
+                {
+                    "name": "LIVINGSPRING GROUP",
+                    "id": "LIVINGSPRING_GROUP"
+                },
+                {
+                    "name": "BEULAHAVEN GROUP",
+                    "id": "BEULAHAVEN_GROUP"
+                },
+                {
+                    "name": "GLORYLAND GROUP",
+                    "id": "GLORYLAND_GROUP"
+                }
+            ]
+        },
+        "SOUTH-SOUTH ZONE 2": {
+            "name": "SOUTH-SOUTH ZONE 2",
+            "groups": [
+                {
+                    "name": "MOST FAVOURED GROUP",
+                    "id": "MOST_FAVOURED_GROUP"
+                },
+                {
+                    "name": "IKOT EKPENE GROUP 1",
+                    "id": "IKOT_EKPENE_GROUP_1"
+                },
+                {
+                    "name": "A-PLUS GROUP",
+                    "id": "A_PLUS_GROUP"
+                },
+                {
+                    "name": "GRACE GROUP",
+                    "id": "GRACE_GROUP"
+                },
+                {
+                    "name": "FLOURISHING GROUP",
+                    "id": "FLOURISHING_GROUP"
+                },
+                {
+                    "name": "AUXANO GROUP",
+                    "id": "AUXANO_GROUP"
+                },
+                {
+                    "name": "PLATINUM GROUP",
+                    "id": "PLATINUM_GROUP"
+                },
+                {
+                    "name": "BLISS GROUP",
+                    "id": "BLISS_GROUP"
+                },
+                {
+                    "name": "MODEL GROUP",
+                    "id": "MODEL_GROUP"
+                },
+                {
+                    "name": "EXCELLENT GROUP",
+                    "id": "EXCELLENT_GROUP"
+                }
+            ]
+        },
+        "SOUTH-SOUTH ZONE 3": {
+            "name": "SOUTH-SOUTH ZONE 3",
+            "groups": [
+                {
+                    "name": "SUMMIT GROUP",
+                    "id": "SUMMIT_GROUP"
+                },
+                {
+                    "name": "SAPELE GROUP",
+                    "id": "SAPELE_GROUP"
+                },
+                {
+                    "name": "AGBOR GROUP",
+                    "id": "AGBOR_GROUP"
+                },
+                {
+                    "name": "CE COOPERATIVE",
+                    "id": "CE_COOPERATIVE"
+                },
+                {
+                    "name": "OGHARA GROUP",
+                    "id": "OGHARA_GROUP"
+                },
+                {
+                    "name": "KWALE",
+                    "id": "KWALE"
+                },
+                {
+                    "name": "CE IBUSA 1",
+                    "id": "CE_IBUSA_1"
+                },
+                {
+                    "name": "CE NITEL 1",
+                    "id": "CE_NITEL_1"
+                },
+                {
+                    "name": "CE OGWASHI UKU",
+                    "id": "CE_OGWASHI_UKU"
+                },
+                {
+                    "name": "CE KONWEA",
+                    "id": "CE_KONWEA"
+                }
+            ]
+        },
+        "Ibadan Zone 2": {
+            "name": "Ibadan Zone 2",
+            "groups": [
+                {
+                    "name": "MONIYA GROUP",
+                    "id": "MONIYA_GROUP"
+                },
+                {
+                    "name": "NORTH-EAST GROUP",
+                    "id": "group_67fe58cf056d3"
+                },
+                {
+                    "name": "CE MEGA GROUP",
+                    "id": "group_67fe58e370eb2"
+                }
+            ]
+        },
+        "CALABAR MINISTRY CENTER": {
+            "name": "CALABAR MINISTRY CENTER",
+            "groups": [
+                {
+                    "name": "CENTRAL CHURCH",
+                    "id": "CENTRAL_CHURCH"
+                },
+                {
+                    "name": "ASARI ESO GROUP",
+                    "id": "ASARI_ESO_GROUP"
+                },
+                {
+                    "name": "AKIM",
+                    "id": "AKIM"
+                },
+                {
+                    "name": "ANANTIGHA",
+                    "id": "ANANTIGHA"
+                },
+                {
+                    "name": "IKOM",
+                    "id": "IKOM"
+                },
+                {
+                    "name": "OGOJA",
+                    "id": "OGOJA"
+                },
+                {
+                    "name": "STATE HOUSING",
+                    "id": "STATE_HOUSING"
+                },
+                {
+                    "name": "HIGHWAY GROUP",
+                    "id": "HIGHWAY_GROUP"
+                },
+                {
+                    "name": "EKPO-ABASI GROUP",
+                    "id": "EKPO_ABASI_GROUP"
+                },
+                {
+                    "name": "HENSHAW TOWN",
+                    "id": "HENSHAW_TOWN"
+                },
+                {
+                    "name": "UGEP GROUP",
+                    "id": "UGEP_GROUP"
+                }
+            ]
+        },
+        "PH ZONE 1": {
+            "name": "PH ZONE 1",
+            "groups": [
+                {
+                    "name": "BOUNDLESS GRACE GROUP",
+                    "id": "group_6809c1427c7a0"
+                },
+                {
+                    "name": "BOUNDLESS GRACE 2 GROUP",
+                    "id": "group_6809c151d7c74"
+                },
+                {
+                    "name": "DOXA GROUP",
+                    "id": "group_6809c15db101e"
+                },
+                {
+                    "name": "SHEKINAH GROUP",
+                    "id": "group_6809c171b7ff5"
+                },
+                {
+                    "name": "CITY CENTRE GROUP",
+                    "id": "group_6809c184d6073"
+                },
+                {
+                    "name": "TRIUMPHANT GROUP",
+                    "id": "group_6809c19f1e78f"
+                },
+                {
+                    "name": "GPH GROUP",
+                    "id": "group_6809c1b45dae3"
+                },
+                {
+                    "name": "OVERFLOWING GRACE GROUP",
+                    "id": "group_6809c1c6e595a"
+                },
+                {
+                    "name": "GREATER LIGHT GROUP",
+                    "id": "group_6809c1d539253"
+                },
+                {
+                    "name": "EXCELLENT GROUP",
+                    "id": "group_6809c1e88373c"
+                },
+                {
+                    "name": "GREEN LAND GROUP",
+                    "id": "group_6809c1f4cd90c"
+                },
+                {
+                    "name": "GRACE POINT GROUP",
+                    "id": "group_6809c200a1485"
+                },
+                {
+                    "name": "LIVING SPRING GROUP",
+                    "id": "group_680f793523dd8"
+                }
+            ]
+        },
+        "PH ZONE 3": {
+            "name": "PH ZONE 3",
+            "groups": [
+                {
+                    "name": "LIMITLESS GROUP",
+                    "id": "group_682e204d457f5"
+                },
+                {
+                    "name": "CCI GROUP",
+                    "id": "group_682e206c4b10f"
+                },
+                {
+                    "name": "CC2 GROUP",
+                    "id": "group_682e22f1acb3b"
+                },
+                {
+                    "name": "CC3 GROUP",
+                    "id": "group_682e230229362"
+                },
+                {
+                    "name": "LUXURIANT GROUP",
+                    "id": "group_682e2320cbc3e"
+                },
+                {
+                    "name": "GLORIOUS GROUP",
+                    "id": "group_682e232fd34a8"
+                },
+                {
+                    "name": "ACCELERATED GRACE GROUP",
+                    "id": "group_682e23569890a"
+                },
+                {
+                    "name": "GRA GROUP",
+                    "id": "group_682e236b75c9a"
+                },
+                {
+                    "name": "ZONAL GROUP",
+                    "id": "group_682e237d9e665"
+                },
+                {
+                    "name": "ADVANTAGE GROUP",
+                    "id": "group_682e238be7dbd"
+                },
+                {
+                    "name": "VICTORIOUS GROUP",
+                    "id": "group_682e23a36cfc8"
+                },
+                {
+                    "name": "GREATER PORT-HARCOURT GROUP",
+                    "id": "group_682e23b67e9a6"
+                },
+                {
+                    "name": "OASIS OF GRACE GROUP",
+                    "id": "group_682e23c64b019"
+                }
+            ]
+        },
+        "Lagos Zone 2": {
+            "name": "Lagos Zone 2",
+            "groups": [
+                {
+                    "name": "YABA",
+                    "id": "YABA"
+                },
+                {
+                    "name": "CE IPAJA",
+                    "id": "CE_IPAJA"
+                },
+                {
+                    "name": "DOPEMU",
+                    "id": "DOPEMU"
+                },
+                {
+                    "name": "IKOTUN",
+                    "id": "IKOTUN"
+                },
+                {
+                    "name": "IBA-IJANIKIN",
+                    "id": "IBA_IJANIKIN"
+                },
+                {
+                    "name": "EGBE",
+                    "id": "EGBE"
+                },
+                {
+                    "name": "FESTAC",
+                    "id": "FESTAC"
+                },
+                {
+                    "name": "ISHERI GROUP",
+                    "id": "ISHERI_GROUP"
+                },
+                {
+                    "name": "ISOLO 2",
+                    "id": "ISOLO_2"
+                },
+                {
+                    "name": "OKOKO",
+                    "id": "OKOKO"
+                },
+                {
+                    "name": "EJIGBO GROUP",
+                    "id": "EJIGBO_GROUP"
+                },
+                {
+                    "name": "ESTATE",
+                    "id": "ESTATE"
+                },
+                {
+                    "name": "NEW OJO",
+                    "id": "NEW_OJO"
+                },
+                {
+                    "name": "AFROMEDIA",
+                    "id": "AFROMEDIA"
+                },
+                {
+                    "name": "AGBARANJE",
+                    "id": "AGBARANJE"
+                },
+                {
+                    "name": "BADAGRY",
+                    "id": "BADAGRY"
+                },
+                {
+                    "name": "OKOTA GROUP",
+                    "id": "OKOTA_GROUP"
+                },
+                {
+                    "name": "AJANGBADI",
+                    "id": "AJANGBADI"
+                },
+                {
+                    "name": "INT'L MISSION",
+                    "id": "INTL_MISSION"
+                },
+                {
+                    "name": "LAFIA",
+                    "id": "LAFIA"
+                },
+                {
+                    "name": "ZONAL",
+                    "id": "ZONAL"
+                },
+                {
+                    "name": "ISOLO 1A",
+                    "id": "ISOLO_1A"
+                },
+                {
+                    "name": "ISOLO 1B",
+                    "id": "ISOLO_1B"
+                }
+            ]
+        },
+        "Lagos Zone 3": {
+            "name": "Lagos Zone 3",
+            "groups": [
+                {
+                    "name": "CE Loveworld Place",
+                    "id": "CE_LOVEWORLD_PLACE"
+                },
+                {
+                    "name": "CE Aguda 1",
+                    "id": "CE_AGUDA_1"
+                },
+                {
+                    "name": "CE Orile 1",
+                    "id": "CE_ORILE_1"
+                },
+                {
+                    "name": "CE Aguda 2",
+                    "id": "CE_AGUDA_2"
+                },
+                {
+                    "name": "CE Eric Moore",
+                    "id": "CE_ERIC_MOORE"
+                },
+                {
+                    "name": "CE Masha",
+                    "id": "CE_MASHA"
+                },
+                {
+                    "name": "CE Shomolu",
+                    "id": "CE_SHOMOLU"
+                },
+                {
+                    "name": "CE Mushin",
+                    "id": "CE_MUSHIN"
+                },
+                {
+                    "name": "Ojuelegba group",
+                    "id": "OJUELEGBA_GROUP"
+                },
+                {
+                    "name": "SOUTH AMERICA GROUP",
+                    "id": "SOUTH_AMERICA_GROUP"
+                },
+                {
+                    "name": "PALMGROOVE GROUP",
+                    "id": "PALMGROOVE_GROUP"
+                },
+                {
+                    "name": "SURULERE 1 GROUP",
+                    "id": "SURULERE_1_GROUP"
+                },
+                {
+                    "name": "LAWANSON GROUP",
+                    "id": "LAWANSON_GROUP"
+                },
+                {
+                    "name": "SURULERE 2 GROUP",
+                    "id": "SURULERE_2_GROUP"
+                },
+                {
+                    "name": "IJESHA GROUP",
+                    "id": "IJESHA_GROUP"
+                },
+                {
+                    "name": "IKATE GROUP",
+                    "id": "IKATE_GROUP"
+                },
+                {
+                    "name": "EBUTE METTA GROUP",
+                    "id": "EBUTE_METTA_GROUP"
+                },
+                {
+                    "name": "PAKISTAN GROUP",
+                    "id": "PAKISTAN_GROUP"
+                }
+            ]
+        },
+        "Ministry Center Ibadan": {
+            "name": "Ministry Center Ibadan",
+            "groups": [
+                {
+                    "name": "IBADAN MINISTRY CENTER",
+                    "id": "IBADAN_MINISTRY_CENTER"
+                }
+            ]
+        },
+        "EWCA Zone 1": {
+            "name": "EWCA Zone 1",
+            "groups": [
+                {
+                    "name": "CE Sarbet",
+                    "id": "CE_SARBET"
+                },
+                {
+                    "name": "Diredawa",
+                    "id": "DIREDAWA"
+                },
+                {
+                    "name": "CE Arbaminch",
+                    "id": "CE_ARBAMINCH"
+                },
+                {
+                    "name": "Lebu",
+                    "id": "LEBU"
+                },
+                {
+                    "name": "Hawasa",
+                    "id": "HAWASA"
+                }
+            ]
+        },
+        "DSC Sub Zone Warri": {
+            "name": "DSC Sub Zone Warri",
+            "groups": [
+                {
+                    "name": "DSCMAIN GROUP",
+                    "id": "DSCMAIN_GROUP"
+                },
+                {
+                    "name": "ABRAKA GROUP",
+                    "id": "ABRAKA_GROUP"
+                },
+                {
+                    "name": "OBIARUKU GROUP",
+                    "id": "OBIARUKU_GROUP"
+                },
+                {
+                    "name": "OSUBI GROUP",
+                    "id": "OSUBI_GROUP"
+                }
+            ]
+        },
+        "CELVZ": {
+            "name": "CELVZ",
+            "groups": [
+                {
+                    "name": "CHURCH 1",
+                    "id": "CHURCH_1"
+                },
+                {
+                    "name": "CHURCH 2",
+                    "id": "CHURCH_2"
+                },
+                {
+                    "name": "CHURCH 3",
+                    "id": "CHURCH_3"
+                },
+                {
+                    "name": "CHURCH 4",
+                    "id": "CHURCH_4"
+                },
+                {
+                    "name": "TEENS CHURCH",
+                    "id": "TEENS_CHURCH"
+                },
+                {
+                    "name": "YOUTH CHURCH",
+                    "id": "YOUTH_CHURCH"
+                },
+                {
+                    "name": "PHENOM CHURCH",
+                    "id": "PHENOM_CHURCH"
+                },
+                {
+                    "name": "INTERNATIONAL MISSIONS",
+                    "id": "INTERNATIONAL_MISSIONS"
+                },
+                {
+                    "name": "CHURCH 5",
+                    "id": "CHURCH_5"
+                }
+            ]
+        },
+        "PH Zone 2": {
+            "name": "PH Zone 2",
+            "groups": [
+                {
+                    "name": "MILE 1 GROUP",
+                    "id": "MILE_1_GROUP"
+                },
+                {
+                    "name": "MILE 2 GROUP",
+                    "id": "MILE_2_GROUP"
+                },
+                {
+                    "name": "MILE 3 GROUP",
+                    "id": "MILE_3_GROUP"
+                },
+                {
+                    "name": "MILE 4 GROUP",
+                    "id": "MILE_4_GROUP"
+                },
+                {
+                    "name": "BOROKIRI GROUP",
+                    "id": "BOROKIRI_GROUP"
+                },
+                {
+                    "name": "MARINE BASE GROUP",
+                    "id": "MARINE_BASE_GROUP"
+                },
+                {
+                    "name": "D-LINE GROUP",
+                    "id": "D_LINE_GROUP"
+                },
+                {
+                    "name": "DIOBU GROUP",
+                    "id": "DIOBU_GROUP"
+                }
+            ]
+        },
+        "South West Zone 5": {
+            "name": "South West Zone 5",
+            "groups": [
+                {
+                    "name": "AJEGUNLE GROUP",
+                    "id": "AJEGUNLE_GROUP"
+                },
+                {
+                    "name": "AMUKOKO GROUP",
+                    "id": "AMUKOKO_GROUP"
+                },
+                {
+                    "name": "ORILE GROUP",
+                    "id": "ORILE_GROUP"
+                },
+                {
+                    "name": "IGANMU GROUP",
+                    "id": "IGANMU_GROUP"
+                },
+                {
+                    "name": "IJORA GROUP",
+                    "id": "IJORA_GROUP"
+                },
+                {
+                    "name": "APAPA GROUP",
+                    "id": "APAPA_GROUP"
+                },
+                {
+                    "name": "AMUWO GROUP",
+                    "id": "AMUWO_GROUP"
+                },
+                {
+                    "name": "KIRIKIRI GROUP",
+                    "id": "KIRIKIRI_GROUP"
+                },
+                {
+                    "name": "AGUDA GROUP",
+                    "id": "AGUDA_GROUP"
+                },
+                {
+                    "name": "SURULERE GROUP",
+                    "id": "SURULERE_GROUP"
+                },
+                {
+                    "name": "LAWANSON GROUP",
+                    "id": "LAWANSON_GROUP"
+                },
+                {
+                    "name": "MUSHIN GROUP",
+                    "id": "MUSHIN_GROUP"
+                },
+                {
+                    "name": "OSHODI GROUP",
+                    "id": "OSHODI_GROUP"
+                },
+                {
+                    "name": "MAFOLUKU GROUP",
+                    "id": "MAFOLUKU_GROUP"
+                },
+                {
+                    "name": "SHOGUNLE GROUP",
+                    "id": "SHOGUNLE_GROUP"
+                },
+                {
+                    "name": "PALM GROOVE GROUP",
+                    "id": "PALM_GROOVE_GROUP"
+                },
+                {
+                    "name": "ILUPEJU GROUP",
+                    "id": "ILUPEJU_GROUP"
+                },
+                {
+                    "name": "PAPA AJAO GROUP",
+                    "id": "PAPA_AJAO_GROUP"
+                },
+                {
+                    "name": "LADIPO GROUP",
+                    "id": "LADIPO_GROUP"
+                },
+                {
+                    "name": "MATORI GROUP",
+                    "id": "MATORI_GROUP"
+                },
+                {
+                    "name": "ITIRE GROUP",
+                    "id": "ITIRE_GROUP"
+                },
+                {
+                    "name": "AKURE GROUP",
+                    "id": "group_67fe4c670ed0d"
+                },
+                {
+                    "name": "OWO GROUP",
+                    "id": "group_67fe4ca0bb03c"
+                },
+                {
+                    "name": "ONDO GROUP",
+                    "id": "group_67ffaecb9c7a6"
+                },
+                {
+                    "name": "IJAPO GROUP",
+                    "id": "group_67ffaee1e1d38"
+                },
+                {
+                    "name": "AGAGU GROUP",
+                    "id": "group_67ffaf0a7661f"
+                }
+            ]
+        },
+        "Abuja Ministry Center": {
+            "name": "Abuja Ministry Center",
+            "groups": [
+                {
+                    "name": "AIRPORT ROAD GROUP",
+                    "id": "group_681a602bb1eec"
+                },
+                {
+                    "name": "KARU GROUP",
+                    "id": "group_681a603ec9ae3"
+                },
+                {
+                    "name": "GARKI GROUP",
+                    "id": "group_681a604eb0219"
+                },
+                {
+                    "name": "MODEL GROUP",
+                    "id": "group_681a605d78817"
+                },
+                {
+                    "name": "ASOKORO GROUP",
+                    "id": "group_681a606be5c9f"
+                },
+                {
+                    "name": "CENTRAL CHURCH GROUP",
+                    "id": "group_681a607e15e0b"
+                },
+                {
+                    "name": "SILVERBIRD GROUP",
+                    "id": "group_681a608d6d791"
+                },
+                {
+                    "name": "WUSE GROUP",
+                    "id": "group_681a609ed5fa0"
+                },
+                {
+                    "name": "GWARIMPA GROUP",
+                    "id": "group_681a60b1c6e2b"
+                },
+                {
+                    "name": "CBD GROUP",
+                    "id": "group_681a60c0aa839"
+                }
+            ]
+        },
+        "Abuja zone 2": {
+            "name": "Abuja zone 2",
+            "groups": [
+                {
+                    "name": "NEW KARU GROUP",
+                    "id": "group_683031e91a3c1"
+                },
+                {
+                    "name": "SULEJA",
+                    "id": "group_683032073af1f"
+                },
+                {
+                    "name": "KORODUMA GROUP",
+                    "id": "group_6830321ea47d6"
+                },
+                {
+                    "name": "KEFFI GROUP",
+                    "id": "group_683032318137e"
+                },
+                {
+                    "name": "JIKOYI GROUP",
+                    "id": "group_6830324b0b70a"
+                },
+                {
+                    "name": "MARARABA GROUP",
+                    "id": "group_68303281285bb"
+                },
+                {
+                    "name": "BOUNDLESS LOVE",
+                    "id": "group_683032a722ff3"
+                },
+                {
+                    "name": "NYANYA GROUP",
+                    "id": "group_683032b74f6b6"
+                }
+            ]
+        },
+        "SOUTH WEST ZONE 4": {
+            "name": "SOUTH WEST ZONE 4",
+            "groups": [
+                {
+                    "name": "CE MAGNIFICENT GROUP",
+                    "id": "group_685befbcc08ee"
+                },
+                {
+                    "name": "CE LUXURIANT GROUP",
+                    "id": "group_685befce35897"
+                },
+                {
+                    "name": "CE SPECIAL GRACE GROUP",
+                    "id": "group_685befe4741a1"
+                }
+            ]
+        }
+    },
+    "Region 5": {
+        "SOUTH EAST ZONE 1": {
+            "name": "SOUTH EAST ZONE 1",
+            "groups": [
+                {
+                    "name": "CE WCC GROUP",
+                    "id": "CE_WOO_GROUP"
+                },
+                {
+                    "name": "CE EGBU GROUP",
+                    "id": "CE_BORI_GROUP"
+                },
+                {
+                    "name": "CE WORLD BANK",
+                    "id": "CE_WORLD_BANK"
+                },
+                {
+                    "name": "CE MCC ROAD",
+                    "id": "CE_MOG_ROAD"
+                },
+                {
+                    "name": "CE OWERRI 1",
+                    "id": "CE_OWERRI_1"
+                },
+                {
+                    "name": "CE OKIGWE ROAD GROUP",
+                    "id": "CE_OKIGWE_ROAD_GROUP"
+                },
+                {
+                    "name": "CE ORJI GROUP",
+                    "id": "CE_ORJI_GROUP"
+                },
+                {
+                    "name": "CE OGUTA GROUP",
+                    "id": "CE_OGUTA_GROUP"
+                },
+                {
+                    "name": "CE ORLU GROUP",
+                    "id": "CE_ORLU_GROUP"
+                },
+                {
+                    "name": "CE AROCHUKWU",
+                    "id": "CE_AFOR_UKWU"
+                },
+                {
+                    "name": "CE AKACHI GROUP",
+                    "id": "CE_AKACHI_GROUP"
+                },
+                {
+                    "name": "CE MBAITOLI",
+                    "id": "CE_MBAITOLI"
+                }
+            ]
+        },
+        "SOUTH EAST ZONE 3": {
+            "name": "SOUTH EAST ZONE 3",
+            "groups": [
+                {
+                    "name": "AWKA GROUP",
+                    "id": "AWKA_GROUP"
+                },
+                {
+                    "name": "CE ENUGU 1",
+                    "id": "CE_ENUGU_1"
+                },
+                {
+                    "name": "CE ABAKALIKI 1",
+                    "id": "CE_ABAKALIKI_1"
+                },
+                {
+                    "name": "CE NNEWI",
+                    "id": "CE_NNEWI"
+                },
+                {
+                    "name": "CE ENUGU 2",
+                    "id": "CE_ENUGU_2"
+                },
+                {
+                    "name": "CE ABAKALIKI 2",
+                    "id": "CE_ABAKALIKI_2"
+                },
+                {
+                    "name": "CE PRESIDENTIAL GROUP",
+                    "id": "group_67f96027a4239"
+                },
+                {
+                    "name": "CE OBA GROUP",
+                    "id": "group_67f9604e3ddcd"
+                },
+                {
+                    "name": "CE NSUKKA GROUP",
+                    "id": "group_67fa0f97850ec"
+                },
+                {
+                    "name": "CE NKALIKI GROUP",
+                    "id": "group_67fa0fce25b9b"
+                },
+                {
+                    "name": "CE NIBO GROUP",
+                    "id": "group_67fa0fdd82a14"
+                }
+            ]
+        },
+        "BENIN ZONE 2": {
+            "name": "BENIN ZONE 2",
+            "groups": [
+                {
+                    "name": "CENTRAL GROUP 1",
+                    "id": "CENTRAL_GROUP_1"
+                },
+                {
+                    "name": "CE OKA GROUP",
+                    "id": "CE_OKA_GROUP"
+                },
+                {
+                    "name": "AGBOR ROAD GROUP",
+                    "id": "CE_AGBOR_ROAD_1"
+                },
+                {
+                    "name": "CENTRAL GROUP 2",
+                    "id": "CENTRAL_GROUP_2"
+                },
+                {
+                    "name": "SAKPONBA GROUP",
+                    "id": "SAKPONBA_GROUP"
+                },
+                {
+                    "name": "CE EXTENSION GROUP",
+                    "id": "group_67fa115ca8a67"
+                },
+                {
+                    "name": "EXCEL GROUP",
+                    "id": "group_67fa11837ab07"
+                },
+                {
+                    "name": "CENTRAL GROUP 3",
+                    "id": "group_67fa11afd4080"
+                }
+            ]
+        },
+        "ABA ZONE": {
+            "name": "ABA ZONE",
+            "groups": [
+                {
+                    "name": "Aba South 1",
+                    "id": "ABA_SOUTH_1"
+                },
+                {
+                    "name": "WWC Church 1",
+                    "id": "WWC_CHURCH_1"
+                },
+                {
+                    "name": "Osisioma Group",
+                    "id": "OSISIOMA_GROUP"
+                },
+                {
+                    "name": "Aba North Central",
+                    "id": "ABA_NORTH_CENTRAL"
+                },
+                {
+                    "name": "Ogbor Hill Group",
+                    "id": "OGBOR_HILL_GROUP"
+                },
+                {
+                    "name": "Express Group",
+                    "id": "EXPRESS_GROUP"
+                },
+                {
+                    "name": "Aba South 2",
+                    "id": "ABA_SOUTH_2"
+                },
+                {
+                    "name": "Model Group",
+                    "id": "MODEL_GROUP"
+                }
+            ]
+        },
+        "Lagos Sub Zone C": {
+            "name": "Lagos Sub Zone C",
+            "groups": [
+                {
+                    "name": "Pakuro",
+                    "id": "PAKOTO"
+                },
+                {
+                    "name": "CE Magboro AIC Building",
+                    "id": "CE_MAGBORO_APC_BUILDING"
+                },
+                {
+                    "name": "CE Grace Arena",
+                    "id": "CE_GRACE_ARENA"
+                },
+                {
+                    "name": "CE Shimawa Bigger Everyday",
+                    "id": "CE_SHOMOLU_BARIGA_EVERYDAY"
+                },
+                {
+                    "name": "CE Seed of Abraham",
+                    "id": "CE_SEED_OF_ABRAHAM"
+                },
+                {
+                    "name": "CE Champions Arena",
+                    "id": "CE_CHAMPIONS_ARENA"
+                },
+                {
+                    "name": "CE Asese",
+                    "id": "group_67fa12eda0f52"
+                },
+                {
+                    "name": "Isheri Central",
+                    "id": "group_67fa12ff22088"
+                }
+            ]
+        },
+        "Loveworld Church Zone": {
+            "name": "Loveworld Church Zone",
+            "groups": [
+                {
+                    "name": "PROLIFIC BERGER CHURCH",
+                    "id": "PROLIFIC_BERGER_CHURCH"
+                },
+                {
+                    "name": "PROLIFIC BERGER CHURCH 2",
+                    "id": "PROLIFIC_BERGER_CHURCH_2"
+                },
+                {
+                    "name": "Believers Loveworld Church",
+                    "id": "BELIEVERS_LOVEWORLD_CHURCH"
+                },
+                {
+                    "name": "GROUP 2",
+                    "id": "group_67fa1320cbf04"
+                },
+                {
+                    "name": "GROUP 3",
+                    "id": "group_67fa13317a3c9"
+                },
+                {
+                    "name": "GROUP 5",
+                    "id": "group_67fa1347a52b8"
+                },
+                {
+                    "name": "GROUP 6",
+                    "id": "group_67fa13558613f"
+                },
+                {
+                    "name": "GROUP 7",
+                    "id": "group_67fa13637e5cc"
+                },
+                {
+                    "name": "GROUP 8",
+                    "id": "group_67fa136fac3f6"
+                },
+                {
+                    "name": "GROUP 9",
+                    "id": "group_67fa137bef2b4"
+                }
+            ]
+        },
+        "Lagos Zone 6": {
+            "name": "Lagos Zone 6",
+            "groups": [
+                {
+                    "name": "OE OLOIDI",
+                    "id": "OE_OLOIDI"
+                },
+                {
+                    "name": "AJEGUNLE 1",
+                    "id": "AJIBUNLE_1"
+                },
+                {
+                    "name": "APAPA",
+                    "id": "APAPA"
+                },
+                {
+                    "name": "ESTATE GROUP",
+                    "id": "ESTATE_GROUP"
+                },
+                {
+                    "name": "NEW AJEGUNLE",
+                    "id": "NEW_AJIBUNLE"
+                },
+                {
+                    "name": "WILMER GROUP",
+                    "id": "WILMER_GROUP"
+                },
+                {
+                    "name": "CITY CHURCH",
+                    "id": "group_67fa14a3f41a9"
+                }
+            ]
+        },
+        "BLW East & Central Africa Region": {
+            "name": "BLW East & Central Africa Region",
+            "groups": [
+                {
+                    "name": "BLW Kenya Zone A",
+                    "id": "group_6800b7c61de5f"
+                },
+                {
+                    "name": "BLW Kenya Zone B",
+                    "id": "group_6800b7d2c0093"
+                },
+                {
+                    "name": "BLW Cameroon Zone A",
+                    "id": "group_6800b80c6fa0b"
+                },
+                {
+                    "name": "BLW Cameroon Zone B",
+                    "id": "group_6800b816f0811"
+                },
+                {
+                    "name": "BLW Uganda Zone A",
+                    "id": "group_6800b837a4174"
+                },
+                {
+                    "name": "BLW Uganda Zone B",
+                    "id": "group_6800b863b78ad"
+                },
+                {
+                    "name": "BLW Tanzania",
+                    "id": "group_6800b872b208c"
+                },
+                {
+                    "name": "BLW DRC",
+                    "id": "group_6800b88216632"
+                }
+            ]
+        },
+        "BLW West Africa Region": {
+            "name": "BLW West Africa Region",
+            "groups": [
+                {
+                    "name": "BLW Ghana Zone A",
+                    "id": "group_67ff8861656d0"
+                },
+                {
+                    "name": "BLW Ghana Zone B",
+                    "id": "group_67ff886b20df1"
+                },
+                {
+                    "name": "BLW Ghana Zone C",
+                    "id": "group_67ff8873a6c91"
+                },
+                {
+                    "name": "BLW Ghana Zone D",
+                    "id": "group_67ff888a222d0"
+                },
+                {
+                    "name": "BLW Benin Republic Zone A",
+                    "id": "group_67ff88a211649"
+                },
+                {
+                    "name": "BLW Benin Republic Zone B",
+                    "id": "group_67ff88aae96f6"
+                },
+                {
+                    "name": "BLW Burkina Faso Zone",
+                    "id": "group_67ff88b995363"
+                }
+            ]
+        },
+        "BLW Nigeria Region": {
+            "name": "BLW Nigeria Region",
+            "groups": [
+                {
+                    "name": "BLW Zone A",
+                    "id": "group_67ff88d652af7"
+                },
+                {
+                    "name": "BLW Zone B",
+                    "id": "group_67ff88e0203c3"
+                },
+                {
+                    "name": "BLW Zone C",
+                    "id": "group_67ff88ea782bb"
+                },
+                {
+                    "name": "BLW Zone D",
+                    "id": "group_67ff88f320e6e"
+                },
+                {
+                    "name": "BLW Zone E",
+                    "id": "group_67ff88fd3983e"
+                },
+                {
+                    "name": "BLW Zone F",
+                    "id": "group_67ff8908d4c5a"
+                },
+                {
+                    "name": "BLW Zone G",
+                    "id": "group_67ff8923429d7"
+                },
+                {
+                    "name": "BLW Zone H",
+                    "id": "group_67ff892ded20a"
+                },
+                {
+                    "name": "BLW Zone I",
+                    "id": "group_67ff89383d861"
+                },
+                {
+                    "name": "BLW Zone J",
+                    "id": "group_67ff89431467f"
+                },
+                {
+                    "name": "BLW Zone K",
+                    "id": "group_67ff894e7b6ca"
+                },
+                {
+                    "name": "BLW Zone L",
+                    "id": "group_67ff89596b401"
+                },
+                {
+                    "name": "BLW Zone M",
+                    "id": "group_67ff8962ca74e"
+                }
+            ]
+        },
+        "NORTH WEST ZONE 2": {
+            "name": "NORTH WEST ZONE 2",
+            "groups": [
+                {
+                    "name": "KADUNA",
+                    "id": "KADUNA"
+                },
+                {
+                    "name": "CHRIST EMBASSY BAUCHI",
+                    "id": "CHRIST_EMBASSY_BAUCHI"
+                },
+                {
+                    "name": "CE Maduguri",
+                    "id": "CE_MADUGURI"
+                },
+                {
+                    "name": "CE JIGAWA",
+                    "id": "group_67fa17623bed4"
+                },
+                {
+                    "name": "CE EVER INCREASING GLORY",
+                    "id": "group_67fa1773e31f9"
+                }
+            ]
+        },
+        "Lagos Zone 5": {
+            "name": "Lagos Zone 5",
+            "groups": [
+                {
+                    "name": "LEKKI GROUP",
+                    "id": "group_680aa81866bfd"
+                },
+                {
+                    "name": "YOUTH GROUP",
+                    "id": "group_680aa85c1f55c"
+                },
+                {
+                    "name": "LEKKI PHASE 1 GROUP",
+                    "id": "group_680aa8704938a"
+                },
+                {
+                    "name": "FREE TRADE ZONE GROUP",
+                    "id": "group_680aa87f38c0f"
+                },
+                {
+                    "name": "KAJOLA GROUP",
+                    "id": "group_680aa88fa5236"
+                },
+                {
+                    "name": "IKOYI 2 GROUP",
+                    "id": "group_680aa89beaf76"
+                },
+                {
+                    "name": "LAGOS ISLAND GROUP",
+                    "id": "group_680aa8c0bca11"
+                },
+                {
+                    "name": "VI CHURCH 1",
+                    "id": "group_680aa8d03a3df"
+                },
+                {
+                    "name": "AJAH GROUP",
+                    "id": "group_680aa8d954091"
+                },
+                {
+                    "name": "AJIWE GROUP",
+                    "id": "group_680aa8e623eb1"
+                },
+                {
+                    "name": "MOBIL ROAD GROUP",
+                    "id": "group_680aa8f97ca63"
+                },
+                {
+                    "name": "ABIJO-TEDO GROUP",
+                    "id": "group_680aa914e1759"
+                },
+                {
+                    "name": "CHEVRON GROUP",
+                    "id": "group_680aa92365004"
+                },
+                {
+                    "name": "EPE GROUP",
+                    "id": "group_680aa92fa198e"
+                },
+                {
+                    "name": "IKOYI 1 GROUP",
+                    "id": "group_680aa93ce84f5"
+                }
+            ]
+        },
+        "Benin Zone 1": {
+            "name": "Benin Zone 1",
+            "groups": [
+                {
+                    "name": "EREDIAUWA GROUP",
+                    "id": "group_680aa9f9a9f77"
+                },
+                {
+                    "name": "CM1 GROUP",
+                    "id": "group_680aaa257e138"
+                },
+                {
+                    "name": "CM 2 GROUP",
+                    "id": "group_680aaa31206af"
+                },
+                {
+                    "name": "CM3 GROUP",
+                    "id": "group_680aaa3a82b30"
+                },
+                {
+                    "name": "MISSIONS 1 GROUP",
+                    "id": "group_680aaa4c5b240"
+                },
+                {
+                    "name": "MISSIONS 2 GROUP",
+                    "id": "group_680aaa5babbd2"
+                },
+                {
+                    "name": "MISSIONS 3 GROUP",
+                    "id": "group_680aaa676c949"
+                },
+                {
+                    "name": "MISSIONS 4 GROUP",
+                    "id": "group_680aaa72eeb52"
+                },
+                {
+                    "name": "MISSIONS 5 GROUP",
+                    "id": "group_680aaa7ed70a4"
+                },
+                {
+                    "name": "MISSIONS 6 GROUP",
+                    "id": "group_680aaa8e941f0"
+                },
+                {
+                    "name": "MISSIONS 7 GROUP",
+                    "id": "group_680aaa9b07f14"
+                },
+                {
+                    "name": "MISSIONS 8 GROUP",
+                    "id": "group_680aaaaf847f7"
+                },
+                {
+                    "name": "MISSIONS 9 GROUP",
+                    "id": "group_680aaabc1a4c0"
+                },
+                {
+                    "name": "MISSIONS 10 GROUP",
+                    "id": "group_680aaad7ea426"
+                }
+            ]
+        },
+        "Onitsha Zone": {
+            "name": "Onitsha Zone",
+            "groups": [
+                {
+                    "name": "CE AWKA ROAD",
+                    "id": "group_682c41cacf2b1"
+                },
+                {
+                    "name": "3-3 MEGA CHURCH",
+                    "id": "group_682c41e212d39"
+                },
+                {
+                    "name": "CE FEGGE GROUP",
+                    "id": "group_682c41fbdb861"
+                },
+                {
+                    "name": "CE AKWKA ROAD",
+                    "id": "group_682c42142e2b7"
+                },
+                {
+                    "name": "CE VENN ROAD",
+                    "id": "group_682c42236ff4f"
+                },
+                {
+                    "name": "CE OTUOCHA",
+                    "id": "group_682c42352948f"
+                },
+                {
+                    "name": "CE AWKUZU",
+                    "id": "group_682c424a01413"
+                },
+                {
+                    "name": "FEDERAL HOUSING",
+                    "id": "group_682c42759d314"
+                },
+                {
+                    "name": "CE GRA",
+                    "id": "group_682c4283357ff"
+                },
+                {
+                    "name": "CE ST VINCENT & THE GRENADINES",
+                    "id": "group_682c429452d98"
+                },
+                {
+                    "name": "ALPHA\/ZONAL CHURCH",
+                    "id": "group_682c42a252f05"
+                },
+                {
+                    "name": "CE ORAIFITE 1",
+                    "id": "group_682c42b146a81"
+                }
+            ]
+        },
+        "North West Zone 1": {
+            "name": "North West Zone 1",
+            "groups": [
+                {
+                    "name": "Kaduna Group",
+                    "id": "group_68551805732d4"
+                },
+                {
+                    "name": "Sokoto Group",
+                    "id": "group_685518124dce5"
+                },
+                {
+                    "name": "Zaria Group",
+                    "id": "group_68551823c7593"
+                },
+                {
+                    "name": "Zamfara Group",
+                    "id": "group_6855183158600"
+                },
+                {
+                    "name": "Kebbi Group",
+                    "id": "group_6855183e4374f"
+                },
+                {
+                    "name": "Kafanchan Group",
+                    "id": "group_6855184d81e6e"
+                }
+            ]
+        },
+        "Edo North and Central": {
+            "name": "Edo North and Central",
+            "groups": [
+                {
+                    "name": "AUCHI NEW GROUP",
+                    "id": "group_6889d6ad71088"
+                },
+                {
+                    "name": "AFUZE GROUP",
+                    "id": "group_6889d6bd6d847"
+                },
+                {
+                    "name": "EKPOMA GROUP",
+                    "id": "group_6889d6e9574be"
+                },
+                {
+                    "name": "ZONAL GROUP",
+                    "id": "group_6889d716871c6"
+                },
+                {
+                    "name": "UROMI GROUP",
+                    "id": "group_68a308014b5eb"
+                },
+                {
+                    "name": "EKPOMA UPPER GROUP",
+                    "id": "group_68a3080ec8577"
+                },
+                {
+                    "name": "JATTU GROUP",
+                    "id": "group_68a3083092938"
+                },
+                {
+                    "name": "OKPELLA GROUP",
+                    "id": "group_68a3083eac23c"
+                }
+            ]
+        }
+    },
+    "Other Regions": {
+        "name": "Other Regions",
+        "groups": [
+            {
+                "name": "International Missions for South East Asia Directorate",
+                "id": "INTERNATIONAL_MISSIONS_FOR_SOUTH_EAST_ASIA_DIRECTORATE"
+            }
+        ],
+        "Zonal Church": {
+            "name": "Zonal Church",
+            "groups": [
+                {
+                    "name": "Zonal",
+                    "id": "group_67fe35232887b"
+                }
+            ]
+        }
+    }
+}

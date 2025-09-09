@@ -1,0 +1,199 @@
+[
+    {
+        "id": "cat_68b84c4af267f0.74425561",
+        "name": "campaigns",
+        "description": "",
+        "created_at": "2025-09-03 16:10:18",
+        "created_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b850599f7898.45316817",
+                "label": "Groups",
+                "type": "select",
+                "required": true,
+                "placeholder": "Select Group",
+                "options": [],
+                "source": "zones_groups"
+            },
+            {
+                "id": "fld_68b85bc158a402.64379297",
+                "label": "Reach Out World Programs",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:19:49"
+            },
+            {
+                "id": "fld_68b85c141226d6.90300083",
+                "label": "Rhapathon With Pastor Chris",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:19:52"
+            },
+            {
+                "id": "fld_68b8627ec15db6.08733344",
+                "label": "Say Yes To Kids",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:19:55"
+            },
+            {
+                "id": "fld_68b862964a2ec0.70457024",
+                "label": "Teevolution",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:19:58"
+            },
+            {
+                "id": "fld_68b862a61bf222.55945939",
+                "label": "YouthsAglow",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:20:03"
+            },
+            {
+                "id": "fld_68b862bb581c38.97519459",
+                "label": "No One Left Behind",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:20:07"
+            },
+            {
+                "id": "fld_68b862def409c0.34952105",
+                "label": "Penetrating With Truth",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:20:15"
+            },
+            {
+                "id": "fld_68b862ef54a408.76917062",
+                "label": "Penetrating With Languages",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:20:18"
+            },
+            {
+                "id": "fld_68b863204ec156.94657958",
+                "label": "Adopt A Street",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:20:22"
+            },
+            {
+                "id": "fld_68b863d0e2d5f0.85257617",
+                "label": "Total Of Outreaches Carried Out",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:20:26"
+            }
+        ]
+    },
+    {
+        "id": "cat_68b84cc402bc30.88887173",
+        "name": "category a churches",
+        "description": "",
+        "created_at": "2025-09-03 16:12:20",
+        "created_by": "user_68b835b7b58290.58357298",
+        "updated_at": "2025-09-03 16:12:32",
+        "updated_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b86cb8077905.44629871",
+                "label": "Group",
+                "type": "select",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "zones_groups"
+            },
+            {
+                "id": "fld_68b86ccb719709.84896258",
+                "label": "Name of zonal pastor",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b87153748c18.89282738",
+                "label": "KingsChat Phone Number",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:21:11"
+            },
+            {
+                "id": "fld_68b871a4acd6d1.87690975",
+                "label": "Email Address",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b871e91b0181.93089634",
+                "label": "Total Quantity Sponsored",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-03 20:21:22"
+            }
+        ]
+    },
+    {
+        "id": "cat_68b84cdbc90ed9.13821287",
+        "name": "category b churches",
+        "description": "",
+        "created_at": "2025-09-03 16:12:43",
+        "created_by": "user_68b835b7b58290.58357298"
+    },
+    {
+        "id": "cat_68b84ce351edf6.76913195",
+        "name": "category c churches",
+        "description": "",
+        "created_at": "2025-09-03 16:12:51",
+        "created_by": "user_68b835b7b58290.58357298"
+    },
+    {
+        "id": "cat_68b84d01ab3598.62561714",
+        "name": "cells",
+        "description": "",
+        "created_at": "2025-09-03 16:13:21",
+        "created_by": "user_68b835b7b58290.58357298"
+    }
+]

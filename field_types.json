@@ -1,0 +1,114 @@
+[
+    {
+        "id": "type_text",
+        "key": "text",
+        "label": "Text",
+        "base_type": "text",
+        "source": "manual",
+        "description": "Single-line text input"
+    },
+    {
+        "id": "type_textarea",
+        "key": "textarea",
+        "label": "Textarea",
+        "base_type": "textarea",
+        "source": "manual",
+        "description": "Multi-line text input"
+    },
+    {
+        "id": "type_number",
+        "key": "number",
+        "label": "Number",
+        "base_type": "number",
+        "source": "manual",
+        "description": "Numeric input"
+    },
+    {
+        "id": "type_date",
+        "key": "date",
+        "label": "Date",
+        "base_type": "date",
+        "source": "manual",
+        "description": "Date picker"
+    },
+    {
+        "id": "type_select",
+        "key": "select",
+        "label": "Select (Manual)",
+        "base_type": "select",
+        "source": "manual",
+        "description": "Dropdown with manually entered options"
+    },
+    {
+        "id": "type_groups",
+        "key": "groups",
+        "label": "Groups (zones.json)",
+        "base_type": "select",
+        "source": "zones_groups",
+        "description": "Dropdown of groups from zones.json"
+    },
+    {
+        "id": "ft_68b86cef2052f4.95293492",
+        "key": "Phone",
+        "label": "Phone Number",
+        "base_type": "number",
+        "source": "manual",
+        "description": ""
+    },
+    {
+        "id": "ft_68b871d4f40349.87466428",
+        "key": "Quantity",
+        "label": "Quantity",
+        "base_type": "number",
+        "source": "manual",
+        "description": ""
+    },
+    {
+        "id": "ft_68b872040b1877.85062395",
+        "key": "name",
+        "label": "Name",
+        "base_type": "text",
+        "source": "manual",
+        "description": "Imported from existing fields"
+    },
+    {
+        "id": "ft_68b872cf850cc9.32569680",
+        "key": "Amount",
+        "label": "Amount",
+        "base_type": "number",
+        "source": "manual",
+        "description": ""
+    },
+    {
+        "id": "ft_test_email",
+        "key": "Email",
+        "label": "Email Address",
+        "base_type": "email",
+        "source": "manual",
+        "description": "Email input field"
+    },
+    {
+        "id": "ft_test_url",
+        "key": "Website",
+        "label": "Website URL",
+        "base_type": "url",
+        "source": "manual",
+        "description": "URL input field"
+    },
+    {
+        "id": "ft_test_tel",
+        "key": "Telephone",
+        "label": "Phone Number",
+        "base_type": "tel",
+        "source": "manual",
+        "description": "Telephone input field"
+    },
+    {
+        "id": "ft_test_password",
+        "key": "Password",
+        "label": "Password",
+        "base_type": "password",
+        "source": "manual",
+        "description": "Password input field"
+    }
+]

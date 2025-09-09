@@ -1,0 +1,32 @@
+2025-09-03 13:46:13 - addReportCategory called with name: 'Test Category', description: 'This is a test category description'
+2025-09-03 13:46:13 - Current categories count: 0
+2025-09-03 13:46:13 - New category created: {"id":"cat_68b846a51200b7.11863167","name":"Test Category","description":"This is a test category description","status":"active","created_at":"2025-09-03 13:46:13","created_by":"test_admin","updated_at":"2025-09-03 13:46:13"}
+2025-09-03 13:46:13 - Categories after adding: 1
+2025-09-03 13:46:13 - Attempting to save categories: [{"id":"cat_68b846a51200b7.11863167","name":"Test Category","description":"This is a test category description","status":"active","created_at":"2025-09-03 13:46:13","created_by":"test_admin","updated_at":"2025-09-03 13:46:13"}]
+2025-09-03 13:46:13 - File path: /Applications/XAMPP/xamppfiles/htdocs/ppc/report_categories.json
+2025-09-03 13:46:13 - File exists: yes
+2025-09-03 13:46:13 - File writable: yes
+2025-09-03 13:46:13 - Write result: 308 bytes
+2025-09-03 13:46:13 - Save result: success
+2025-09-03 13:46:13 - addReportCategory called with name: 'Test Category 2', description: 'This should fail to save'
+2025-09-03 13:46:13 - Current categories count: 1
+2025-09-03 13:46:13 - New category created: {"id":"cat_68b846a5121b29.58788067","name":"Test Category 2","description":"This should fail to save","status":"active","created_at":"2025-09-03 13:46:13","created_by":"test_admin","updated_at":"2025-09-03 13:46:13"}
+2025-09-03 13:46:13 - Categories after adding: 2
+2025-09-03 13:46:13 - Attempting to save categories: [{"id":"cat_68b846a51200b7.11863167","name":"Test Category","description":"This is a test category description","status":"active","created_at":"2025-09-03 13:46:13","created_by":"test_admin","updated_at":"2025-09-03 13:46:13"},{"id":"cat_68b846a5121b29.58788067","name":"Test Category 2","description":"This should fail to save","status":"active","created_at":"2025-09-03 13:46:13","created_by":"test_admin","updated_at":"2025-09-03 13:46:13"}]
+2025-09-03 13:46:13 - File path: /Applications/XAMPP/xamppfiles/htdocs/ppc/report_categories.json
+2025-09-03 13:46:13 - File exists: yes
+2025-09-03 13:46:13 - File writable: no
+2025-09-03 13:46:13 - Write result: failed
+2025-09-03 13:46:13 - Save result: failed
+2025-09-03 13:46:13 - Save failed, returning false
+2025-09-03 13:47:36 - addReportCategory called with name: 'Duplicate Test', description: 'Test description'
+2025-09-03 13:47:36 - Current categories count: 1
+2025-09-03 13:47:36 - New category created: {"id":"cat_68b846f8766083.56573349","name":"Duplicate Test","description":"Test description","status":"active","created_at":"2025-09-03 13:47:36","created_by":"test_admin","updated_at":"2025-09-03 13:47:36"}
+2025-09-03 13:47:36 - Categories after adding: 2
+2025-09-03 13:47:36 - Attempting to save categories: [{"id":"cat_68b846a51200b7.11863167","name":"Test Category","description":"This is a test category description","status":"active","created_at":"2025-09-03 13:46:13","created_by":"test_admin","updated_at":"2025-09-03 13:46:13"},{"id":"cat_68b846f8766083.56573349","name":"Duplicate Test","description":"Test description","status":"active","created_at":"2025-09-03 13:47:36","created_by":"test_admin","updated_at":"2025-09-03 13:47:36"}]
+2025-09-03 13:47:36 - File path: /Applications/XAMPP/xamppfiles/htdocs/ppc/report_categories.json
+2025-09-03 13:47:36 - File exists: yes
+2025-09-03 13:47:36 - File writable: yes
+2025-09-03 13:47:36 - Write result: 596 bytes
+2025-09-03 13:47:36 - Save result: success
+Test log entry - Wed Sep  3 14:48:41 WAT 2025
