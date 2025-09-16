@@ -180,7 +180,117 @@
         "name": "category b churches",
         "description": "",
         "created_at": "2025-09-03 16:12:43",
-        "created_by": "user_68b835b7b58290.58357298"
+        "created_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b84cdbc90ed9.13821288",
+                "label": "Group",
+                "type": "select",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "zones_groups"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821289",
+                "label": "Name of Group Pastor",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821290",
+                "label": "KingsChat Phone Number",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821291",
+                "label": "Email Address",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821292",
+                "label": "Church Level Category",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821293",
+                "label": "Total Quantity Sponsored",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821294",
+                "label": "Total Amount Received for Rhapsody Partnership by the Group Church",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821295",
+                "label": "Kiddies Products",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821296",
+                "label": "Teevo",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821297",
+                "label": "Braille & Sign Language(N OLB)",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821298",
+                "label": "Languages",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821299",
+                "label": "Youth Aglow",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            }
+        ]
     },
     {
         "id": "cat_68b84ce351edf6.76913195",
@@ -194,6 +304,739 @@
         "name": "cells",
         "description": "",
         "created_at": "2025-09-03 16:13:21",
-        "created_by": "user_68b835b7b58290.58357298"
+        "created_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b84d01ab3598.62561715",
+                "label": "Cell",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561716",
+                "label": "Name of Cell Leader",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561717",
+                "label": "KingsChat Phone Number",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561718",
+                "label": "Email Address",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561719",
+                "label": "Church",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561720",
+                "label": "Group",
+                "type": "select",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "zones_groups"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561721",
+                "label": "Total Quantity Sponsored",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561722",
+                "label": "Total Amount Received for Rhapsody Partnership by the Group Church",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561723",
+                "label": "Total Amount Given",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561724",
+                "label": "Kiddies Products",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561725",
+                "label": "Teevo",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561726",
+                "label": "Braille Languages",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d01ab3598.62561727",
+                "label": "Youth Aglow",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            }
+        ]
+    },
+    {
+        "id": "cat_68b84d15ab3598.62561715",
+        "name": "churches",
+        "description": "",
+        "created_at": "2025-09-03 16:13:25",
+        "created_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b84d15ab3598.62561716",
+                "label": "Group",
+                "type": "select",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "zones_groups"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561717",
+                "label": "Church",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561718",
+                "label": "Name of Church Pastor",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561719",
+                "label": "KingsChat Phone Number",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561720",
+                "label": "Email Address",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561721",
+                "label": "Church Level Category",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561722",
+                "label": "Total Quantity Sponsored",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561723",
+                "label": "Total Amount Received for Rhapsody Partnership by the Group Church",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561724",
+                "label": "Kiddies Products",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561725",
+                "label": "Teevo",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561726",
+                "label": "Braille(NOLB)",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561727",
+                "label": "Languages",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d15ab3598.62561728",
+                "label": "Youth Aglow",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            }
+        ]
+    },
+    {
+        "id": "cat_68b84d25ab3598.62561730",
+        "name": "partners",
+        "description": "",
+        "created_at": "2025-09-03 16:13:30",
+        "created_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b84d25ab3598.62561731",
+                "label": "Title",
+                "type": "text",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561732",
+                "label": "First Name",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561733",
+                "label": "Surname",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561734",
+                "label": "KingsChat Phone Number",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561735",
+                "label": "Email Address",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561736",
+                "label": "Church",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561737",
+                "label": "Group",
+                "type": "select",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "zones_groups"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561738",
+                "label": "Zone",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561739",
+                "label": "Total Amount Given For Monde Challenge",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561740",
+                "label": "Total Amount Given For Rhapsody Languages",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561741",
+                "label": "Total Amount Given For Kiddies Products",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561742",
+                "label": "Total Amount Given For Teevo",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561743",
+                "label": "Total Amount Given For Braille(NOLB)",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561744",
+                "label": "Total Amount Given For Youth Aglow",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561745",
+                "label": "Total Amount For Local Distribution\/Reach-out In Your Nations",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561746",
+                "label": "Total Subscription Weight Of Subscription Of Kubads",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561747",
+                "label": "Total Given For Other Projects (eg Rhapsody Reading Of Rhapathon, Reachout)",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d25ab3598.62561748",
+                "label": "Grand Total Given For ROR (B)",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            }
+        ]
+    },
+    {
+        "id": "cat_68b84d35ab3598.62561750",
+        "name": "children",
+        "description": "",
+        "created_at": "2025-09-03 16:13:35",
+        "created_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b84d35ab3598.62561751",
+                "label": "Title",
+                "type": "text",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561752",
+                "label": "First Name",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561753",
+                "label": "Surname",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561754",
+                "label": "Age",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561755",
+                "label": "KingsChat Phone Number",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561756",
+                "label": "Email Address",
+                "type": "text",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561757",
+                "label": "Birthdays",
+                "type": "text",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561758",
+                "label": "Church",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561759",
+                "label": "Group",
+                "type": "select",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "zones_groups"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561760",
+                "label": "Total Amount Given For Kiddies ROR",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561761",
+                "label": "Total Given For Other ROR Projects (Kindly create another column and state which project)",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d35ab3598.62561762",
+                "label": "Grand Total Given For ROR",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            }
+        ]
+    },
+    {
+        "id": "cat_68b84d45ab3598.62561770",
+        "name": "teenagers and youths",
+        "description": "",
+        "created_at": "2025-09-03 16:13:40",
+        "created_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b84d45ab3598.62561771",
+                "label": "Title",
+                "type": "text",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561772",
+                "label": "First Name",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561773",
+                "label": "Surname",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561774",
+                "label": "KingsChat Phone Number",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561775",
+                "label": "Email Address",
+                "type": "Email",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-16 01:56:52"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561776",
+                "label": "Birthdays",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual",
+                "updated_at": "2025-09-16 01:57:05"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561777",
+                "label": "Church",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561778",
+                "label": "Group",
+                "type": "select",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "zones_groups"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561779",
+                "label": "Amount Given For Monthly Teevo Copies",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561780",
+                "label": "Total Given For Other ROR Projects (Subscription)",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d45ab3598.62561781",
+                "label": "Grand Total Given For ROR",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            }
+        ]
+    },
+    {
+        "id": "cat_68b84d55ab3598.62561790",
+        "name": "external partnership",
+        "description": "",
+        "created_at": "2025-09-03 16:13:45",
+        "created_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b84d55ab3598.62561791",
+                "label": "Name of Individual",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d55ab3598.62561792",
+                "label": "Zone",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d55ab3598.62561793",
+                "label": "Rhapsody Subscriptions and Kubads",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d55ab3598.62561794",
+                "label": "Sponsorship Through ROR Call Centre",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d55ab3598.62561795",
+                "label": "Quantity Sponsored Through REON",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d55ab3598.62561796",
+                "label": "Translators Network International",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d55ab3598.62561797",
+                "label": "Rhapsody Influencers Network",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d55ab3598.62561798",
+                "label": "RIM",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84d55ab3598.62561799",
+                "label": "Total",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            }
+        ]
     }
 ]
