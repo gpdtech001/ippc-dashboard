@@ -7,24 +7,37 @@ ini_set('log_errors', '1');
 ini_set('error_log', ERROR_LOG_FILE);
 
 // Ensure a file exists and is writable; try to create and relax perms if needed
-function ensureWritableFile($path) {
-    if (!file_exists($path)) {
-        $result = @file_put_contents($path, '');
-        if ($result === false) {
-            app_log('file_creation_error', 'Failed to create file', ['path' => $path]);
+function ensureWritableFile($filepath) {
+    $dir = dirname($filepath);
+
+    // Check/create directory
+    if (!file_exists($dir)) {
+        if (!@mkdir($dir, 0755, true)) {
+            // Can't create directory — return false instead of throwing to avoid fatal errors during logging
+            @error_log("ensureWritableFile: Unable to create directory: $dir\n");
             return false;
         }
     }
-    // Attempt to relax permissions for web-server write access
-    if (!is_writable($path)) {
-        // Try chmod, but don't fail if it doesn't work (some systems don't allow it)
-        @chmod($path, 0666);
-        // If still not writable, log the issue but continue
-        if (!is_writable($path)) {
-            app_log('permission_warning', 'File not writable after chmod attempt', ['path' => $path]);
+
+    // Create file if it doesn't exist
+    if (!file_exists($filepath)) {
+        if (!@file_put_contents($filepath, '[]')) {
+            @error_log("ensureWritableFile: Unable to create file: $filepath\n");
+            return false;
+        }
+        @chmod($filepath, 0644);
+    }
+
+    // Verify permissions
+    if (!is_writable($filepath)) {
+        // Try to fix permissions
+        @chmod($filepath, 0644);
+        if (!is_writable($filepath)) {
+            @error_log("ensureWritableFile: File not writable: $filepath\n");
             return false;
         }
     }
+
     return true;
 }
 
@@ -38,9 +51,20 @@ function app_log($level, $message, $context = []) {
         'context' => $context,
     ];
     $line = json_encode($entry, JSON_UNESCAPED_SLASHES) . PHP_EOL;
-    // Prefer PHP's error_log to avoid race conditions; ensure file first
-    ensureWritableFile(ERROR_LOG_FILE);
-    @error_log($line, 3, ERROR_LOG_FILE);
+
+    // Try to ensure the error log file is writable; if not, fall back to PHP system logger
+    try {
+        $ok = ensureWritableFile(ERROR_LOG_FILE);
+        if ($ok) {
+            @error_log($line, 3, ERROR_LOG_FILE);
+            return;
+        }
+    } catch (Exception $e) {
+        // ignore — fall back to system logger
+    }
+
+    // Fallback: write to system error log to avoid throwing inside error handlers
+    @error_log($line);
 }
 
 // Global error/exception handlers to capture PHP notices/fatals
@@ -726,34 +750,64 @@ function getReports() {
 }
 
 function saveReports($reports) {
-    if (!ensureWritableFile(REPORTS_FILE)) {
-        app_log('write_error', 'Reports file not writable', ['file' => REPORTS_FILE]);
-        return false;
-    }
-    $json = json_encode($reports, JSON_PRETTY_PRINT);
-    if ($json === false) {
-        app_log('json_error', 'Failed to encode reports to JSON', ['error' => json_last_error_msg()]);
-        return false;
-    }
-    $fp = fopen(REPORTS_FILE, 'w');
-    if (!$fp) {
-        app_log('write_error', 'Failed to open reports file for writing', ['file' => REPORTS_FILE]);
-        return false;
-    }
-    if (flock($fp, LOCK_EX)) {
-        $result = fwrite($fp, $json);
-        flock($fp, LOCK_UN);
-        fclose($fp);
-        if ($result === false) {
-            app_log('write_error', 'Failed to write reports file', ['file' => REPORTS_FILE]);
-            return false;
+    $filepath = __DIR__ . '/reports.json';
+    try {
+        if (!ensureWritableFile($filepath)) {
+            throw new Exception('Reports file is not writable');
         }
-    } else {
-        fclose($fp);
-        app_log('write_error', 'Failed to lock reports file', ['file' => REPORTS_FILE]);
-        return false;
+
+        // Encode payload once so we can reuse it across fallbacks
+        $json = json_encode($reports, JSON_PRETTY_PRINT);
+        if ($json === false) {
+            throw new Exception('JSON encode failed: ' . json_last_error_msg());
+        }
+
+        // Atomic write using temp file with fallback to app directory when system temp is unavailable
+        $temp = @tempnam(sys_get_temp_dir(), 'report');
+        if ($temp === false) {
+            $temp = __DIR__ . '/reports.json.tmp.' . uniqid();
+        }
+
+        if (file_put_contents($temp, $json) === false) {
+            if (file_exists($temp)) {
+                @unlink($temp);
+            }
+            throw new Exception('Failed to write to temporary file');
+        }
+
+        // Try atomic rename first. If it fails (e.g. directory not writable for target user), fall back to locked write.
+        if (!@rename($temp, $filepath)) {
+            $renameError = error_get_last();
+            $writeOk = false;
+            $fp = @fopen($filepath, 'c');
+            if ($fp) {
+                if (flock($fp, LOCK_EX)) {
+                    if (ftruncate($fp, 0) !== false) {
+                        $written = fwrite($fp, $json);
+                        if ($written === strlen($json)) {
+                            fflush($fp);
+                            $writeOk = true;
+                        }
+                    }
+                    flock($fp, LOCK_UN);
+                }
+                fclose($fp);
+            }
+            @unlink($temp);
+
+            if ($writeOk) {
+                return true;
+            }
+
+            $reason = $renameError['message'] ?? 'unknown error during rename';
+            throw new Exception('Failed to persist reports: ' . $reason);
+        }
+
+        return true;
+    } catch (Exception $e) {
+        error_log('Error saving reports: ' . $e->getMessage());
+        throw $e;
     }
-    return true;
 }
 
 function generateReportId() {

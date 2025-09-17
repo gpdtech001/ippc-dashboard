@@ -383,12 +383,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <form method="post">
                                 <div class="card-body">
-                                    <?php if (!empty($message)): ?>
-                                        <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
-                                    <?php endif; ?>
-                                    <?php if (!empty($error)): ?>
-                                        <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
-                                    <?php endif; ?>
+                                    <?php // Flash messages handled via SweetAlert2 ?>
                                     <input type="hidden" name="action" value="add_type">
                                     <div class="form-group">
                                         <label>Key *</label>
@@ -488,7 +483,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                             data-description="<?php echo htmlspecialchars($t['description'] ?? ''); ?>">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
-                                                        <form method="post" class="d-inline" onsubmit="return confirm('Delete this type?');">
+                                                        <form method="post" class="d-inline" data-confirm="Delete this type?" data-confirm-title="Delete field type" data-confirm-action="Delete">
                                                             <input type="hidden" name="action" value="delete_type">
                                                             <input type="hidden" name="key" value="<?php echo htmlspecialchars($t['key']); ?>">
                                                             <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -701,6 +696,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/sweetalert-init.js"></script>
+<script>
+window.__FLASH_MESSAGES__ = {
+    success: <?php echo json_encode($message ?? ''); ?>,
+    error: <?php echo json_encode($error ?? ''); ?>,
+    errorTitle: 'Error'
+};
+</script>
 <script>
 function toggleSource() {
     var baseSel = document.getElementById('base_type_select');

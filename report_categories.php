@@ -161,12 +161,6 @@ $categories = getReportCategories();
                             <div class="card-header"><h3 class="card-title">Add Category</h3></div>
                             <form method="post">
                                 <div class="card-body">
-                                    <?php if (!empty($message)): ?>
-                                        <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
-                                    <?php endif; ?>
-                                    <?php if (!empty($error)): ?>
-                                        <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
-                                    <?php endif; ?>
                                     <input type="hidden" name="action" value="add_category">
                                     <div class="form-group">
                                         <label>Name *</label>
@@ -214,7 +208,7 @@ $categories = getReportCategories();
                                                         data-description="<?php echo htmlspecialchars($cat['description'] ?? ''); ?>">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <form method="post" onsubmit="return confirm('Delete this category?');" class="d-inline">
+                                                    <form method="post" class="d-inline" data-confirm="Delete this category?" data-confirm-title="Delete category" data-confirm-action="Delete">
                                                         <input type="hidden" name="action" value="delete_category">
                                                         <input type="hidden" name="category_id" value="<?php echo htmlspecialchars($cat['id']); ?>">
                                                         <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -274,6 +268,15 @@ $categories = getReportCategories();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/sweetalert-init.js"></script>
+<script>
+window.__FLASH_MESSAGES__ = {
+    success: <?php echo json_encode($message ?? ''); ?>,
+    error: <?php echo json_encode($error ?? ''); ?>,
+    errorTitle: 'Error'
+};
+</script>
 <script>
 $('#editCategoryModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);

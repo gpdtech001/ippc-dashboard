@@ -143,20 +143,6 @@ function formatBytes($bytes) {
 
         <section class="content">
             <div class="container-fluid">
-                <?php if ($message): ?>
-                    <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <i class="icon fas fa-check"></i> <?php echo htmlspecialchars($message); ?>
-                    </div>
-                <?php endif; ?>
-
-                <?php if ($error): ?>
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <i class="icon fas fa-ban"></i> <?php echo htmlspecialchars($error); ?>
-                    </div>
-                <?php endif; ?>
-
                 <!-- System Overview -->
                 <div class="row">
                     <div class="col-lg-3 col-6">
@@ -443,5 +429,14 @@ function formatBytes($bytes) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/sweetalert-init.js"></script>
+<script>
+window.__FLASH_MESSAGES__ = {
+    success: <?php echo json_encode($message ?? ''); ?>,
+    error: <?php echo json_encode($error ?? ''); ?>,
+    errorTitle: 'Error'
+};
+</script>
 </body>
 </html>

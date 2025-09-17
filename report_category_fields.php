@@ -219,12 +219,7 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
                             <div class="card-header"><h3 class="card-title">Add Field</h3></div>
                             <form method="post">
                                 <div class="card-body">
-                                    <?php if (!empty($message)): ?>
-                                        <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
-                                    <?php endif; ?>
-                                    <?php if (!empty($error)): ?>
-                                        <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
-                                    <?php endif; ?>
+                                    <?php // Flash messages handled via SweetAlert2 ?>
                                     <input type="hidden" name="action" value="add_field">
                                     <div class="form-group">
                                         <label>Label *</label>
@@ -300,7 +295,7 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
                                                         data-source="<?php echo htmlspecialchars($f['source'] ?? 'manual'); ?>">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <form method="post" class="d-inline" onsubmit="return confirm('Delete this field?');">
+                                                    <form method="post" class="d-inline" data-confirm="Delete this field?" data-confirm-title="Delete field" data-confirm-action="Delete">
                                                         <input type="hidden" name="action" value="delete_field">
                                                         <input type="hidden" name="field_id" value="<?php echo htmlspecialchars($f['id']); ?>">
                                                         <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -385,6 +380,15 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/sweetalert-init.js"></script>
+<script>
+window.__FLASH_MESSAGES__ = {
+    success: <?php echo json_encode($message ?? ''); ?>,
+    error: <?php echo json_encode($error ?? ''); ?>,
+    errorTitle: 'Error'
+};
+</script>
 <script>
 // Field types data from PHP
 var fieldTypesData = <?php echo json_encode($fieldTypes); ?>;

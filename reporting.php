@@ -18,6 +18,9 @@ $categories = getReportCategories();
 
 // Handle submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate CSRF token for all POST requests on this page
+    requireCSRFToken();
+
     $categoryId = filter_var($_POST['category_id'] ?? '', FILTER_SANITIZE_STRING);
     if (!isset($_POST['field']) || !is_array($_POST['field'])) {
         $error = 'Invalid form data';
@@ -214,15 +217,9 @@ $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) :
                         <div class="card card-primary">
                             <div class="card-header"><h3 class="card-title">Report Form</h3></div>
                             <form method="post">
+                                <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
                                 <div class="card-body">
-                                    <?php if (!empty($message)): ?>
-                                        <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
-                                    <?php endif; ?>
-                                    <?php if (!empty($error)): ?>
-                                        <div class="alert alert-danger" style="white-space: pre-line;">
-                                            <?php echo htmlspecialchars($error); ?>
-                                        </div>
-                                    <?php endif; ?>
+                                    <?php // Flash messages handled via SweetAlert2 ?>
                                     <?php if ($selectedCategory): ?>
                                         <input type="hidden" name="category_id" value="<?php echo htmlspecialchars($selectedCategory['id']); ?>">
                                         <div class="mb-3">
@@ -284,5 +281,14 @@ $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) :
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/sweetalert-init.js"></script>
+<script>
+window.__FLASH_MESSAGES__ = {
+    success: <?php echo json_encode($message ?? ''); ?>,
+    error: <?php echo json_encode($error ?? ''); ?>,
+    errorTitle: 'Error'
+};
+</script>
 </body>
 </html>

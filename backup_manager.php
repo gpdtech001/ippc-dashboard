@@ -91,20 +91,6 @@ $backups = listBackups();
 
         <section class="content">
             <div class="container-fluid">
-                <?php if ($message): ?>
-                    <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <i class="icon fas fa-check"></i> <?php echo htmlspecialchars($message); ?>
-                    </div>
-                <?php endif; ?>
-
-                <?php if ($error): ?>
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <i class="icon fas fa-ban"></i> <?php echo htmlspecialchars($error); ?>
-                    </div>
-                <?php endif; ?>
-
                 <!-- Create Backup -->
                 <div class="row mb-4">
                     <div class="col-12">
@@ -169,7 +155,7 @@ $backups = listBackups();
                                                     </td>
                                                     <td><?php echo htmlspecialchars($backup['created_by'] ?? 'system'); ?></td>
                                                     <td>
-                                                        <form method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to restore this backup? This will overwrite current data.');">
+                                                        <form method="POST" class="d-inline" data-confirm="Are you sure you want to restore this backup? This will overwrite current data." data-confirm-title="Restore backup?" data-confirm-action="Restore">
                                                             <input type="hidden" name="backup_name" value="<?php echo htmlspecialchars($backup['name']); ?>">
                                                             <button type="submit" name="action" value="restore_backup" class="btn btn-warning btn-sm">
                                                                 <i class="fas fa-undo"></i> Restore
@@ -235,5 +221,14 @@ $backups = listBackups();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/sweetalert-init.js"></script>
+<script>
+window.__FLASH_MESSAGES__ = {
+    success: <?php echo json_encode($message ?? ''); ?>,
+    error: <?php echo json_encode($error ?? ''); ?>,
+    errorTitle: 'Error'
+};
+</script>
 </body>
 </html>
