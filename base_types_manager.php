@@ -342,7 +342,7 @@ foreach ($fieldTypes as $type) {
                                     <strong>Types Utilization:</strong>
                                     <div class="progress mt-2">
                                         <?php
-                                        $utilization = ($stats['types_in_use'] / $stats['total_field_types']) * 100;
+                                        $utilization = $stats['total_field_types'] > 0 ? ($stats['types_in_use'] / $stats['total_field_types']) * 100 : 0;
                                         $utilClass = $utilization >= 70 ? 'bg-success' : ($utilization >= 40 ? 'bg-warning' : 'bg-danger');
                                         ?>
                                         <div class="progress-bar <?php echo $utilClass; ?>" style="width: <?php echo $utilization; ?>%">

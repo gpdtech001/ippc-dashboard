@@ -119,61 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
     <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="dashboard.php" class="brand-link">
-            <span class="brand-text font-weight-light">IPPC Dashboard</span>
-        </a>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user panel -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <i class="fas fa-user-circle fa-2x text-white"></i>
-                </div>
-                <div class="info">
-                    <a href="#" class="d-block"><?php echo htmlspecialchars($user['name']); ?></a>
-                    <small class="text-muted"><?php echo htmlspecialchars(ucfirst($user['role'])); ?></small>
-                </div>
-            </div>
-
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-                    <li class="nav-item">
-                        <a href="dashboard.php" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="zone_details.php" class="nav-link">
-                            <i class="nav-icon fas fa-map"></i>
-                            <p>Zone Details</p>
-                        </a>
-                    </li>
-                    <?php if ($_SESSION['role'] === ROLE_ADMIN): ?>
-                    <li class="nav-item">
-                        <a href="user_management.php" class="nav-link">
-                            <i class="nav-icon fas fa-users"></i>
-                            <p>User Management</p>
-                        </a>
-                    </li>
-                    <?php endif; ?>
-                    <li class="nav-item">
-                        <a href="profile.php" class="nav-link active">
-                            <i class="nav-icon fas fa-user"></i>
-                            <p>Profile</p>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-    </aside>
+    <?php include __DIR__ . '/includes/sidebar.php'; ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

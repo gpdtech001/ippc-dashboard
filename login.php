@@ -2,6 +2,7 @@
 require_once 'config.php';
 
 session_start();
+requireCSRFToken();
 
 // Redirect if already logged in
 if (isset($_SESSION['user_id'])) {
@@ -101,8 +102,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Success and error messages are now handled by SweetAlert2 toasts -->
 
             <form action="login.php" method="post">
+                <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
                 <div class="input-group mb-3">
-                    <input type="text" name="login_input" class="form-control" placeholder="Email or Username" required>
+                    <input type="text" name="login_input" class="form-control" placeholder="Email or Username" maxlength="255" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -110,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <input type="password" name="password" class="form-control" placeholder="Password" maxlength="255" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -162,7 +164,7 @@ Swal.fire({
     timer: 5000,
     timerProgressBar: true,
     icon: 'error',
-    title: '<?php echo addslashes($error); ?>'
+    title: <?php echo json_encode($error); ?>
 });
 <?php endif; ?>
 
@@ -175,7 +177,7 @@ Swal.fire({
     timer: 3000,
     timerProgressBar: true,
     icon: 'success',
-    title: '<?php echo addslashes($success); ?>'
+    title: <?php echo json_encode($success); ?>
 });
 <?php endif; ?>
 </script>

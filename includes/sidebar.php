@@ -26,12 +26,6 @@ $current = basename($_SERVER['PHP_SELF']);
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="zone_details.php" class="nav-link <?php echo $current === 'zone_details.php' ? 'active' : ''; ?>">
-                        <i class="nav-icon fas fa-map"></i>
-                        <p>Zone Details</p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="reporting.php" class="nav-link <?php echo $current === 'reporting.php' ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-clipboard-list"></i>
                         <p>Submit Report</p>

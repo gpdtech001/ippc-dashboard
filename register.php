@@ -2,6 +2,7 @@
 require_once 'config.php';
 
 session_start();
+requireCSRFToken();
 
 // Redirect if already logged in
 if (isset($_SESSION['user_id'])) {
@@ -36,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Please enter a valid email address.';
     } elseif ($password !== $confirm_password) {
         $error = 'Passwords do not match.';
-    } elseif (strlen($password) < 6) {
-        $error = 'Password must be at least 6 characters long.';
+    } elseif (!validatePassword($password)) {
+        $error = 'Password must be at least 8 characters long and include uppercase, lowercase, and numeric characters.';
     } elseif (getUserByEmail($email)) {
         $error = 'Email address already exists.';
     } elseif (getUserByUsername($username)) {
@@ -98,8 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Success and error messages are now handled by SweetAlert2 toasts -->
 
             <form action="register.php" method="post">
+                <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
                 <div class="input-group mb-3">
-                    <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+                    <input type="text" name="name" class="form-control" placeholder="Full Name" maxlength="255" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -107,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    <input type="email" name="email" class="form-control" placeholder="Email" maxlength="255" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -115,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="text" name="username" class="form-control" placeholder="Username" required>
+                    <input type="text" name="username" class="form-control" placeholder="Username" maxlength="50" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-at"></span>
@@ -123,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <input type="password" name="password" class="form-control" placeholder="Password" maxlength="255" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -131,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+                    <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" maxlength="255" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -282,7 +284,7 @@ Swal.fire({
     timer: 5000,
     timerProgressBar: true,
     icon: 'error',
-    title: '<?php echo addslashes($error); ?>'
+    title: <?php echo json_encode($error); ?>
 });
 <?php endif; ?>
 
@@ -295,7 +297,7 @@ Swal.fire({
     timer: 3000,
     timerProgressBar: true,
     icon: 'success',
-    title: '<?php echo addslashes($success); ?>'
+    title: <?php echo json_encode($success); ?>
 });
 <?php endif; ?>
 </script>

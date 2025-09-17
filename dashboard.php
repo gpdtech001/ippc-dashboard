@@ -5,7 +5,7 @@ session_start();
 requireLogin();
 
 $user = getUserById($_SESSION['user_id']);
-$isAdmin = ($_SESSION['role'] === ROLE_ADMIN);
+$isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === ROLE_ADMIN);
 // Latest report: admin -> any; RZM -> own
 $latestReport = null;
 if (function_exists('getReports')) {
@@ -99,16 +99,15 @@ if (function_exists('getReports')) {
                             <div class="card-body">
                                 <div class="text-center">
                                     <h1 class="display-4">Welcome to IPPC - Reporting and Analytics Dashboard</h1>
-                                    <p class="lead">Hello <strong><?php echo htmlspecialchars($user['name']); ?></strong>!</p>
-                                    <p class="mb-4">You are logged in as <strong><?php echo htmlspecialchars(ucfirst($user['role'])); ?></strong></p>
+                                    <p class="lead">Hello <strong><?php echo htmlspecialchars($user['name'] ?? 'User'); ?></strong>!</p>
+                                    <p class="mb-4">You are logged in as <strong><?php echo htmlspecialchars(ucfirst($user['role'] ?? 'user')); ?></strong></p>
 
                                     <div class="row justify-content-center">
                                         <div class="col-md-8">
                                             <div class="alert alert-info">
                                                 <h5><i class="icon fas fa-info"></i> Getting Started</h5>
-                                                <p>Use the navigation menu to access different features of the system. As a <?php echo htmlspecialchars(ucfirst($user['role'])); ?>, you have access to:</p>
+                                                <p>Use the navigation menu to access different features of the system. As a <?php echo htmlspecialchars(ucfirst($user['role'] ?? 'user')); ?>, you have access to:</p>
                                                 <ul class="list-unstyled">
-                                                    <li><i class="fas fa-check text-success"></i> View zone details and statistics</li>
                                                     <?php if ($_SESSION['role'] === ROLE_ADMIN): ?>
                                                     <li><i class="fas fa-check text-success"></i> Manage all users and their permissions</li>
                                                     <li><i class="fas fa-check text-success"></i> Approve or reject user registrations</li>
@@ -127,9 +126,6 @@ if (function_exists('getReports')) {
                                                 <div class="card-body">
                                                     <h5 class="card-title">Quick Actions</h5>
                                                     <div class="d-grid gap-2">
-                                                        <a href="zone_details.php" class="btn btn-primary btn-lg">
-                                                            <i class="fas fa-map"></i> View Zone Details
-                                                        </a>
                                                         <a href="profile.php" class="btn btn-secondary btn-lg">
                                                             <i class="fas fa-user"></i> Update Profile
                                                         </a>
@@ -154,7 +150,7 @@ if (function_exists('getReports')) {
                     <div class="col-md-4">
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3><?php echo htmlspecialchars(ucfirst($user['role'])); ?></h3>
+                                <h3><?php echo htmlspecialchars(ucfirst($user['role'] ?? 'user')); ?></h3>
                                 <p>Your Role</p>
                             </div>
                             <div class="icon">
@@ -165,7 +161,7 @@ if (function_exists('getReports')) {
                     <div class="col-md-4">
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3><?php echo htmlspecialchars($user['name']); ?></h3>
+                                <h3><?php echo htmlspecialchars($user['name'] ?? 'User'); ?></h3>
                                 <p>Welcome Back!</p>
                             </div>
                             <div class="icon">

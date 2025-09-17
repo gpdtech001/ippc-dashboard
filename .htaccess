@@ -15,10 +15,12 @@ RewriteRule . index.php [L]
     Order allow,deny
     Deny from all
 </Files>
-
 <Files "config.php">
     Order allow,deny
     Deny from all
 </Files>
+RewriteRule ^backups/ - [F,L]
+
+
 
 

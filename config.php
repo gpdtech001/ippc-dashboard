@@ -95,9 +95,27 @@ function saveUsers($users) {
         app_log('write_error', 'Users file not writable', ['file' => USERS_FILE]);
         return false;
     }
-    $result = @file_put_contents(USERS_FILE, json_encode($users, JSON_PRETTY_PRINT));
-    if ($result === false) {
-        app_log('write_error', 'Failed to write users file', ['file' => USERS_FILE]);
+    $json = json_encode($users, JSON_PRETTY_PRINT);
+    if ($json === false) {
+        app_log('json_error', 'Failed to encode users to JSON', ['error' => json_last_error_msg()]);
+        return false;
+    }
+    $fp = fopen(USERS_FILE, 'w');
+    if (!$fp) {
+        app_log('write_error', 'Failed to open users file for writing', ['file' => USERS_FILE]);
+        return false;
+    }
+    if (flock($fp, LOCK_EX)) {
+        $result = fwrite($fp, $json);
+        flock($fp, LOCK_UN);
+        fclose($fp);
+        if ($result === false) {
+            app_log('write_error', 'Failed to write users file', ['file' => USERS_FILE]);
+            return false;
+        }
+    } else {
+        fclose($fp);
+        app_log('write_error', 'Failed to lock users file', ['file' => USERS_FILE]);
         return false;
     }
     return true;
@@ -156,6 +174,8 @@ function sanitizeInput($data) {
     }
     // Trim whitespace
     $data = trim($data);
+    // Limit length to prevent DoS
+    $data = substr($data, 0, 1000);
     // Remove null bytes
     $data = str_replace(chr(0), '', $data);
     // Strip HTML tags and encode special characters
@@ -188,8 +208,8 @@ function validatePassword($password) {
     if (!is_string($password)) {
         return false;
     }
-    // Password should be at least 8 characters
-    return strlen($password) >= 8;
+    // Password should be at least 8 characters and include uppercase, lowercase, and numeric
+    return strlen($password) >= 8 && preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/', $password);
 }
 
 function validatePhone($phone) {
@@ -315,7 +335,7 @@ function requireCSRFToken() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $token = $_POST['csrf_token'] ?? '';
         if (!validateCSRFToken($token)) {
-            app_log('security_warning', 'Invalid CSRF token', [
+            app_log('csrf_failure', 'Invalid CSRF token', [
                 'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
                 'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? ''
             ]);
@@ -329,8 +349,8 @@ function requireCSRFToken() {
 function ensureBackupDirectoryPermissions($backupDir) {
     // Try to fix permissions if directory exists but isn't writable
     if (is_dir($backupDir) && !is_writable($backupDir)) {
-        // Try chmod 777 as a last resort
-        if (!chmod($backupDir, 0777)) {
+        // Try chmod 755 as a safer alternative
+        if (!chmod($backupDir, 0755)) {
             app_log('backup_warning', 'Could not fix backup directory permissions', ['path' => $backupDir]);
             return false;
         }
@@ -468,7 +488,7 @@ function listBackups() {
 
 function restoreBackup($backupName) {
     $backupDir = __DIR__ . '/backups';
-    $backupPath = $backupDir . '/' . $backupName;
+    $backupPath = $backupDir . '/' . basename($backupName);
 
     if (!is_dir($backupPath)) {
         return ['success' => false, 'message' => 'Backup not found'];
@@ -710,9 +730,27 @@ function saveReports($reports) {
         app_log('write_error', 'Reports file not writable', ['file' => REPORTS_FILE]);
         return false;
     }
-    $result = @file_put_contents(REPORTS_FILE, json_encode($reports, JSON_PRETTY_PRINT));
-    if ($result === false) {
-        app_log('write_error', 'Failed to write reports', ['file' => REPORTS_FILE]);
+    $json = json_encode($reports, JSON_PRETTY_PRINT);
+    if ($json === false) {
+        app_log('json_error', 'Failed to encode reports to JSON', ['error' => json_last_error_msg()]);
+        return false;
+    }
+    $fp = fopen(REPORTS_FILE, 'w');
+    if (!$fp) {
+        app_log('write_error', 'Failed to open reports file for writing', ['file' => REPORTS_FILE]);
+        return false;
+    }
+    if (flock($fp, LOCK_EX)) {
+        $result = fwrite($fp, $json);
+        flock($fp, LOCK_UN);
+        fclose($fp);
+        if ($result === false) {
+            app_log('write_error', 'Failed to write reports file', ['file' => REPORTS_FILE]);
+            return false;
+        }
+    } else {
+        fclose($fp);
+        app_log('write_error', 'Failed to lock reports file', ['file' => REPORTS_FILE]);
         return false;
     }
     return true;

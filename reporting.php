@@ -1,4 +1,7 @@
 <?php
+if (version_compare(PHP_VERSION, '7.0.0', '<')) {
+    die('PHP 7.0+ required for this application.');
+}
 require_once 'config.php';
 
 session_start();
@@ -15,12 +18,22 @@ $categories = getReportCategories();
 
 // Handle submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $categoryId = $_POST['category_id'] ?? '';
-    $category = getCategoryById($categoryId);
-    if (!$category) {
-        $error = 'Invalid category';
-        app_log('validation_error', 'Report submit invalid category', ['category_id' => $categoryId]);
+    $categoryId = filter_var($_POST['category_id'] ?? '', FILTER_SANITIZE_STRING);
+    if (!isset($_POST['field']) || !is_array($_POST['field'])) {
+        $error = 'Invalid form data';
+        app_log('validation_error', 'Invalid POST field data', ['category_id' => $categoryId]);
     } else {
+        foreach ($_POST['field'] as $key => $value) {
+            $_POST['field'][$key] = filter_var(trim($value), FILTER_SANITIZE_STRING);
+        }
+        $category = getCategoryById($categoryId);
+        if (strlen($categoryId) > 100) {
+            $error = 'Category ID too long';
+            app_log('validation_error', 'Category ID too long', ['category_id' => $categoryId]);
+        } elseif (!$category) {
+            $error = 'Invalid category';
+            app_log('validation_error', 'Report submit invalid category', ['category_id' => $categoryId]);
+        } else {
         $fields = isset($category['fields']) && is_array($category['fields']) ? $category['fields'] : [];
         $data = [];
         $errors = [];
@@ -36,23 +49,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Validate select options when applicable
             if ($inputType === 'select' || $fieldType === 'groups') {
-                $opts = resolveFieldOptions($f, $user);
+                try {
+                    $opts = resolveFieldOptions($f, $user);
+                } catch (Exception $e) {
+                    $opts = [];
+                    $errors[] = 'Error loading options for ' . ($f['label'] ?? $fid) . ': ' . $e->getMessage();
+                }
                 if (!empty($opts)) {
                     $allowed = array_column($opts, 'id');
                     if ($val !== '' && !in_array($val, $allowed, true)) {
                         $errors[] = ($f['label'] ?? $fid) . ' has an invalid selection';
                     }
+                } else {
+                    if ($val !== '') {
+                        $errors[] = ($f['label'] ?? $fid) . ' has no available options but value provided';
+                    }
                 }
             }
 
             // Additional validation based on input type
-            if ($inputType === 'number' && $val !== '' && !is_numeric($val)) {
+            if ($inputType === 'number' && $val !== '' && filter_var($val, FILTER_VALIDATE_FLOAT) === false) {
                 $errors[] = ($f['label'] ?? $fid) . ' must be a valid number';
             }
 
             if ($inputType === 'email' && $val !== '' && !filter_var($val, FILTER_VALIDATE_EMAIL)) {
                 $errors[] = ($f['label'] ?? $fid) . ' must be a valid email address';
             }
+
+            // Length check
+            if (strlen($val) > 1000) {
+                $errors[] = ($f['label'] ?? $fid) . ' is too long (max 1000 characters)';
+            }
+
             $data[$fid] = $val;
         }
 
@@ -60,34 +88,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = implode('\n', $errors);
             app_log('validation_error', 'Report submission validation errors', ['errors' => $errors, 'category_id' => $categoryId]);
         } else {
-            $reports = getReports();
-            $rep = [
-                'id' => generateReportId(),
-                'category_id' => $category['id'],
-                'category_name' => $category['name'] ?? '',
-                'submitted_by' => $user['id'] ?? null,
-                'submitted_by_name' => $user['name'] ?? '',
-                'role' => $user['role'] ?? '',
-                'region' => $user['region'] ?? null,
-                'zone' => $user['zone'] ?? null,
-                'submitted_at' => date('Y-m-d H:i:s'),
-                'data' => $data
-            ];
-            $reports[] = $rep;
-            if (saveReports($reports) === false) {
-                $error = 'Failed to save report';
-                app_log('write_error', 'Failed to save report', ['category_id' => $categoryId]);
-            } else {
-                $_SESSION['flash_message'] = 'Report submitted successfully';
-                header('Location: reporting.php');
-                exit;
+            try {
+                $reports = getReports();
+            } catch (Exception $e) {
+                $error = 'Failed to load reports: ' . $e->getMessage();
+                app_log('error', 'Failed to load reports', ['error' => $e->getMessage()]);
+            }
+            if (!$error) {
+                try {
+                    $id = generateReportId();
+                } catch (Exception $e) {
+                    $error = 'Failed to generate report ID: ' . $e->getMessage();
+                    app_log('error', 'Failed to generate report ID', ['error' => $e->getMessage()]);
+                }
+                if (!$error) {
+                    $rep = [
+                        'id' => $id,
+                        'category_id' => $category['id'],
+                        'category_name' => $category['name'] ?? '',
+                        'submitted_by' => $user['id'] ?? null,
+                        'submitted_by_name' => $user['name'] ?? '',
+                        'role' => $user['role'] ?? '',
+                        'region' => $user['region'] ?? null,
+                        'zone' => $user['zone'] ?? null,
+                        'submitted_at' => date('Y-m-d H:i:s'),
+                        'data' => $data
+                    ];
+                    $reports[] = $rep;
+                    try {
+                        if (saveReports($reports) === false) {
+                            throw new Exception('Save failed');
+                        }
+                    } catch (Exception $e) {
+                        $error = 'Failed to save report: ' . $e->getMessage();
+                        app_log('write_error', 'Failed to save report', ['category_id' => $categoryId, 'error' => $e->getMessage()]);
+                    }
+                    if (!$error) {
+                        $_SESSION['flash_message'] = 'Report submitted successfully';
+                        header('Location: reporting.php');
+                        exit;
+                    }
+                }
             }
         }
     }
 }
+}
 
 // Determine selected category (for rendering form)
-$selectedCategoryId = $_GET['category_id'] ?? ($_POST['category_id'] ?? '');
+$selectedCategoryId = filter_var($_GET['category_id'] ?? '', FILTER_SANITIZE_STRING) ?: filter_var($_POST['category_id'] ?? '', FILTER_SANITIZE_STRING);
 $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) : null;
 
 ?>
@@ -151,17 +200,12 @@ $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) :
                                 <?php if (empty($categories)): ?>
                                     <div class="text-muted">No categories defined yet.</div>
                                 <?php else: ?>
-                                    <ul class="list-group">
+                                    <select class="form-control" id="categorySelect" onchange="if(this.value) window.location.href='reporting.php?category_id='+this.value;">
+                                        <option value="">-- Select Category --</option>
                                         <?php foreach ($categories as $cat): ?>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center <?php echo ($selectedCategoryId === $cat['id']) ? 'active' : ''; ?>">
-                                                <div>
-                                                    <div class="font-weight-bold"><?php echo htmlspecialchars($cat['name']); ?></div>
-                                                    <small class="text-muted"><?php echo htmlspecialchars($cat['description'] ?? ''); ?></small>
-                                                </div>
-                                                <a href="reporting.php?category_id=<?php echo urlencode($cat['id']); ?>" class="btn btn-sm btn-primary">Fill</a>
-                                            </li>
+                                            <option value="<?php echo htmlspecialchars($cat['id']); ?>" <?php echo ($selectedCategoryId === $cat['id']) ? 'selected' : ''; ?>><?php echo htmlspecialchars($cat['name']); ?></option>
                                         <?php endforeach; ?>
-                                    </ul>
+                                    </select>
                                 <?php endif; ?>
                             </div>
                         </div>

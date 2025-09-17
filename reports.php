@@ -5,7 +5,7 @@ session_start();
 requireLogin();
 
 $user = getUserById($_SESSION['user_id']);
-$isAdmin = ($_SESSION['role'] === ROLE_ADMIN);
+$isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === ROLE_ADMIN);
 
 $reports = getReports();
 $categories = getReportCategories();
