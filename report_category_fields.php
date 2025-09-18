@@ -70,8 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'source' => $type === 'select' ? $source : 'manual'
                 ];
                 $categories[$index]['fields'][] = $field;
-                if (saveReportCategories($categories) === false) {
-                    $error = 'Failed to add field';
+                $result = saveReportCategories($categories);
+                if ($result['success'] === false) {
+                    $error = 'Failed to add field: ' . $result['message'];
                     app_log('write_error', 'Failed to add field', ['category_id' => $categoryId]);
                 } else {
                     $_SESSION['flash_message'] = 'Field added successfully';
@@ -123,8 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error = 'Field not found';
                     app_log('not_found', 'Edit non-existent field', ['category_id' => $categoryId, 'field_id' => $fieldId]);
                 } else {
-                    if (saveReportCategories($categories) === false) {
-                        $error = 'Failed to update field';
+                    $result = saveReportCategories($categories);
+                    if ($result['success'] === false) {
+                        $error = 'Failed to update field: ' . $result['message'];
                         app_log('write_error', 'Failed to update field', ['category_id' => $categoryId, 'field_id' => $fieldId]);
                     } else {
                         $_SESSION['flash_message'] = 'Field updated successfully';
@@ -139,8 +141,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $categories[$index]['fields'] = array_values(array_filter($categories[$index]['fields'], function ($f) use ($fieldId) {
                 return $f['id'] !== $fieldId;
             }));
-            if (saveReportCategories($categories) === false) {
-                $error = 'Failed to delete field';
+            $result = saveReportCategories($categories);
+            if ($result['success'] === false) {
+                $error = 'Failed to delete field: ' . $result['message'];
                 app_log('write_error', 'Failed to delete field', ['category_id' => $categoryId, 'field_id' => $fieldId]);
             } else {
                 if ($before === count($categories[$index]['fields'])) {
