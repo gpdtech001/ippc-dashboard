@@ -54,9 +54,15 @@ function discoverTypesFromCategories() {
             $base = $f['type'] ?? 'text';
             $src = $f['source'] ?? 'manual';
             // Map select+zones_groups to groups pseudo-type for clarity
-            $key = ($base === 'select' && $src === 'zones_groups') ? 'groups' : $base;
+            // Map select+currency to currency pseudo-type for clarity
+            $key = ($base === 'select' && $src === 'zones_groups') ? 'groups' : 
+                   (($base === 'select' && $src === 'currency') ? 'currency' : $base);
             if (!isset($found[$key])) {
-                $found[$key] = [ 'key' => $key, 'base_type' => ($key === 'groups' ? 'select' : $base), 'source' => ($key === 'groups' ? 'zones_groups' : $src) ];
+                $found[$key] = [ 
+                    'key' => $key, 
+                    'base_type' => (in_array($key, ['groups', 'currency']) ? 'select' : $base), 
+                    'source' => ($key === 'groups' ? 'zones_groups' : ($key === 'currency' ? 'currency' : $src))
+                ];
             }
         }
     }
@@ -412,6 +418,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <select name="source" id="source_select" class="form-control">
                                             <option value="manual">Manual</option>
                                             <option value="zones_groups">Zones: Groups</option>
+                                            <option value="currency">Currency</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -616,7 +623,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <li><i class="fas fa-check text-info"></i> Automatic HTML input type resolution</li>
                                             <li><i class="fas fa-check text-info"></i> Built-in validation for supported types</li>
                                             <li><i class="fas fa-check text-info"></i> JSON export/import functionality</li>
-                                            <li><i class="fas fa-check text-info"></i> Dynamic source support (zones_groups)</li>
+                                            <li><i class="fas fa-check text-info"></i> Dynamic source support (zones_groups, currency)</li>
                                             <li><i class="fas fa-check text-info"></i> Real-time statistics and usage tracking</li>
                                         </ul>
 
@@ -675,6 +682,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <select class="form-control" id="edit_source" name="source">
                   <option value="manual">Manual</option>
                   <option value="zones_groups">Zones: Groups</option>
+                  <option value="currency">Currency</option>
                 </select>
               </div>
               <div class="form-group">

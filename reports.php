@@ -7,10 +7,105 @@ requireLogin();
 $user = getUserById($_SESSION['user_id']);
 $isAdmin = (isset($_SESSION['role']) && $_SESSION['role'] === ROLE_ADMIN);
 
+// Handle delete request for admin users
+if ($isAdmin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete_report') {
+    // CSRF protection
+    $token = $_POST['csrf_token'] ?? '';
+    if (!validateCSRFToken($token)) {
+        $_SESSION['flash_error'] = 'Security error: Invalid request token';
+        header('Location: reports.php');
+        exit;
+    }
+    
+    $reportId = $_POST['report_id'] ?? '';
+    if (empty($reportId)) {
+        $_SESSION['flash_error'] = 'No report ID provided';
+        header('Location: reports.php');
+        exit;
+    }
+    
+    // Load current reports
+    $allReports = getReports();
+    $reportFound = false;
+    $deletedReportInfo = null;
+    
+    // Find and remove the report
+    foreach ($allReports as $index => $report) {
+        if ($report['id'] === $reportId) {
+            $deletedReportInfo = $report;
+            unset($allReports[$index]);
+            $reportFound = true;
+            break;
+        }
+    }
+    
+    if (!$reportFound) {
+        $_SESSION['flash_error'] = 'Report not found';
+        header('Location: reports.php');
+        exit;
+    }
+    
+    // Save updated reports array
+    try {
+        if (saveReports(array_values($allReports)) === false) {
+            throw new Exception('Save failed');
+        }
+        
+        // Log the deletion
+        app_log('report_deleted', 'Report deleted by admin', [
+            'report_id' => $reportId,
+            'category' => $deletedReportInfo['category_name'] ?? 'Unknown',
+            'original_submitter' => $deletedReportInfo['submitted_by_name'] ?? 'Unknown',
+            'deleted_by' => $_SESSION['user_id']
+        ]);
+        
+        $_SESSION['flash_message'] = 'Report deleted successfully';
+    } catch (Exception $e) {
+        app_log('report_delete_error', 'Failed to delete report', [
+            'report_id' => $reportId,
+            'error' => $e->getMessage()
+        ]);
+        $_SESSION['flash_error'] = 'Failed to delete report. Please try again.';
+    }
+    
+    header('Location: reports.php');
+    exit;
+}
+
+// Handle flash messages
+$message = $_SESSION['flash_message'] ?? '';
+$error = $_SESSION['flash_error'] ?? '';
+unset($_SESSION['flash_message'], $_SESSION['flash_error']);
+
+// Helper function to format currency display
+function formatCurrencyDisplay($currencyCode) {
+    static $currencyData = null;
+    if ($currencyData === null) {
+        $currencyFile = __DIR__ . '/currency.json';
+        if (file_exists($currencyFile)) {
+            $currencyData = json_decode(file_get_contents($currencyFile), true) ?: [];
+        } else {
+            $currencyData = [];
+        }
+    }
+    
+    foreach ($currencyData as $currency) {
+        if ($currency['code'] === $currencyCode) {
+            return $currency['code'] . ' - ' . $currency['name'] . ' (' . $currency['symbol'] . ')';
+        }
+    }
+    return $currencyCode; // fallback to just the code
+}
+
 $reports = getReports();
 $categories = getReportCategories();
 $categoryById = [];
-foreach ($categories as $c) { $categoryById[$c['id']] = $c; }
+foreach ($categories as $c) { 
+    // Apply currency field fixes and automatic currency field addition
+    $c = fixCurrencyFields($c);
+    $c = addAutomaticCurrencyField($c);
+    $categoryById[$c['id']] = $c; 
+}
 
 // Filter for non-admin: show only own submissions
 if (!$isAdmin) {
@@ -98,7 +193,7 @@ foreach ($reports as $r) {
                                             <tr>
                                                 <th style="width:180px">Submitted At</th>
                                                 <th>Submitted By</th>
-                                                <th style="width:100px">Actions</th>
+                                                <th style="width:140px">Actions</th>
                                                 <?php foreach ($catFields as $f): ?>
                                                     <th><?php echo htmlspecialchars($f['label'] ?? $f['id']); ?></th>
                                                 <?php endforeach; ?>
@@ -118,17 +213,36 @@ foreach ($reports as $r) {
                                                     <?php else: ?>
                                                         <span class="text-muted">—</span>
                                                     <?php endif; ?>
+                                                    <?php if ($isAdmin): ?>
+                                                        <button type="button" class="btn btn-sm btn-danger ml-1" onclick="deleteReport('<?php echo htmlspecialchars($r['id']); ?>', '<?php echo htmlspecialchars($r['submitted_by_name'] ?? 'Unknown'); ?>', '<?php echo htmlspecialchars($cat['name']); ?>')">
+                                                            <i class="fas fa-trash"></i> Delete
+                                                        </button>
+                                                    <?php endif; ?>
                                                 </td>
                                                 <?php foreach ($catFields as $f): ?>
-                                                    <?php
+                                                <?php
                                                         $fid = $f['id'];
                                                         $val = $r['data'][$fid] ?? '';
+                                                        $fieldType = $f['type'] ?? 'text';
+                                                        
                                                         // Pretty-print for groups: map ID to group name
-                                                        if (($f['type'] ?? '') === 'select' && ($f['source'] ?? 'manual') === 'zones_groups') {
+                                                        if ($fieldType === 'select' && ($f['source'] ?? 'manual') === 'zones_groups') {
                                                             $val = $val !== '' ? resolveGroupLabelById($val) : '';
                                                         }
+                                                        // Pretty-print for currency: show full currency name
+                                                        elseif ($fieldType === 'currency' && $val !== '') {
+                                                            $val = formatCurrencyDisplay($val);
+                                                        }
                                                     ?>
-                                                    <td><?php echo $val === '' ? '<span class="text-muted">—</span>' : htmlspecialchars(is_array($val) ? json_encode($val) : $val); ?></td>
+                                                    <td>
+                                                        <?php if ($val === ''): ?>
+                                                            <span class="text-muted">—</span>
+                                                        <?php elseif ($fieldType === 'currency_amount' && is_numeric($val)): ?>
+                                                            <?php echo number_format((float)$val, 2); ?>
+                                                        <?php else: ?>
+                                                            <?php echo htmlspecialchars(is_array($val) ? json_encode($val) : $val); ?>
+                                                        <?php endif; ?>
+                                                    </td>
                                                 <?php endforeach; ?>
                                             </tr>
                                             <?php endforeach; ?>
@@ -153,15 +267,73 @@ foreach ($reports as $r) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-  $(function(){
-    $('.datatable').DataTable({
-      order: [[0, 'desc']],
-      pageLength: 10,
-      lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']],
-      autoWidth: false
-    });
+$(function(){
+  // Initialize DataTables
+  $('.datatable').DataTable({
+    order: [[0, 'desc']],
+    pageLength: 10,
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']],
+    autoWidth: false
   });
+  
+  // Show flash messages
+  <?php if ($message): ?>
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    icon: 'success',
+    title: '<?php echo htmlspecialchars($message); ?>'
+  });
+  <?php endif; ?>
+  
+  <?php if ($error): ?>
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: true,
+    icon: 'error',
+    title: '<?php echo htmlspecialchars($error); ?>'
+  });
+  <?php endif; ?>
+});
+
+// Delete report function
+function deleteReport(reportId, submitterName, categoryName) {
+  Swal.fire({
+    title: 'Delete Report?',
+    html: `Are you sure you want to delete this report?<br><br>
+           <strong>Category:</strong> ${categoryName}<br>
+           <strong>Submitted by:</strong> ${submitterName}<br><br>
+           <span class="text-danger">This action cannot be undone.</span>`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#dc3545',
+    cancelButtonColor: '#6c757d',
+    confirmButtonText: 'Yes, Delete',
+    cancelButtonText: 'Cancel',
+    focusCancel: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Create and submit delete form
+      const form = document.createElement('form');
+      form.method = 'post';
+      form.innerHTML = `
+        <input type="hidden" name="action" value="delete_report">
+        <input type="hidden" name="report_id" value="${reportId}">
+        <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+      `;
+      document.body.appendChild(form);
+      form.submit();
+    }
+  });
+}
 </script>
 </body>
 </html>

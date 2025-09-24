@@ -17,24 +17,20 @@
         "approved_by": "system"
     },
     {
-        "id": "user_68b835e3318955.50617250",
+        "id": "user_68d3e153085fc1.65233567",
         "name": "max",
         "email": "odunoyemayowa@gmail.com",
-        "username": "maxwell",
-        "password": "$2y$10$BmXisxH30jMkdumdyAg6m.9pvfc6qNRMgzOpsqAWfI4r75BWKA7Ai",
+        "username": "maxwellvn",
+        "password": "$2y$10$7lwNGtX7tMuwuQ4ZNng6p.5gCGd4Ecn2LKFN.kwptW4bY9LzUO\/nq",
         "role": "rzm",
-        "phone": "0909090909",
+        "phone": "0909090808",
         "kingschat_username": "maxwellvn",
-        "region": "Region 5",
-        "zone": "Lagos Zone 5",
-        "created_at": "2025-09-03 14:34:43",
-        "remember_token": null,
+        "region": "Region 1",
+        "zone": "SA Zone 1",
         "status": "approved",
-        "approved_at": "2025-09-03 14:34:43",
-        "approved_by": "system",
-        "disabled_at": "2025-09-03 14:45:06",
-        "disabled_by": "user_68b835b7b58290.58357298",
-        "enabled_at": "2025-09-03 14:45:14",
-        "enabled_by": "user_68b835b7b58290.58357298"
+        "created_at": "2025-09-24 14:17:23",
+        "remember_token": null,
+        "approved_at": "2025-09-24 14:17:54",
+        "approved_by": "user_68b835b7b58290.58357298"
     }
 ]

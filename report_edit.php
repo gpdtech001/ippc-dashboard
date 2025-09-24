@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($f['required']) && $val === '') {
                 $errors[] = ($f['label'] ?? $fid) . ' is required';
             }
-            if (($f['type'] === 'select' || $f['type'] === 'groups')) {
+            if (($f['type'] === 'select' || $f['type'] === 'groups' || $f['type'] === 'currency')) {
                 $opts = resolveFieldOptions($f, $user);
                 if (!empty($opts)) {
                     $allowed = array_column($opts, 'id');
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <?php elseif ($type === 'date'): ?>
                                                     <input type="date" class="form-control" name="field[<?php echo htmlspecialchars($fid); ?>]" value="<?php echo htmlspecialchars($value); ?>">
                                                 <?php else: ?>
-                                                    <?php $isSelect = ($type === 'select' || $type === 'groups'); ?>
+                                                    <?php $isSelect = ($type === 'select' || $type === 'groups' || $type === 'currency'); ?>
                                                     <?php if ($isSelect): ?>
                                                         <?php $opts = resolveFieldOptions($f, $user); ?>
                                                         <select class="form-control" name="field[<?php echo htmlspecialchars($fid); ?>]">

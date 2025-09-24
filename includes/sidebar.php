@@ -80,6 +80,12 @@ $current = basename($_SERVER['PHP_SELF']);
                         <p>System Monitor</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="analytics.php" class="nav-link <?php echo $current === 'analytics.php' ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-trophy"></i>
+                        <p>Analytics</p>
+                    </a>
+                </li>
                 <?php endif; ?>
                 <li class="nav-item">
                     <a href="profile.php" class="nav-link <?php echo $current === 'profile.php' ? 'active' : ''; ?>">

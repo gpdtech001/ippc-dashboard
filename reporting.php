@@ -21,13 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate CSRF token for all POST requests on this page
     requireCSRFToken();
 
-    $categoryId = filter_var($_POST['category_id'] ?? '', FILTER_SANITIZE_STRING);
+    $categoryId = htmlspecialchars(trim($_POST['category_id'] ?? ''), ENT_QUOTES, 'UTF-8');
     if (!isset($_POST['field']) || !is_array($_POST['field'])) {
         $error = 'Invalid form data';
         app_log('validation_error', 'Invalid POST field data', ['category_id' => $categoryId]);
     } else {
         foreach ($_POST['field'] as $key => $value) {
-            $_POST['field'][$key] = filter_var(trim($value), FILTER_SANITIZE_STRING);
+            $_POST['field'][$key] = htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8');
         }
         $category = getCategoryById($categoryId);
         if (strlen($categoryId) > 100) {
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $inputType = resolveFieldInputType($fieldType);
 
             // Validate select options when applicable
-            if ($inputType === 'select' || $fieldType === 'groups') {
+            if ($inputType === 'select' || $fieldType === 'groups' || $fieldType === 'currency') {
                 try {
                     $opts = resolveFieldOptions($f, $user);
                 } catch (Exception $e) {
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Determine selected category (for rendering form)
-$selectedCategoryId = filter_var($_GET['category_id'] ?? '', FILTER_SANITIZE_STRING) ?: filter_var($_POST['category_id'] ?? '', FILTER_SANITIZE_STRING);
+$selectedCategoryId = htmlspecialchars(trim($_GET['category_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?: htmlspecialchars(trim($_POST['category_id'] ?? ''), ENT_QUOTES, 'UTF-8');
 $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) : null;
 
 ?>
@@ -245,7 +245,7 @@ $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) :
                                                     <label><?php echo htmlspecialchars($label); ?><?php echo !empty($f['required']) ? ' *' : ''; ?></label>
                                                     <?php if ($inputType === 'textarea'): ?>
                                                         <textarea class="form-control" name="field[<?php echo htmlspecialchars($fid); ?>]" rows="3" placeholder="<?php echo htmlspecialchars($f['placeholder'] ?? ''); ?>"><?php echo htmlspecialchars($_POST['field'][$fid] ?? ''); ?></textarea>
-                                                    <?php elseif ($inputType === 'select' || $fieldType === 'groups'): ?>
+                                                    <?php elseif ($inputType === 'select' || $fieldType === 'groups' || $fieldType === 'currency'): ?>
                                                         <?php $opts = resolveFieldOptions($f, $user); ?>
                                                         <select class="form-control" name="field[<?php echo htmlspecialchars($fid); ?>]">
                                                             <option value="">-- Select --</option>

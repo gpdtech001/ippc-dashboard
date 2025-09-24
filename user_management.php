@@ -14,10 +14,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userId = $_POST['user_id'] ?? '';
 
         if ($action === 'delete' && $userId) {
-            $users = array_filter($users, function($user) use ($userId) {
-                return $user['id'] !== $userId;
-            });
-            saveUsers($users);
+            $userFound = false;
+
+            foreach ($users as $index => $user) {
+                if (($user['id'] ?? '') === $userId) {
+                    unset($users[$index]);
+                    $userFound = true;
+                    break;
+                }
+            }
+
+            if (!$userFound) {
+                header('Location: user_management.php?error=Unable to find the selected user for deletion');
+                exit;
+            }
+
+            if (!saveUsers(array_values($users))) {
+                app_log('write_error', 'Failed to delete user', ['user_id' => $userId]);
+                header('Location: user_management.php?error=Failed to delete user. Please try again.');
+                exit;
+            }
+
             header('Location: user_management.php?success=User deleted successfully');
             exit;
         } elseif ($action === 'update_role' && $userId) {

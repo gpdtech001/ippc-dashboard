@@ -110,5 +110,29 @@
         "base_type": "password",
         "source": "manual",
         "description": "Password input field"
+    },
+    {
+        "id": "ft_quantity",
+        "key": "quantity",
+        "label": "Quantity",
+        "base_type": "number",
+        "source": "manual",
+        "description": "Numeric input for quantities (items, units, etc.)"
+    },
+    {
+        "id": "ft_currency_amount",
+        "key": "currency_amount",
+        "label": "Currency Amount",
+        "base_type": "number",
+        "source": "manual",
+        "description": "Numeric input for monetary amounts (automatically adds currency field)"
+    },
+    {
+        "id": "ft_68d3e8e3de67a6.55339019",
+        "key": "currency",
+        "label": "Currency",
+        "base_type": "select",
+        "source": "currency",
+        "description": ""
     }
 ]

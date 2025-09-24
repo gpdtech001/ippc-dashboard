@@ -637,16 +637,73 @@ function getCategoryById($id) {
     $categories = getReportCategories();
     foreach ($categories as $category) {
         if ($category['id'] === $id) {
+            // Fix existing currency fields and add automatic currency field if needed
+            $category = fixCurrencyFields($category);
+            $category = addAutomaticCurrencyField($category);
             return $category;
         }
     }
     return null;
 }
 
+// Fix existing currency fields to ensure they have proper source attribute
+function fixCurrencyFields($category) {
+    if (!isset($category['fields']) || !is_array($category['fields'])) {
+        return $category;
+    }
+    
+    foreach ($category['fields'] as &$field) {
+        if (($field['type'] ?? '') === 'currency' && !isset($field['source'])) {
+            $field['source'] = 'currency';
+        }
+    }
+    
+    return $category;
+}
+
+// Add automatic currency field if category contains currency_amount fields
+function addAutomaticCurrencyField($category) {
+    if (!isset($category['fields']) || !is_array($category['fields'])) {
+        return $category;
+    }
+    
+    // Check if category has currency_amount fields
+    $hasCurrencyAmount = false;
+    $hasCurrencyField = false;
+    
+    foreach ($category['fields'] as $field) {
+        if (($field['type'] ?? '') === 'currency_amount') {
+            $hasCurrencyAmount = true;
+        }
+        if (($field['type'] ?? '') === 'currency') {
+            $hasCurrencyField = true;
+        }
+    }
+    
+    // If has currency_amount fields but no currency field, add one automatically
+    if ($hasCurrencyAmount && !$hasCurrencyField) {
+        $currencyField = [
+            'id' => 'auto_currency_' . $category['id'],
+            'label' => 'Currency',
+            'type' => 'currency',
+            'source' => 'currency',
+            'required' => true,
+            'placeholder' => 'Select currency for amounts',
+            'auto_added' => true
+        ];
+        
+        // Add currency field at the end
+        $category['fields'][] = $currencyField;
+    }
+    
+    return $category;
+}
+
 // Resolve dynamic options for field based on source and user context
 function resolveFieldOptions($field, $user) {
     $type = $field['type'] ?? 'text';
-    if ($type !== 'select') {
+    // Handle select-like field types (select, groups, currency)
+    if ($type !== 'select' && $type !== 'groups' && $type !== 'currency') {
         return [];
     }
     $source = $field['source'] ?? 'manual';
@@ -695,6 +752,26 @@ function resolveFieldOptions($field, $user) {
             return $out;
         }
     }
+    if ($source === 'currency') {
+        $currencyFile = __DIR__ . '/currency.json';
+        if (!file_exists($currencyFile)) {
+            app_log('config_error', 'Currency file not found', ['file' => $currencyFile]);
+            return [];
+        }
+        $currencyData = json_decode(file_get_contents($currencyFile), true);
+        if (!$currencyData) {
+            app_log('config_error', 'Invalid currency JSON data');
+            return [];
+        }
+        $out = [];
+        foreach ($currencyData as $currency) {
+            $out[] = [
+                'id' => $currency['code'],
+                'label' => $currency['code'] . ' - ' . $currency['name'] . ' (' . $currency['symbol'] . ')'
+            ];
+        }
+        return $out;
+    }
     app_log('config_warning', 'Unknown field source', ['source' => $source]);
     return [];
 }
@@ -722,6 +799,16 @@ function resolveFieldInputType($fieldType) {
     $standardTypes = ['text', 'textarea', 'number', 'date', 'select', 'email', 'password', 'tel', 'url'];
     if (in_array($fieldType, $standardTypes)) {
         return $fieldType;
+    }
+
+    // Handle special field types
+    if ($fieldType === 'quantity' || $fieldType === 'currency_amount') {
+        return 'number';
+    }
+    
+    // Currency fields should use select dropdown
+    if ($fieldType === 'currency') {
+        return 'select';
     }
 
     // For custom field types, look up the base_type from field_types.json

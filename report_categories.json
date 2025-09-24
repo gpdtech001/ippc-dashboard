@@ -114,6 +114,15 @@
                 "options": [],
                 "source": "manual",
                 "updated_at": "2025-09-03 20:20:26"
+            },
+            {
+                "id": "fld_68d3efe3d3c713.89613610",
+                "label": "total",
+                "type": "currency_amount",
+                "required": false,
+                "placeholder": "new",
+                "options": [],
+                "source": "manual"
             }
         ]
     },

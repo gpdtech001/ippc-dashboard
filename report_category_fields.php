@@ -48,9 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $options = [];
                 // Normalize "groups" pseudo-type to select + zones_groups
+                // Normalize "currency" pseudo-type to select + currency
                 if ($type === 'groups') {
                     $type = 'select';
                     $source = 'zones_groups';
+                } elseif ($type === 'currency') {
+                    $type = 'select';
+                    $source = 'currency';
                 }
                 if ($type === 'select' && $source === 'manual' && $options_raw !== '') {
                     // Split by newlines or commas
@@ -105,9 +109,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $f['required'] = $required;
                         $f['placeholder'] = $placeholder;
                         // Normalize "groups" pseudo-type to select + zones_groups
+                        // Normalize "currency" pseudo-type to select + currency
                         if ($type === 'groups') {
                             $type = 'select';
                             $source = 'zones_groups';
+                        } elseif ($type === 'currency') {
+                            $type = 'select';
+                            $source = 'currency';
                         }
                         $opts = [];
                         if ($type === 'select' && $source === 'manual' && $options_raw !== '') {
@@ -243,6 +251,7 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
                                         <select name="source" class="form-control" id="add_field_source" onchange="toggleOptions('add')">
                                             <option value="manual" selected>Manual (enter options)</option>
                                             <option value="zones_groups">Zones: Groups (from zones.json)</option>
+                                            <option value="currency">Currency (from currency.json)</option>
                                         </select>
                                     </div>
                                     <div class="form-group" id="add_options_group" style="display:none;">
@@ -351,6 +360,7 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
                             <select name="source" class="form-control" id="edit_field_source" onchange="toggleOptions('edit')">
                                 <option value="manual">Manual (enter options)</option>
                                 <option value="zones_groups">Zones: Groups (from zones.json)</option>
+                                <option value="currency">Currency (from currency.json)</option>
                             </select>
                         </div>
                         <div class="form-group" id="edit_options_group" style="display:none;">
@@ -411,13 +421,20 @@ function toggleOptions(prefix) {
     if (!selectedType) return;
     
     var isGroups = selectedType.key === 'groups';
+    var isCurrency = selectedType.key === 'currency';
+    var isQuantity = selectedType.key === 'quantity';
+    var isCurrencyAmount = selectedType.key === 'currency_amount';
     var isSelect = selectedType.base_type === 'select';
     
     if (sourceGroup) {
         sourceGroup.style.display = isSelect ? '' : 'none';
         // If groups selected, force source to zones_groups and disable the selector
+        // If currency selected, force source to currency and disable the selector
         if (isGroups && sourceSel) {
             sourceSel.value = 'zones_groups';
+            sourceSel.disabled = true;
+        } else if (isCurrency && sourceSel) {
+            sourceSel.value = 'currency';
             sourceSel.disabled = true;
         } else if (sourceSel) {
             sourceSel.disabled = false;
@@ -428,7 +445,7 @@ function toggleOptions(prefix) {
         }
     }
     if (optionsGroup) {
-        var useManual = (!sourceSel || sourceSel.value === 'manual') && !isGroups;
+        var useManual = (!sourceSel || sourceSel.value === 'manual') && !isGroups && !isCurrency;
         optionsGroup.style.display = isSelect && useManual ? '' : 'none';
     }
 }
