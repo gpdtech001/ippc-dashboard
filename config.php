@@ -101,6 +101,7 @@ session_set_cookie_params([
 // User roles
 define('ROLE_ADMIN', 'admin');
 define('ROLE_RZM', 'rzm');
+define('ROLE_USER', 'user');
 
 // User approval status
 define('STATUS_PENDING', 'pending');
@@ -793,6 +794,93 @@ function resolveGroupLabelById($groupId) {
     return $groupId; // fallback to id if not found
 }
 
+// Find group ID by name within user's zone
+function findGroupIdByName($groupName, $user) {
+    if (!$groupName || !$user) {
+        return null;
+    }
+    
+    $userRole = $user['role'] ?? '';
+    $userRegion = $user['region'] ?? '';
+    $userZone = $user['zone'] ?? '';
+    
+    if ($userRole !== 'rzm' || !$userRegion || !$userZone) {
+        return null;
+    }
+    
+    $zones = getZones();
+    $groups = $zones[$userRegion][$userZone]['groups'] ?? [];
+    
+    foreach ($groups as $group) {
+        if (strcasecmp($group['name'], $groupName) === 0) {
+            return $group['id'];
+        }
+    }
+    
+    return null; // Group not found
+}
+
+// Ensure a group exists in the user's zone, create if it doesn't exist
+function ensureGroupExists($groupName, $user) {
+    if (!$groupName || !$user) {
+        return [];
+    }
+    
+    $userRole = $user['role'] ?? '';
+    $userRegion = $user['region'] ?? '';
+    $userZone = $user['zone'] ?? '';
+    
+    // Only RZM users can add groups to their specific zone
+    if ($userRole !== 'rzm' || !$userRegion || !$userZone) {
+        return [];
+    }
+    
+    error_log("ensureGroupExists: Checking group '" . $groupName . "' for user " . $user['name']);
+    
+    $zones = getZones();
+    
+    // Check if group already exists in user's zone
+    $existingGroups = $zones[$userRegion][$userZone]['groups'] ?? [];
+    foreach ($existingGroups as $existingGroup) {
+        if (strcasecmp($existingGroup['name'], $groupName) === 0) {
+            error_log("ensureGroupExists: Group '" . $groupName . "' already exists");
+            return []; // Group already exists
+        }
+    }
+    
+    // Group doesn't exist, create it
+    $newGroupId = 'grp_' . uniqid() . '_' . time();
+    $newGroup = [
+        'id' => $newGroupId,
+        'name' => $groupName,
+        'created_at' => date('Y-m-d H:i:s'),
+        'created_by' => $user['id'] ?? 'bulk_upload',
+        'source' => 'bulk_upload'
+    ];
+    
+    // Add group to user's zone
+    if (!isset($zones[$userRegion])) {
+        $zones[$userRegion] = [];
+    }
+    if (!isset($zones[$userRegion][$userZone])) {
+        $zones[$userRegion][$userZone] = ['groups' => []];
+    }
+    if (!isset($zones[$userRegion][$userZone]['groups'])) {
+        $zones[$userRegion][$userZone]['groups'] = [];
+    }
+    
+    $zones[$userRegion][$userZone]['groups'][] = $newGroup;
+    
+    // Save updated zones
+    if (saveZones($zones)) {
+        error_log("ensureGroupExists: Successfully created group '" . $groupName . "' with ID '" . $newGroupId . "'");
+        return [$newGroup];
+    } else {
+        error_log("ensureGroupExists: Failed to save group '" . $groupName . "'");
+        return [];
+    }
+}
+
 // Resolve the proper HTML input type for a field, including custom field types
 function resolveFieldInputType($fieldType) {
     // Handle standard HTML types directly
@@ -823,6 +911,115 @@ function resolveFieldInputType($fieldType) {
 
     // Default fallback
     return 'text';
+}
+
+// Currency conversion helpers
+define('CURRENCY_SETTINGS_FILE', __DIR__ . '/currency_settings.json');
+
+// Get currency conversion settings
+function getCurrencySettings() {
+    if (!file_exists(CURRENCY_SETTINGS_FILE)) {
+        // Create default settings if file doesn't exist
+        $defaultSettings = [
+            'base_currency' => [
+                'code' => 'E',
+                'name' => 'Espees',
+                'symbol' => 'E',
+                'country' => 'IPPC'
+            ],
+            'exchange_rates' => ['E' => 1.0],
+            'last_updated' => date('c'),
+            'updated_by' => null
+        ];
+        saveCurrencySettings($defaultSettings);
+        return $defaultSettings;
+    }
+    $settings = json_decode(file_get_contents(CURRENCY_SETTINGS_FILE), true);
+    return $settings ?: [];
+}
+
+// Save currency conversion settings
+function saveCurrencySettings($settings) {
+    if (!ensureWritableFile(CURRENCY_SETTINGS_FILE)) {
+        app_log('write_error', 'Currency settings file not writable', ['file' => CURRENCY_SETTINGS_FILE]);
+        return ['success' => false, 'message' => 'Unable to write to currency settings file. Please check file permissions.'];
+    }
+    
+    $settings['last_updated'] = date('c');
+    $json = json_encode($settings, JSON_PRETTY_PRINT);
+    if ($json === false) {
+        app_log('json_error', 'Failed to encode currency settings to JSON', ['error' => json_last_error_msg()]);
+        return ['success' => false, 'message' => 'Invalid data format. Please check your input.'];
+    }
+    
+    $result = @file_put_contents(CURRENCY_SETTINGS_FILE, $json);
+    if ($result === false) {
+        app_log('write_error', 'Failed to write currency settings', ['file' => CURRENCY_SETTINGS_FILE]);
+        return ['success' => false, 'message' => 'Failed to save currency settings. Please try again.'];
+    }
+    
+    return ['success' => true, 'message' => 'Currency settings saved successfully.'];
+}
+
+// Convert amount from one currency to base currency (Espees)
+function convertToBaseCurrency($amount, $fromCurrency) {
+    if ($amount === 0 || $amount === '0' || $amount === '') {
+        return 0;
+    }
+    
+    $settings = getCurrencySettings();
+    $rates = $settings['exchange_rates'] ?? [];
+    
+    // If converting from base currency, return as is
+    if ($fromCurrency === $settings['base_currency']['code']) {
+        return (float)$amount;
+    }
+    
+    // Get exchange rate (rate represents: X Currency = 1 Espee)
+    // So to convert TO espees, we divide the amount by the rate
+    $rate = $rates[$fromCurrency] ?? 1;
+    return $rate > 0 ? (float)$amount / (float)$rate : 0;
+}
+
+// Convert amount from base currency to target currency
+function convertFromBaseCurrency($amount, $toCurrency) {
+    if ($amount === 0 || $amount === '0' || $amount === '') {
+        return 0;
+    }
+    
+    $settings = getCurrencySettings();
+    $rates = $settings['exchange_rates'] ?? [];
+    
+    // If converting to base currency, return as is
+    if ($toCurrency === $settings['base_currency']['code']) {
+        return (float)$amount;
+    }
+    
+    // Get exchange rate (rate represents: X Currency = 1 Espee)
+    // So to convert FROM espees, we multiply the amount by the rate
+    $rate = $rates[$toCurrency] ?? 1;
+    return (float)$amount * (float)$rate;
+}
+
+// Format currency amount with proper symbol and formatting
+function formatCurrencyAmount($amount, $currencyCode, $showCode = true) {
+    if ($currencyCode === 'E') {
+        $symbol = 'E';
+        $formatted = number_format((float)$amount, 2);
+        return $showCode ? "E {$formatted}" : $formatted;
+    }
+    
+    // Get currency info from currency.json
+    $currencies = json_decode(file_get_contents(__DIR__ . '/currency.json'), true);
+    foreach ($currencies as $currency) {
+        if ($currency['code'] === $currencyCode) {
+            $formatted = number_format((float)$amount, 2);
+            return $showCode ? "{$currency['symbol']} {$formatted} ({$currencyCode})" : "{$currency['symbol']} {$formatted}";
+        }
+    }
+    
+    // Fallback
+    return number_format((float)$amount, 2) . ' ' . $currencyCode;
 }
 
 // Reports storage helpers
@@ -960,4 +1157,742 @@ function toggleCategoryStatus($id) {
     saveReportCategories($categories);
     return true;
 }
+
+// Group management functions
+define('GROUPS_FILE', __DIR__ . '/groups.json');
+
+function getAllGroups() {
+    // Get groups from zones.json (existing groups) and groups.json (newly created groups)
+    $allGroups = [];
+    
+    // First, get existing groups from zones.json
+    $zones = getAllZones();
+    foreach ($zones as $zoneId => $zone) {
+        if (!empty($zone['groups'])) {
+            foreach ($zone['groups'] as $group) {
+                $allGroups[] = [
+                    'id' => $group['id'],
+                    'name' => $group['name'],
+                    'description' => '', // Existing groups don't have descriptions
+                    'zone_id' => $zoneId,
+                    'created_at' => '2024-01-01 00:00:00', // Default date for existing groups
+                    'created_by' => 'system',
+                    'updated_at' => '2024-01-01 00:00:00',
+                    'updated_by' => 'system',
+                    'source' => 'zones.json' // Mark as existing group
+                ];
+            }
+        }
+    }
+    
+    // Then, get newly created groups from groups.json
+    if (file_exists(GROUPS_FILE)) {
+        $newGroups = json_decode(@file_get_contents(GROUPS_FILE), true);
+        if ($newGroups) {
+            foreach ($newGroups as $group) {
+                $group['source'] = 'groups.json'; // Mark as new group
+                $allGroups[] = $group;
+            }
+        }
+    }
+    
+    return $allGroups;
+}
+
+function getGroupsByZone($zoneId) {
+    $allGroups = getAllGroups();
+    return array_filter($allGroups, function($group) use ($zoneId) {
+        return $group['zone_id'] == $zoneId;
+    });
+}
+
+function getGroupById($groupId) {
+    $groups = getAllGroups();
+    foreach ($groups as $group) {
+        if ($group['id'] === $groupId) {
+            return $group;
+        }
+    }
+    return null;
+}
+
+function saveGroups($groups) {
+    if (!ensureWritableFile(GROUPS_FILE)) {
+        app_log('write_error', 'Groups file not writable', ['file' => GROUPS_FILE]);
+        return false;
+    }
+    
+    $json = json_encode($groups, JSON_PRETTY_PRINT);
+    if ($json === false) {
+        app_log('json_error', 'Failed to encode groups to JSON', ['error' => json_last_error_msg()]);
+        return false;
+    }
+    
+    $result = @file_put_contents(GROUPS_FILE, $json);
+    if ($result === false) {
+        app_log('write_error', 'Failed to write groups', ['file' => GROUPS_FILE]);
+        return false;
+    }
+    
+    return true;
+}
+
+function createGroup($name, $description, $zoneId, $userId) {
+    // Check if group name already exists in the same zone (including existing groups)
+    $allGroups = getAllGroups();
+    foreach ($allGroups as $group) {
+        if ($group['name'] === $name && $group['zone_id'] == $zoneId) {
+            return ['success' => false, 'message' => 'A group with this name already exists in this zone'];
+        }
+    }
+    
+    $newGroup = [
+        'id' => 'grp_' . uniqid(),
+        'name' => $name,
+        'description' => $description,
+        'zone_id' => $zoneId,
+        'created_at' => date('Y-m-d H:i:s'),
+        'created_by' => $userId,
+        'updated_at' => date('Y-m-d H:i:s'),
+        'updated_by' => $userId
+    ];
+    
+    // Get only the editable groups (from groups.json)
+    $editableGroups = [];
+    if (file_exists(GROUPS_FILE)) {
+        $editableGroups = json_decode(@file_get_contents(GROUPS_FILE), true) ?: [];
+    }
+    
+    $editableGroups[] = $newGroup;
+    
+    if (saveGroups($editableGroups)) {
+        app_log('group_created', 'New group created', [
+            'group_id' => $newGroup['id'],
+            'name' => $name,
+            'zone_id' => $zoneId,
+            'created_by' => $userId
+        ]);
+        return ['success' => true, 'message' => 'Group created successfully', 'id' => $newGroup['id']];
+    } else {
+        return ['success' => false, 'message' => 'Failed to save group'];
+    }
+}
+
+function updateGroup($groupId, $name, $description, $zoneId, $userId) {
+    // First check if this group exists and if it's editable
+    $currentGroup = getGroupById($groupId);
+    if (!$currentGroup) {
+        return ['success' => false, 'message' => 'Group not found'];
+    }
+    
+    // Allow editing groups from zones.json (system groups)
+    // We'll handle both system groups and custom groups
+    
+    // Check if group name already exists in the same zone (excluding current group)
+    $allGroups = getAllGroups();
+    foreach ($allGroups as $group) {
+        if ($group['name'] === $name && $group['zone_id'] == $zoneId && $group['id'] !== $groupId) {
+            return ['success' => false, 'message' => 'A group with this name already exists in this zone'];
+        }
+    }
+    
+    if ($currentGroup['source'] === 'zones.json') {
+        // Update system group in zones.json
+        $zones = [];
+        if (file_exists(ZONES_FILE)) {
+            $zonesData = json_decode(@file_get_contents(ZONES_FILE), true);
+            if ($zonesData) {
+                // Find and update the group in the zones structure
+                foreach ($zonesData as $regionName => &$regionData) {
+                    foreach ($regionData as $zoneName => &$zoneData) {
+                        if (!empty($zoneData['groups'])) {
+                            foreach ($zoneData['groups'] as &$group) {
+                                if ($group['id'] === $groupId) {
+                                    $group['name'] = $name;
+                                    // If changing zones, we need to move the group
+                                    if ($zoneName !== $zoneId) {
+                                        // Remove from current zone
+                                        $zoneData['groups'] = array_filter($zoneData['groups'], function($g) use ($groupId) {
+                                            return $g['id'] !== $groupId;
+                                        });
+                                        $zoneData['groups'] = array_values($zoneData['groups']);
+                                        
+                                        // Add to new zone
+                                        foreach ($zonesData as $newRegionName => &$newRegionData) {
+                                            foreach ($newRegionData as $newZoneName => &$newZoneData) {
+                                                if ($newZoneName === $zoneId) {
+                                                    if (!isset($newZoneData['groups'])) {
+                                                        $newZoneData['groups'] = [];
+                                                    }
+                                                    $newZoneData['groups'][] = [
+                                                        'id' => $groupId,
+                                                        'name' => $name
+                                                    ];
+                                                    break 2;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    // Save the updated zones file
+                                    if (!ensureWritableFile(ZONES_FILE)) {
+                                        return ['success' => false, 'message' => 'Zones file not writable'];
+                                    }
+                                    
+                                    $json = json_encode($zonesData, JSON_PRETTY_PRINT);
+                                    if ($json === false) {
+                                        return ['success' => false, 'message' => 'Failed to encode zones data'];
+                                    }
+                                    
+                                    $result = @file_put_contents(ZONES_FILE, $json);
+                                    if ($result === false) {
+                                        return ['success' => false, 'message' => 'Failed to save zones file'];
+                                    }
+                                    
+                                    app_log('group_updated', 'System group updated', [
+                                        'group_id' => $groupId,
+                                        'name' => $name,
+                                        'zone_id' => $zoneId,
+                                        'updated_by' => $userId
+                                    ]);
+                                    return ['success' => true, 'message' => 'Group updated successfully'];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return ['success' => false, 'message' => 'System group not found in zones file'];
+    } else {
+        // Update custom group in groups.json
+        $editableGroups = [];
+        if (file_exists(GROUPS_FILE)) {
+            $editableGroups = json_decode(@file_get_contents(GROUPS_FILE), true) ?: [];
+        }
+        
+        // Update the group in the editable groups array
+        $found = false;
+        foreach ($editableGroups as &$group) {
+            if ($group['id'] === $groupId) {
+                $group['name'] = $name;
+                $group['description'] = $description;
+                $group['zone_id'] = $zoneId;
+                $group['updated_at'] = date('Y-m-d H:i:s');
+                $group['updated_by'] = $userId;
+                $found = true;
+                break;
+            }
+        }
+        
+        if (!$found) {
+            return ['success' => false, 'message' => 'Custom group not found'];
+        }
+        
+        if (saveGroups($editableGroups)) {
+            app_log('group_updated', 'Custom group updated', [
+                'group_id' => $groupId,
+                'name' => $name,
+                'zone_id' => $zoneId,
+                'updated_by' => $userId
+            ]);
+            return ['success' => true, 'message' => 'Group updated successfully'];
+        } else {
+            return ['success' => false, 'message' => 'Failed to save group changes'];
+        }
+    }
+}
+
+function deleteGroup($groupId, $userId) {
+    // First check if this group exists and if it's editable
+    $currentGroup = getGroupById($groupId);
+    if (!$currentGroup) {
+        return ['success' => false, 'message' => 'Group not found'];
+    }
+    
+    // Allow deletion of both system groups and custom groups
+    
+    // Check if group is used in any reports
+    $reports = getReports();
+    $isGroupUsed = false;
+    foreach ($reports as $report) {
+        if (isset($report['group_id']) && $report['group_id'] === $groupId) {
+            $isGroupUsed = true;
+            break;
+        }
+    }
+    
+    if ($isGroupUsed) {
+        return ['success' => false, 'message' => 'Cannot delete group as it is used in existing reports'];
+    }
+    
+    if ($currentGroup['source'] === 'zones.json') {
+        // Delete system group from zones.json
+        if (file_exists(ZONES_FILE)) {
+            $zonesData = json_decode(@file_get_contents(ZONES_FILE), true);
+            if ($zonesData) {
+                // Find and remove the group from the zones structure
+                foreach ($zonesData as $regionName => &$regionData) {
+                    foreach ($regionData as $zoneName => &$zoneData) {
+                        if (!empty($zoneData['groups'])) {
+                            $originalCount = count($zoneData['groups']);
+                            $zoneData['groups'] = array_filter($zoneData['groups'], function($group) use ($groupId) {
+                                return $group['id'] !== $groupId;
+                            });
+                            $zoneData['groups'] = array_values($zoneData['groups']);
+                            
+                            if (count($zoneData['groups']) < $originalCount) {
+                                // Group was found and removed, save the file
+                                if (!ensureWritableFile(ZONES_FILE)) {
+                                    return ['success' => false, 'message' => 'Zones file not writable'];
+                                }
+                                
+                                $json = json_encode($zonesData, JSON_PRETTY_PRINT);
+                                if ($json === false) {
+                                    return ['success' => false, 'message' => 'Failed to encode zones data'];
+                                }
+                                
+                                $result = @file_put_contents(ZONES_FILE, $json);
+                                if ($result === false) {
+                                    return ['success' => false, 'message' => 'Failed to save zones file'];
+                                }
+                                
+                                app_log('group_deleted', 'System group deleted', [
+                                    'group_id' => $groupId,
+                                    'deleted_by' => $userId
+                                ]);
+                                return ['success' => true, 'message' => 'Group deleted successfully'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return ['success' => false, 'message' => 'System group not found in zones file'];
+    } else {
+        // Delete custom group from groups.json
+        $editableGroups = [];
+        if (file_exists(GROUPS_FILE)) {
+            $editableGroups = json_decode(@file_get_contents(GROUPS_FILE), true) ?: [];
+        }
+        
+        $originalCount = count($editableGroups);
+        $editableGroups = array_filter($editableGroups, function($group) use ($groupId) {
+            return $group['id'] !== $groupId;
+        });
+        
+        if (count($editableGroups) === $originalCount) {
+            return ['success' => false, 'message' => 'Custom group not found'];
+        }
+        
+        if (saveGroups(array_values($editableGroups))) {
+            app_log('group_deleted', 'Custom group deleted', [
+                'group_id' => $groupId,
+                'deleted_by' => $userId
+            ]);
+            return ['success' => true, 'message' => 'Group deleted successfully'];
+        } else {
+            return ['success' => false, 'message' => 'Failed to delete group'];
+        }
+    }
+}
+
+// Zone management functions
+define('ZONES_FILE', __DIR__ . '/zones.json');
+
+function getAllZones() {
+    if (!file_exists(ZONES_FILE)) {
+        return [];
+    }
+    
+    $zonesData = json_decode(@file_get_contents(ZONES_FILE), true);
+    if (!$zonesData) {
+        return [];
+    }
+    
+    $zones = [];
+    // Extract all zones from the nested structure
+    foreach ($zonesData as $regionName => $regionData) {
+        foreach ($regionData as $zoneName => $zoneData) {
+            $zones[$zoneName] = [
+                'id' => $zoneName,
+                'name' => $zoneData['name'] ?? $zoneName,
+                'region' => $regionName,
+                'groups' => $zoneData['groups'] ?? []
+            ];
+        }
+    }
+    
+    return $zones;
+}
+
+function getZoneGroups($zoneName) {
+    $zones = getAllZones();
+    return $zones[$zoneName]['groups'] ?? [];
+}
+
+// Save zones data back to zones.json
+function saveZones($zones) {
+    if (!ensureWritableFile(ZONES_FILE)) {
+        app_log('write_error', 'Zones file not writable', ['file' => ZONES_FILE]);
+        return false;
+    }
+    
+    $json = json_encode($zones, JSON_PRETTY_PRINT);
+    if ($json === false) {
+        app_log('json_error', 'Failed to encode zones to JSON', ['error' => json_last_error_msg()]);
+        return false;
+    }
+    
+    $result = @file_put_contents(ZONES_FILE, $json);
+    if ($result === false) {
+        app_log('write_error', 'Failed to write zones file', ['file' => ZONES_FILE]);
+        return false;
+    }
+    
+    return true;
+}
+
+// Bulk upload processing function
+function processBulkUpload($csvFilePath, $categoryId, $userId) {
+    error_log("processBulkUpload: Starting with csvFile=" . $csvFilePath . ", categoryId=" . $categoryId . ", userId=" . $userId);
+    
+    try {
+        // Get user information
+        $user = getUserById($userId);
+        if (!$user) {
+            error_log("processBulkUpload: ERROR - Invalid user ID: " . $userId);
+            return ['success' => false, 'message' => 'Invalid user'];
+        }
+        
+        error_log("processBulkUpload: User found: " . ($user['name'] ?? 'NO NAME'));
+        
+        // Get the report category to understand the field structure
+        error_log("processBulkUpload: Getting category by ID: " . $categoryId);
+        $category = getCategoryById($categoryId);
+        if (!$category) {
+            error_log("processBulkUpload: ERROR - Invalid category ID: " . $categoryId);
+            return ['success' => false, 'message' => 'Invalid report category'];
+        }
+        
+        error_log("processBulkUpload: Category found: " . ($category['name'] ?? 'NO NAME'));
+        
+        // Apply fixes to the category
+        $category = fixCurrencyFields($category);
+        $category = addAutomaticCurrencyField($category);
+        $fields = $category['fields'] ?? [];
+        
+        // Read the CSV file
+        $csvData = array_map('str_getcsv', file($csvFilePath));
+        if (empty($csvData)) {
+            return ['success' => false, 'message' => 'CSV file is empty or invalid'];
+        }
+        
+        $headers = array_shift($csvData); // Remove header row
+        
+        // Create a mapping of CSV headers to field IDs
+        $fieldMapping = [];
+        $fieldsByLabel = [];
+        $fieldsById = [];
+        
+        // Build lookup arrays for fields
+        foreach ($fields as $field) {
+            $fieldsById[$field['id']] = $field;
+            $fieldsByLabel[strtolower($field['label'] ?? $field['id'])] = $field;
+        }
+        
+        // Map CSV headers to field IDs
+        foreach ($headers as $colIndex => $header) {
+            $cleanHeader = trim($header);
+            $headerLower = strtolower($cleanHeader);
+            
+            // Try exact match with field ID first
+            if (isset($fieldsById[$cleanHeader])) {
+                $fieldMapping[$colIndex] = $cleanHeader;
+            }
+            // Then try exact match with field label (case insensitive)
+            elseif (isset($fieldsByLabel[$headerLower])) {
+                $fieldMapping[$colIndex] = $fieldsByLabel[$headerLower]['id'];
+            }
+            // Try partial matches for common variations
+            else {
+                $found = false;
+                foreach ($fields as $field) {
+                    $fieldLabel = strtolower($field['label'] ?? $field['id']);
+                    $fieldId = strtolower($field['id']);
+                    
+                    // Check if header matches field label or ID (case insensitive)
+                    if ($headerLower === $fieldLabel || $headerLower === $fieldId) {
+                        $fieldMapping[$colIndex] = $field['id'];
+                        $found = true;
+                        break;
+                    }
+                    
+                    // Check for partial matches for common field patterns
+                    if (strpos($fieldLabel, $headerLower) !== false || strpos($headerLower, $fieldLabel) !== false) {
+                        $fieldMapping[$colIndex] = $field['id'];
+                        $found = true;
+                        break;
+                    }
+                }
+                
+                if (!$found) {
+                    // If no field mapping found, use the header as-is (for custom fields)
+                    $fieldMapping[$colIndex] = $cleanHeader;
+                }
+            }
+        }
+        
+        $reports = [];
+        $errors = [];
+        $rowNumber = 2; // Start at 2 because header is row 1
+        
+        foreach ($csvData as $row) {
+            // Skip empty rows
+            if (empty(array_filter($row))) {
+                $rowNumber++;
+                continue;
+            }
+            
+            // Skip instruction/comment rows (rows that start with #, //, etc.)
+            if (isset($row[0]) && (strpos(trim($row[0]), '#') === 0 || strpos(trim($row[0]), '//') === 0)) {
+                $rowNumber++;
+                continue;
+            }
+            
+            $reportData = [];
+            $hasRequiredData = false;
+            
+            // Map CSV columns to report fields using our mapping
+            foreach ($row as $colIndex => $value) {
+                $cleanValue = trim($value);
+                
+                if (isset($fieldMapping[$colIndex])) {
+                    $fieldId = $fieldMapping[$colIndex];
+                    $reportData[$fieldId] = $cleanValue;
+                    
+                    if (!empty($cleanValue)) {
+                        $hasRequiredData = true;
+                    }
+                }
+            }
+            
+            // Skip rows that have no meaningful data
+            if (!$hasRequiredData) {
+                $rowNumber++;
+                continue;
+            }
+            
+            // Validate required fields
+            $rowErrors = [];
+            foreach ($fields as $field) {
+                if (($field['required'] ?? false) && empty($reportData[$field['id']] ?? '')) {
+                    $rowErrors[] = "Missing required field: {$field['label']}";
+                }
+            }
+            
+            if (!empty($rowErrors)) {
+                $errors[] = "Row {$rowNumber}: " . implode(', ', $rowErrors);
+            } else {
+                // Create the report with user and zone information
+                $report = [
+                    'id' => generateReportId(),
+                    'category_id' => $categoryId,
+                    'category_name' => $category['name'] ?? 'Unknown Category',
+                    'data' => $reportData,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'created_by' => $userId,
+                    'submitted_by' => $userId, // Store user ID like manual reports
+                    'submitted_by_name' => $user['name'] ?? 'Unknown User', // Store name for display
+                    'role' => $user['role'] ?? '',
+                    'region' => $user['region'] ?? '',
+                    'zone' => $user['zone'] ?? '',
+                    'source' => 'bulk_upload'
+                ];
+                
+                $reports[] = $report;
+            }
+            
+            $rowNumber++;
+        }
+        
+        // If there are validation errors, provide debug information
+        if (!empty($errors)) {
+            $debugInfo = "\n\nDEBUG INFO:\n";
+            $debugInfo .= "CSV Headers found: " . implode(', ', $headers) . "\n";
+            $debugInfo .= "Field mappings created:\n";
+            foreach ($fieldMapping as $colIndex => $fieldId) {
+                $headerName = $headers[$colIndex] ?? "Column {$colIndex}";
+                $debugInfo .= "  '{$headerName}' -> '{$fieldId}'\n";
+            }
+            $debugInfo .= "\nExpected field IDs:\n";
+            foreach ($fields as $field) {
+                $required = ($field['required'] ?? false) ? ' (REQUIRED)' : '';
+                $debugInfo .= "  '{$field['id']}' (label: '{$field['label']}'){$required}\n";
+            }
+            
+            return [
+                'success' => false, 
+                'message' => 'Validation errors found:\n' . implode('\n', array_slice($errors, 0, 5)) . (count($errors) > 5 ? '\n... and ' . (count($errors) - 5) . ' more errors' : '') . $debugInfo
+            ];
+        }
+        
+        // If no reports were created, return error
+        if (empty($reports)) {
+            return ['success' => false, 'message' => 'No valid data rows found in the CSV file'];
+        }
+        
+        // Load existing reports and process updates/inserts
+        $existingReports = getReports();
+        $updatedCount = 0;
+        $createdCount = 0;
+        
+        // Find the group field ID for this category
+        $groupFieldId = null;
+        foreach ($fields as $field) {
+            if ($field['type'] === 'select' && ($field['source'] ?? 'manual') === 'zones_groups') {
+                $groupFieldId = $field['id'];
+                break;
+            }
+        }
+        
+        if (!$groupFieldId) {
+            return ['success' => false, 'message' => 'No group field found in this category. Cannot process bulk upload.'];
+        }
+        
+        $updatedGroups = [];
+        $createdGroups = [];
+        
+        // Before processing reports, ensure all groups from CSV exist in the user's zone
+        $newGroupsAdded = [];
+        foreach ($reports as $newReport) {
+            $groupValue = $newReport['data'][$groupFieldId] ?? '';
+            if ($groupValue) {
+                $newGroupsAdded = array_merge($newGroupsAdded, ensureGroupExists($groupValue, $user));
+            }
+        }
+        
+        foreach ($reports as $newReport) {
+            $groupValue = $newReport['data'][$groupFieldId] ?? '';
+            
+            // Convert group name to group ID if needed
+            $groupId = findGroupIdByName($groupValue, $user);
+            if ($groupId && $groupId !== $groupValue) {
+                // Update the report to use group ID instead of group name
+                $newReport['data'][$groupFieldId] = $groupId;
+                error_log("Mapped group name '" . $groupValue . "' to ID '" . $groupId . "'");
+            }
+            
+            $finalGroupValue = $newReport['data'][$groupFieldId];
+            $existingIndex = null;
+            
+            // Look for existing report with same user, category, and group
+            foreach ($existingReports as $index => $existingReport) {
+                if ($existingReport['created_by'] === $userId && 
+                    $existingReport['category_id'] === $categoryId &&
+                    isset($existingReport['data'][$groupFieldId]) &&
+                    $existingReport['data'][$groupFieldId] === $finalGroupValue) {
+                    $existingIndex = $index;
+                    break;
+                }
+            }
+            
+            if ($existingIndex !== null) {
+                // Update existing report
+                $oldCreatedAt = $existingReports[$existingIndex]['created_at'];
+                $existingReports[$existingIndex]['data'] = $newReport['data'];
+                $existingReports[$existingIndex]['created_at'] = $newReport['created_at']; // Update timestamp
+                $existingReports[$existingIndex]['source'] = 'bulk_upload_update';
+                // Ensure proper field structure for analytics
+                $existingReports[$existingIndex]['category_name'] = $category['name'] ?? 'Unknown Category';
+                $existingReports[$existingIndex]['submitted_by_name'] = $user['name'] ?? 'Unknown User';
+                $existingReports[$existingIndex]['role'] = $user['role'] ?? '';
+                $existingReports[$existingIndex]['region'] = $user['region'] ?? '';
+                $existingReports[$existingIndex]['zone'] = $user['zone'] ?? '';
+                $updatedCount++;
+                
+                // Track the updated group with details
+                $updatedGroups[] = [
+                    'group_name' => resolveGroupLabelById($finalGroupValue) ?: $finalGroupValue,
+                    'group_id' => $finalGroupValue,
+                    'previous_date' => $oldCreatedAt
+                ];
+            } else {
+                // Add new report
+                $existingReports[] = $newReport;
+                $createdCount++;
+                
+                // Track the new group
+                $createdGroups[] = [
+                    'group_name' => resolveGroupLabelById($finalGroupValue) ?: $finalGroupValue,
+                    'group_id' => $finalGroupValue
+                ];
+            }
+        }
+        
+        if (saveReports($existingReports)) {
+            app_log('bulk_upload_success', 'Bulk upload completed', [
+                'category_id' => $categoryId,
+                'reports_created' => $createdCount,
+                'reports_updated' => $updatedCount,
+                'uploaded_by' => $userId
+            ]);
+            
+            // Build detailed success message
+            $message = "Bulk upload completed successfully!\n\n";
+            
+            // Add information about auto-created groups
+            if (!empty($newGroupsAdded)) {
+                $message .= "🆕 AUTO-CREATED " . count($newGroupsAdded) . " NEW GROUPS:\n";
+                foreach ($newGroupsAdded as $group) {
+                    $message .= "  • {$group['name']} (now available for future uploads)\n";
+                }
+                $message .= "\n";
+            }
+            
+            if ($createdCount > 0) {
+                $message .= "📝 CREATED {$createdCount} NEW REPORTS:\n";
+                foreach ($createdGroups as $group) {
+                    $message .= "  • {$group['group_name']}\n";
+                }
+                $message .= "\n";
+            }
+            
+            if ($updatedCount > 0) {
+                $message .= "🔄 UPDATED {$updatedCount} EXISTING REPORTS:\n";
+                foreach ($updatedGroups as $group) {
+                    $message .= "  • {$group['group_name']} (previously from " . date('M d, Y H:i', strtotime($group['previous_date'])) . ")\n";
+                }
+                $message .= "\n";
+            }
+            
+            if (empty($createdGroups) && empty($updatedGroups)) {
+                $message .= "No changes were made.\n";
+            }
+            
+            return [
+                'success' => true, 
+                'message' => trim($message),
+                'details' => [
+                    'created_groups' => $createdGroups,
+                    'updated_groups' => $updatedGroups,
+                    'created_count' => $createdCount,
+                    'updated_count' => $updatedCount
+                ]
+            ];
+        } else {
+            return ['success' => false, 'message' => 'Failed to save reports. Please try again.'];
+        }
+        
+    } catch (Exception $e) {
+        app_log('bulk_upload_error', 'Bulk upload failed', [
+            'category_id' => $categoryId,
+            'error' => $e->getMessage(),
+            'uploaded_by' => $userId
+        ]);
+        
+        return ['success' => false, 'message' => 'Error processing CSV file: ' . $e->getMessage()];
+    }
+}
+
 ?>

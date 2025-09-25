@@ -7,8 +7,9 @@ requireLogin();
 $user = getUserById($_SESSION['user_id']);
 $zones = getZones();
 
-$message = '';
-$error = '';
+$message = $_SESSION['flash_message'] ?? '';
+$error = $_SESSION['flash_error'] ?? '';
+unset($_SESSION['flash_message'], $_SESSION['flash_error']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = sanitizeInput($_POST['name'] ?? '');
@@ -67,8 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['name'] = $name;
             $_SESSION['email'] = $email;
 
-            $message = 'Profile updated successfully!';
-            $user = getUserById($_SESSION['user_id']); // Refresh user data
+            $_SESSION['flash_message'] = 'Profile updated successfully!';
+            header('Location: profile.php');
+            exit;
+        } else {
+            $_SESSION['flash_error'] = $error;
+            header('Location: profile.php');
+            exit;
         }
     }
 }

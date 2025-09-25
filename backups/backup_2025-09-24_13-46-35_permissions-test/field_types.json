@@ -56,6 +56,14 @@
         "description": ""
     },
     {
+        "id": "ft_68b871d4f40349.87466428",
+        "key": "Quantity",
+        "label": "Quantity",
+        "base_type": "number",
+        "source": "manual",
+        "description": ""
+    },
+    {
         "id": "ft_68b872040b1877.85062395",
         "key": "name",
         "label": "Name",

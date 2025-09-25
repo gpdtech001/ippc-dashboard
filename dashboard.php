@@ -588,8 +588,8 @@ $(document).ready(function() {
 $latestReport = null;
 if (function_exists('getReports')) {
     $allReports = getReports();
-    // Sort by submitted_at desc
-    usort($allReports, function($a, $b){ return strcmp($b['submitted_at'] ?? '', $a['submitted_at'] ?? ''); });
+    // Sort by created_at desc
+    usort($allReports, function($a, $b){ return strcmp($b['created_at'] ?? '', $a['created_at'] ?? ''); });
     if ($isAdmin) {
         $latestReport = $allReports[0] ?? null;
     } else {
@@ -680,23 +680,6 @@ if (function_exists('getReports')) {
                                     <p class="lead">Hello <strong><?php echo htmlspecialchars($user['name'] ?? 'User'); ?></strong>!</p>
                                     <p class="mb-4">You are logged in as <strong><?php echo htmlspecialchars(ucfirst($user['role'] ?? 'user')); ?></strong></p>
 
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-8">
-                                            <div class="alert alert-info">
-                                                <h5><i class="icon fas fa-info"></i> Getting Started</h5>
-                                                <p>Use the navigation menu to access different features of the system. As a <?php echo htmlspecialchars(ucfirst($user['role'] ?? 'user')); ?>, you have access to:</p>
-                                                <ul class="list-unstyled">
-                                                    <?php if ($_SESSION['role'] === ROLE_ADMIN): ?>
-                                                    <li><i class="fas fa-check text-success"></i> Manage all users and their permissions</li>
-                                                    <li><i class="fas fa-check text-success"></i> Approve or reject user registrations</li>
-                                                    <?php else: ?>
-                                                    <li><i class="fas fa-check text-success"></i> Access your assigned zone information</li>
-                                                    <?php endif; ?>
-                                                    <li><i class="fas fa-check text-success"></i> Update your profile information</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="row justify-content-center mt-4">
                                         <div class="col-md-6">
@@ -791,7 +774,7 @@ if (function_exists('getReports')) {
                                             </div>
                                             <div class="mb-2">
                                                 <strong>Submitted At:</strong> 
-                                                <?php echo htmlspecialchars($latestReport['submitted_at'] ?? ''); ?>
+                                                <?php echo htmlspecialchars($latestReport['created_at'] ?? ''); ?>
                                             </div>
                                             <?php if ($isAdmin): ?>
                                                 <div class="mb-2">

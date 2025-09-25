@@ -110,13 +110,13 @@ foreach ($categories as $c) {
 // Filter for non-admin: show only own submissions
 if (!$isAdmin) {
     $reports = array_values(array_filter($reports, function($r) use ($user) {
-        return isset($r['submitted_by']) && $r['submitted_by'] === ($user['id'] ?? null);
+        return isset($r['created_by']) && $r['created_by'] === ($user['id'] ?? null);
     }));
 }
 
-// Sort reports by submitted_at desc
+// Sort reports by created_at desc
 usort($reports, function($a, $b){
-    return strcmp($b['submitted_at'] ?? '', $a['submitted_at'] ?? '');
+    return strcmp($b['created_at'] ?? '', $a['created_at'] ?? '');
 });
 
 // Group reports by category_id
@@ -151,6 +151,7 @@ foreach ($reports as $r) {
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item"><a class="nav-link" href="reporting.php"><i class="fas fa-plus"></i> Submit Report</a></li>
+            <li class="nav-item"><a class="nav-link" href="bulk_reports.php"><i class="fas fa-file-upload"></i> Bulk Upload</a></li>
             <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
     </nav>
@@ -191,8 +192,11 @@ foreach ($reports as $r) {
                                     <table class="table table-striped table-bordered mb-0 datatable">
                                         <thead>
                                             <tr>
-                                                <th style="width:180px">Submitted At</th>
+                                                <th style="width:180px">Created At</th>
                                                 <th>Submitted By</th>
+                                                <?php if ($isAdmin): ?>
+                                                    <th>Zone</th>
+                                                <?php endif; ?>
                                                 <th style="width:140px">Actions</th>
                                                 <?php foreach ($catFields as $f): ?>
                                                     <th><?php echo htmlspecialchars($f['label'] ?? $f['id']); ?></th>
@@ -202,10 +206,28 @@ foreach ($reports as $r) {
                                         <tbody>
                                             <?php foreach ($items as $r): ?>
                                             <tr>
-                                                <td><?php echo htmlspecialchars($r['submitted_at'] ?? ''); ?></td>
-                                                <td><?php echo htmlspecialchars(($r['submitted_by_name'] ?? '') . ($isAdmin ? ' (' . ($r['role'] ?? '') . ')' : '')); ?></td>
+                                                <td><?php echo htmlspecialchars($r['created_at'] ?? ''); ?></td>
                                                 <td>
-                                                    <?php $canEdit = $isAdmin || (($r['submitted_by'] ?? '') === ($user['id'] ?? '')); ?>
+                                                    <?php 
+                                                    $submitterInfo = $r['submitted_by_name'] ?? $r['submitted_by'] ?? 'Unknown User';
+                                                    if ($isAdmin && !empty($r['role'])) {
+                                                        $submitterInfo .= ' (' . htmlspecialchars($r['role']) . ')';
+                                                    }
+                                                    echo htmlspecialchars($submitterInfo);
+                                                    ?>
+                                                    <?php if (!empty($r['source'])): ?>
+                                                        <?php if ($r['source'] === 'bulk_upload'): ?>
+                                                            <span class="badge badge-info badge-sm ml-1">Bulk</span>
+                                                        <?php elseif ($r['source'] === 'bulk_upload_update'): ?>
+                                                            <span class="badge badge-warning badge-sm ml-1">Updated</span>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <?php if ($isAdmin): ?>
+                                                    <td><?php echo htmlspecialchars($r['zone'] ?? '—'); ?></td>
+                                                <?php endif; ?>
+                                                <td>
+                                                    <?php $canEdit = $isAdmin || (($r['created_by'] ?? '') === ($user['id'] ?? '')); ?>
                                                     <?php if ($canEdit): ?>
                                                         <a class="btn btn-sm btn-primary" href="report_edit.php?id=<?php echo urlencode($r['id']); ?>">
                                                             <i class="fas fa-edit"></i> Edit
@@ -214,7 +236,7 @@ foreach ($reports as $r) {
                                                         <span class="text-muted">—</span>
                                                     <?php endif; ?>
                                                     <?php if ($isAdmin): ?>
-                                                        <button type="button" class="btn btn-sm btn-danger ml-1" onclick="deleteReport('<?php echo htmlspecialchars($r['id']); ?>', '<?php echo htmlspecialchars($r['submitted_by_name'] ?? 'Unknown'); ?>', '<?php echo htmlspecialchars($cat['name']); ?>')">
+                                                        <button type="button" class="btn btn-sm btn-danger ml-1" onclick="deleteReport('<?php echo htmlspecialchars($r['id']); ?>', '<?php echo htmlspecialchars($r['submitted_by_name'] ?? $r['submitted_by'] ?? 'Unknown'); ?>', '<?php echo htmlspecialchars($cat['name']); ?>')">
                                                             <i class="fas fa-trash"></i> Delete
                                                         </button>
                                                     <?php endif; ?>

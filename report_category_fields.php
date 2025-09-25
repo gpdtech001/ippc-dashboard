@@ -163,6 +163,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header('Location: report_category_fields.php?category_id=' . urlencode($categoryId));
                 exit;
             }
+        } elseif ($action === 'reorder_fields') {
+            $fieldOrder = $_POST['field_order'] ?? [];
+            if (!is_array($fieldOrder) || empty($fieldOrder)) {
+                $error = 'Invalid field order data';
+                app_log('validation_error', 'Invalid field order', ['category_id' => $categoryId]);
+            } else {
+                // Create a map of existing fields by ID
+                $fieldsById = [];
+                foreach ($categories[$index]['fields'] as $field) {
+                    $fieldsById[$field['id']] = $field;
+                }
+                
+                // Reorder fields according to the provided order
+                $reorderedFields = [];
+                foreach ($fieldOrder as $fieldId) {
+                    if (isset($fieldsById[$fieldId])) {
+                        $reorderedFields[] = $fieldsById[$fieldId];
+                    }
+                }
+                
+                // Update the category with reordered fields
+                $categories[$index]['fields'] = $reorderedFields;
+                
+                $result = saveReportCategories($categories);
+                if ($result['success'] === false) {
+                    $error = 'Failed to reorder fields: ' . $result['message'];
+                    app_log('write_error', 'Failed to reorder fields', ['category_id' => $categoryId]);
+                } else {
+                    app_log('field_reorder', 'Fields reordered', ['category_id' => $categoryId, 'new_order' => $fieldOrder]);
+                    echo json_encode(['success' => true, 'message' => 'Fields reordered successfully']);
+                    exit;
+                }
+            }
         }
     }
 }
@@ -179,6 +212,59 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css">
+    <style>
+    /* Sortable drag and drop styles */
+    .sortable-ghost {
+        opacity: 0.4;
+        background-color: #f8f9fa;
+    }
+    
+    .sortable-chosen {
+        background-color: #e3f2fd !important;
+    }
+    
+    .sortable-drag {
+        background-color: #fff !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        transform: rotate(5deg);
+    }
+    
+    .drag-handle {
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+    
+    .drag-handle {
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        padding: 8px 4px;
+    }
+    
+    .drag-handle:hover {
+        background-color: #e3f2fd;
+        color: #007bff !important;
+    }
+    
+    .drag-handle:active {
+        cursor: grabbing !important;
+        background-color: #bbdefb;
+    }
+    }
+    
+    /* Smooth transitions */
+    #sortable-fields tr {
+        transition: all 0.2s ease;
+    }
+    
+    /* Disable text selection during drag */
+    .sortable-fallback {
+        user-select: none;
+    }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -275,24 +361,36 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
                     </div>
                     <div class="col-md-7">
                         <div class="card card-outline card-secondary">
-                            <div class="card-header"><h3 class="card-title">Existing Fields</h3></div>
+                            <div class="card-header">
+                                <h3 class="card-title">Existing Fields</h3>
+                                <?php if (!empty($fields)): ?>
+                                <div class="card-tools">
+                                    <small class="text-muted"><i class="fas fa-arrows-alt"></i> Drag rows to reorder fields</small>
+                                </div>
+                                <?php endif; ?>
+                            </div>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
                                     <table class="table table-striped mb-0">
                                         <thead>
                                             <tr>
+                                                <th style="width:30px"></th>
                                                 <th>Label</th>
                                                 <th>Type</th>
                                                 <th>Required</th>
                                                 <th style="width:160px">Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="sortable-fields">
                                         <?php if (empty($fields)): ?>
-                                            <tr><td colspan="4" class="text-center text-muted">No fields yet</td></tr>
+                                            <tr><td colspan="5" class="text-center text-muted">No fields yet</td></tr>
                                         <?php else: ?>
-                                            <?php foreach ($fields as $f): ?>
-                                            <tr>
+                                            <?php foreach ($fields as $index => $f): ?>
+                                            <tr data-field-id="<?php echo htmlspecialchars($f['id']); ?>">
+                                                <td class="drag-handle" style="cursor: grab;" title="Drag to reorder">
+                                                    <i class="fas fa-grip-vertical text-muted"></i>
+                                                    <small class="text-muted ml-1"><?php echo $index + 1; ?></small>
+                                                </td>
                                                 <td><?php echo htmlspecialchars($f['label']); ?></td>
                                                 <td><?php echo htmlspecialchars($f['type']); ?></td>
                                                 <td><?php echo !empty($f['required']) ? 'Yes' : 'No'; ?></td>
@@ -394,6 +492,7 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script src="assets/js/sweetalert-init.js"></script>
 <script>
 window.__FLASH_MESSAGES__ = {
@@ -464,7 +563,114 @@ $('#editFieldModal').on('show.bs.modal', function (event) {
 });
 
 // Initialize options visibility on add form
-document.addEventListener('DOMContentLoaded', function(){ toggleOptions('add'); });
+document.addEventListener('DOMContentLoaded', function(){ 
+    toggleOptions('add');
+    initializeSortable();
+});
+
+// Initialize sortable functionality
+function initializeSortable() {
+    const sortableElement = document.getElementById('sortable-fields');
+    if (!sortableElement || sortableElement.children.length <= 1) {
+        return; // No fields or only one field, no need to initialize
+    }
+    
+    const sortable = new Sortable(sortableElement, {
+        handle: '.drag-handle',
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
+        onStart: function(evt) {
+            evt.item.style.cursor = 'grabbing';
+        },
+        onEnd: function(evt) {
+            evt.item.style.cursor = 'grab';
+            if (evt.oldIndex !== evt.newIndex) {
+                updateOrderNumbers();
+                saveFieldOrder();
+            }
+        }
+    });
+}
+
+// Update order numbers after reordering
+function updateOrderNumbers() {
+    const fieldRows = document.querySelectorAll('#sortable-fields tr[data-field-id]');
+    fieldRows.forEach(function(row, index) {
+        const orderNumber = row.querySelector('.drag-handle small');
+        if (orderNumber) {
+            orderNumber.textContent = index + 1;
+        }
+    });
+}
+
+// Save the new field order
+function saveFieldOrder() {
+    const fieldRows = document.querySelectorAll('#sortable-fields tr[data-field-id]');
+    const fieldOrder = [];
+    
+    fieldRows.forEach(function(row) {
+        const fieldId = row.getAttribute('data-field-id');
+        if (fieldId) {
+            fieldOrder.push(fieldId);
+        }
+    });
+    
+    if (fieldOrder.length === 0) {
+        return;
+    }
+    
+    // Show loading indicator
+    Swal.fire({
+        title: 'Saving order...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    
+    // Send AJAX request to save the new order
+    const formData = new FormData();
+    formData.append('action', 'reorder_fields');
+    fieldOrder.forEach(function(fieldId, index) {
+        formData.append('field_order[]', fieldId);
+    });
+    
+    fetch(window.location.href, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.close();
+        if (data.success) {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                icon: 'success',
+                title: 'Field order saved!'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: data.message || 'Failed to save field order'
+            });
+        }
+    })
+    .catch(error => {
+        Swal.close();
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to save field order'
+        });
+    });
+}
 </script>
 </body>
 </html>

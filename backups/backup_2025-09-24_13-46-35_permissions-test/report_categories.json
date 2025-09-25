@@ -16,112 +16,113 @@
                 "source": "zones_groups"
             },
             {
-                "id": "fld_68d3f7226e3be7.30488465",
+                "id": "fld_68b85bc158a402.64379297",
                 "label": "Reach Out World Programs",
-                "type": "quantity",
-                "required": true,
-                "placeholder": "Enter Number",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
                 "options": [],
-                "source": "manual"
+                "source": "manual",
+                "updated_at": "2025-09-03 20:19:49"
             },
             {
-                "id": "fld_68d3f8db8ca405.56456644",
+                "id": "fld_68b85c141226d6.90300083",
                 "label": "Rhapathon With Pastor Chris",
-                "type": "quantity",
-                "required": true,
-                "placeholder": "Enter Number",
+                "type": "number",
+                "required": false,
+                "placeholder": "enter amount",
                 "options": [],
-                "source": "manual"
+                "source": "manual",
+                "updated_at": "2025-09-03 20:19:52"
             },
             {
                 "id": "fld_68b8627ec15db6.08733344",
                 "label": "Say Yes To Kids",
-                "type": "quantity",
+                "type": "number",
                 "required": false,
                 "placeholder": "enter amount",
                 "options": [],
                 "source": "manual",
-                "updated_at": "2025-09-24 15:58:05"
+                "updated_at": "2025-09-03 20:19:55"
             },
             {
                 "id": "fld_68b862964a2ec0.70457024",
                 "label": "Teevolution",
-                "type": "quantity",
+                "type": "number",
                 "required": false,
                 "placeholder": "enter amount",
                 "options": [],
                 "source": "manual",
-                "updated_at": "2025-09-24 15:58:11"
+                "updated_at": "2025-09-03 20:19:58"
             },
             {
                 "id": "fld_68b862a61bf222.55945939",
                 "label": "YouthsAglow",
-                "type": "quantity",
+                "type": "number",
                 "required": false,
                 "placeholder": "enter amount",
                 "options": [],
                 "source": "manual",
-                "updated_at": "2025-09-24 15:58:20"
+                "updated_at": "2025-09-03 20:20:03"
             },
             {
                 "id": "fld_68b862bb581c38.97519459",
                 "label": "No One Left Behind",
-                "type": "quantity",
+                "type": "number",
                 "required": false,
                 "placeholder": "enter amount",
                 "options": [],
                 "source": "manual",
-                "updated_at": "2025-09-24 15:58:26"
+                "updated_at": "2025-09-03 20:20:07"
             },
             {
                 "id": "fld_68b862def409c0.34952105",
                 "label": "Penetrating With Truth",
-                "type": "quantity",
+                "type": "number",
                 "required": false,
                 "placeholder": "enter amount",
                 "options": [],
                 "source": "manual",
-                "updated_at": "2025-09-24 16:00:22"
+                "updated_at": "2025-09-03 20:20:15"
             },
             {
                 "id": "fld_68b862ef54a408.76917062",
                 "label": "Penetrating With Languages",
-                "type": "quantity",
+                "type": "number",
                 "required": false,
                 "placeholder": "enter amount",
                 "options": [],
                 "source": "manual",
-                "updated_at": "2025-09-24 16:00:37"
+                "updated_at": "2025-09-03 20:20:18"
             },
             {
                 "id": "fld_68b863204ec156.94657958",
                 "label": "Adopt A Street",
-                "type": "quantity",
+                "type": "number",
                 "required": false,
                 "placeholder": "enter amount",
                 "options": [],
                 "source": "manual",
-                "updated_at": "2025-09-24 16:01:14"
+                "updated_at": "2025-09-03 20:20:22"
             },
             {
                 "id": "fld_68b863d0e2d5f0.85257617",
                 "label": "Total Of Outreaches Carried Out",
-                "type": "quantity",
+                "type": "number",
                 "required": false,
                 "placeholder": "enter amount",
                 "options": [],
                 "source": "manual",
-                "updated_at": "2025-09-24 16:01:23"
+                "updated_at": "2025-09-03 20:20:26"
             },
             {
                 "id": "fld_68d3efe3d3c713.89613610",
-                "label": "Total Sponsorship",
+                "label": "total",
                 "type": "currency_amount",
                 "required": false,
                 "placeholder": "new",
                 "options": [],
-                "source": "manual",
-                "updated_at": "2025-09-24 16:05:41"
+                "source": "manual"
             }
         ]
     },
@@ -554,15 +555,6 @@
                 "type": "number",
                 "required": false,
                 "placeholder": "",
-                "options": [],
-                "source": "manual"
-            },
-            {
-                "id": "fld_68d41e31be3395.69830999",
-                "label": "Sponsorship Total",
-                "type": "currency_amount",
-                "required": true,
-                "placeholder": "Enter Amount",
                 "options": [],
                 "source": "manual"
             }

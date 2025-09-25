@@ -310,5 +310,11 @@
     "name": "Central African CFA Franc",
     "symbol": "FCFA",
     "country": "Central Africa"
+  },
+  {
+    "code": "E",
+    "name": "Espees",
+    "symbol": "E",
+    "country": "IPPC"
   }
 ]

@@ -10,8 +10,9 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
-$error = '';
-$success = '';
+$error = $_SESSION['flash_error'] ?? '';
+$success = $_SESSION['flash_message'] ?? '';
+unset($_SESSION['flash_error'], $_SESSION['flash_message']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login_input = sanitizeInput($_POST['login_input'] ?? '');
@@ -19,7 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $remember = isset($_POST['remember']);
 
     if (empty($login_input) || empty($password)) {
-        $error = 'Please fill in all fields.';
+        $_SESSION['flash_error'] = 'Please fill in all fields.';
+        header('Location: login.php');
+        exit;
     } else {
         // Try to find user by email first, then by username
         $user = getUserByEmail($login_input);
@@ -31,14 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check if user is approved and enabled
             if (!isUserApproved($user)) {
                 if (isset($user['status']) && $user['status'] === STATUS_REJECTED) {
-                    $error = 'Your account has been rejected. Please contact an administrator.';
+                    $_SESSION['flash_error'] = 'Your account has been rejected. Please contact an administrator.';
                 } elseif (isset($user['status']) && $user['status'] === STATUS_DISABLED) {
-                    $error = 'Your account has been disabled. Please contact an administrator.';
+                    $_SESSION['flash_error'] = 'Your account has been disabled. Please contact an administrator.';
                 } elseif (isset($user['status']) && $user['status'] === STATUS_PENDING) {
-                    $error = 'Your account is pending approval. Please wait for administrator approval.';
+                    $_SESSION['flash_error'] = 'Your account is pending approval. Please wait for administrator approval.';
                 } else {
-                    $error = 'Your account is pending approval. Please contact an administrator.';
+                    $_SESSION['flash_error'] = 'Your account is pending approval. Please contact an administrator.';
                 }
+                header('Location: login.php');
+                exit;
             } else {
                 // Set session
                 $_SESSION['user_id'] = $user['id'];
@@ -67,7 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
         } else {
-            $error = 'Invalid login credentials.';
+            $_SESSION['flash_error'] = 'Invalid login credentials.';
+            header('Location: login.php');
+            exit;
         }
     }
 }

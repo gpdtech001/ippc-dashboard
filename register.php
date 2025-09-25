@@ -11,8 +11,9 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $zones = getZones();
-$error = '';
-$success = '';
+$error = $_SESSION['flash_error'] ?? '';
+$success = $_SESSION['flash_message'] ?? '';
+unset($_SESSION['flash_error'], $_SESSION['flash_message']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = sanitizeInput($_POST['name'] ?? '');
@@ -28,21 +29,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validation
     if (empty($name) || empty($email) || empty($username) || empty($password) || empty($role)) {
-        $error = 'Please fill in all required fields.';
+        $_SESSION['flash_error'] = 'Please fill in all required fields.';
     } elseif ($role === ROLE_ADMIN) {
-        $error = 'Admin role cannot be selected during registration. Contact an administrator to request admin privileges.';
+        $_SESSION['flash_error'] = 'Admin role cannot be selected during registration. Contact an administrator to request admin privileges.';
     } elseif ($role === ROLE_RZM && (empty($phone) || empty($kingschat_username) || empty($region) || empty($zone))) {
-        $error = 'Please fill in all RZM required fields.';
+        $_SESSION['flash_error'] = 'Please fill in all RZM required fields.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Please enter a valid email address.';
+        $_SESSION['flash_error'] = 'Please enter a valid email address.';
     } elseif ($password !== $confirm_password) {
-        $error = 'Passwords do not match.';
+        $_SESSION['flash_error'] = 'Passwords do not match.';
     } elseif (!validatePassword($password)) {
-        $error = 'Password must be at least 8 characters long and include uppercase, lowercase, and numeric characters.';
+        $_SESSION['flash_error'] = 'Password must be at least 8 characters long and include uppercase, lowercase, and numeric characters.';
     } elseif (getUserByEmail($email)) {
-        $error = 'Email address already exists.';
+        $_SESSION['flash_error'] = 'Email address already exists.';
     } elseif (getUserByUsername($username)) {
-        $error = 'Username already exists.';
+        $_SESSION['flash_error'] = 'Username already exists.';
     } else {
         // Create user with pending status
         $user = [
@@ -65,8 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $users[] = $user;
         saveUsers($users);
 
-                    $success = 'Registration successful! Your account is pending approval by an administrator. You will be able to login once approved.';
+        $_SESSION['flash_message'] = 'Registration successful! Your account is pending approval by an administrator. You will be able to login once approved.';
     }
+    
+    // Redirect to prevent form resubmission
+    header('Location: register.php');
+    exit;
 }
 ?>
 

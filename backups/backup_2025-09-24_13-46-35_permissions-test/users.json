@@ -1,0 +1,36 @@
+[
+    {
+        "id": "user_68b835b7b58290.58357298",
+        "name": "admin",
+        "email": "new@new.com",
+        "username": "admin",
+        "password": "$2y$10$hdSCe5zfT9KeYq6CiDucD.kIBcBIo6FAT.EuMuPtLOuFxhRiTP026",
+        "role": "admin",
+        "phone": "",
+        "kingschat_username": "",
+        "region": "",
+        "zone": "",
+        "created_at": "2025-09-03 14:33:59",
+        "remember_token": null,
+        "status": "approved",
+        "approved_at": "2025-09-03 14:33:59",
+        "approved_by": "system"
+    },
+    {
+        "id": "user_68d3e153085fc1.65233567",
+        "name": "max",
+        "email": "odunoyemayowa@gmail.com",
+        "username": "maxwellvn",
+        "password": "$2y$10$7lwNGtX7tMuwuQ4ZNng6p.5gCGd4Ecn2LKFN.kwptW4bY9LzUO\/nq",
+        "role": "rzm",
+        "phone": "0909090808",
+        "kingschat_username": "maxwellvn",
+        "region": "Region 1",
+        "zone": "SA Zone 1",
+        "status": "approved",
+        "created_at": "2025-09-24 14:17:23",
+        "remember_token": null,
+        "approved_at": "2025-09-24 14:17:54",
+        "approved_by": "user_68b835b7b58290.58357298"
+    }
+]

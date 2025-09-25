@@ -39,8 +39,8 @@ function aggregateSponsorshipData($reports, $filters = []) {
             continue;
         }
 
-        $submitter_name = $report['submitted_by_name'];
-        $category = $report['category_name'];
+        $submitter_name = $report['submitted_by_name'] ?? $report['submitted_by'] ?? 'Unknown';
+        $category = $report['category_name'] ?? 'Unknown';
         $region = $report['region'] ?: 'Unknown';
         $zone = $report['zone'] ?: 'Unknown';
 
@@ -62,16 +62,49 @@ function aggregateSponsorshipData($reports, $filters = []) {
         // Process each field in the report
         foreach ($report['data'] as $field_id => $value) {
             if (is_numeric($value) && $value > 0) {
-                // Check if this is likely an amount or quantity field
-                $field_label = strtolower(getFieldLabel($field_id, $category));
-
-                // Categorize as amount or quantity
-                if (strpos($field_label, 'amount') !== false ||
-                    strpos($field_label, 'total') !== false ||
-                    strpos($field_label, 'given') !== false ||
-                    strpos($field_label, 'received') !== false) {
+                // Get the field definition to check its type
+                $field_def = getFieldDefinition($field_id, $category);
+                $field_type = $field_def['type'] ?? '';
+                $field_label = strtolower($field_def['label'] ?? '');
+                
+                if ($field_type === 'currency_amount') {
+                    // Convert currency amount to base currency (Espees)
+                    $currency_field_id = $field_def['currency_field'] ?? null;
+                    $original_currency = 'E'; // Default to base currency
+                    
+                    // If no specific currency_field is defined, look for auto-currency field
+                    if (!$currency_field_id) {
+                        $auto_currency_field = "auto_currency_{$report['category_id']}";
+                        if (isset($report['data'][$auto_currency_field])) {
+                            $original_currency = $report['data'][$auto_currency_field];
+                        }
+                    } else {
+                        // Find the currency value if currency_field is specified
+                        if (isset($report['data'][$currency_field_id])) {
+                            $original_currency = $report['data'][$currency_field_id];
+                        }
+                    }
+                    
+                    // Convert to base currency (Espees)
+                    $amount_in_espees = convertToBaseCurrency($value, $original_currency);
+                    
+                    $aggregated_data[$submitter_name]['total_amount'] += $amount_in_espees;
+                    
+                } elseif ($field_type === 'quantity' || 
+                         strpos($field_label, 'quantity') !== false ||
+                         strpos($field_label, 'number') !== false ||
+                         strpos($field_label, 'count') !== false) {
+                    // Handle quantity fields
+                    $aggregated_data[$submitter_name]['total_quantity'] += (float)$value;
+                    
+                } elseif (strpos($field_label, 'amount') !== false ||
+                         strpos($field_label, 'total') !== false ||
+                         strpos($field_label, 'given') !== false ||
+                         strpos($field_label, 'received') !== false) {
+                    // Legacy fallback for fields that look like amounts but aren't currency_amount type
                     $aggregated_data[$submitter_name]['total_amount'] += (float)$value;
                 } else {
+                    // Default to quantity for other numeric fields
                     $aggregated_data[$submitter_name]['total_quantity'] += (float)$value;
                 }
             }
@@ -94,6 +127,21 @@ function getFieldLabel($field_id, $category_name) {
         }
     }
     return $field_id;
+}
+
+// Helper function to get field definition including type
+function getFieldDefinition($field_id, $category_name) {
+    $categories = getReportCategories() ?: [];
+    foreach ($categories as $category) {
+        if ($category['name'] === $category_name) {
+            foreach ($category['fields'] as $field) {
+                if ($field['id'] === $field_id) {
+                    return $field;
+                }
+            }
+        }
+    }
+    return null;
 }
 
 // Get data based on view type
@@ -340,7 +388,7 @@ sort($unique_zones);
                                                     </td>
                                                     <td class="text-right">
                                                         <span class="metric-value text-success">
-                                                            ₦<?php echo number_format($sponsor['total_amount'], 2); ?>
+                                                            E <?php echo number_format($sponsor['total_amount'], 2); ?>
                                                         </span>
                                                     </td>
                                                     <td class="text-right">
@@ -384,14 +432,48 @@ sort($unique_zones);
 
                                         foreach ($report['data'] as $field_id => $value) {
                                             if (is_numeric($value) && $value > 0) {
-                                                $field_label = strtolower(getFieldLabel($field_id, $category));
-
-                                                if (strpos($field_label, 'amount') !== false ||
-                                                    strpos($field_label, 'total') !== false ||
-                                                    strpos($field_label, 'given') !== false ||
-                                                    strpos($field_label, 'received') !== false) {
+                                                // Get the field definition to check its type
+                                                $field_def = getFieldDefinition($field_id, $category);
+                                                $field_type = $field_def['type'] ?? '';
+                                                $field_label = strtolower($field_def['label'] ?? '');
+                                                
+                                                if ($field_type === 'currency_amount') {
+                                                    // Convert currency amount to base currency (Espees)
+                                                    $currency_field_id = $field_def['currency_field'] ?? null;
+                                                    $original_currency = 'E'; // Default to base currency
+                                                    
+                                                    // If no specific currency_field is defined, look for auto-currency field
+                                                    if (!$currency_field_id) {
+                                                        $auto_currency_field = "auto_currency_{$report['category_id']}";
+                                                        if (isset($report['data'][$auto_currency_field])) {
+                                                            $original_currency = $report['data'][$auto_currency_field];
+                                                        }
+                                                    } else {
+                                                        // Find the currency value if currency_field is specified
+                                                        if (isset($report['data'][$currency_field_id])) {
+                                                            $original_currency = $report['data'][$currency_field_id];
+                                                        }
+                                                    }
+                                                    
+                                                    // Convert to base currency (Espees)
+                                                    $amount_in_espees = convertToBaseCurrency($value, $original_currency);
+                                                    $category_totals[$category]['amount'] += $amount_in_espees;
+                                                    
+                                                } elseif ($field_type === 'quantity' || 
+                                                         strpos($field_label, 'quantity') !== false ||
+                                                         strpos($field_label, 'number') !== false ||
+                                                         strpos($field_label, 'count') !== false) {
+                                                    // Handle quantity fields
+                                                    $category_totals[$category]['quantity'] += (float)$value;
+                                                    
+                                                } elseif (strpos($field_label, 'amount') !== false ||
+                                                         strpos($field_label, 'total') !== false ||
+                                                         strpos($field_label, 'given') !== false ||
+                                                         strpos($field_label, 'received') !== false) {
+                                                    // Legacy fallback for fields that look like amounts but aren't currency_amount type
                                                     $category_totals[$category]['amount'] += (float)$value;
                                                 } else {
+                                                    // Default to quantity for other numeric fields
                                                     $category_totals[$category]['quantity'] += (float)$value;
                                                 }
                                             }
@@ -406,7 +488,7 @@ sort($unique_zones);
                                             <div class="inner">
                                                 <h4><?php echo htmlspecialchars($category); ?></h4>
                                                 <p class="mb-1">
-                                                    <strong>₦<?php echo number_format($totals['amount'], 2); ?></strong> Amount
+                                                    <strong>E <?php echo number_format($totals['amount'], 2); ?></strong> Amount
                                                 </p>
                                                 <p class="mb-1">
                                                     <strong><?php echo number_format($totals['quantity']); ?></strong> Quantity

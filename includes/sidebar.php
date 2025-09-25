@@ -37,6 +37,20 @@ $current = basename($_SERVER['PHP_SELF']);
                         <p>Reports</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="bulk_reports.php" class="nav-link <?php echo $current === 'bulk_reports.php' ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-file-upload"></i>
+                        <p>Bulk Upload</p>
+                    </a>
+                </li>
+                <?php if (isset($_SESSION['role']) && ($_SESSION['role'] === ROLE_ADMIN || $_SESSION['role'] === 'rzm')): ?>
+                <li class="nav-item">
+                    <a href="groups_management.php" class="nav-link <?php echo $current === 'groups_management.php' ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-users-cog"></i>
+                        <p>Groups Management</p>
+                    </a>
+                </li>
+                <?php endif; ?>
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === ROLE_ADMIN): ?>
                 <li class="nav-item">
                     <a href="user_management.php" class="nav-link <?php echo $current === 'user_management.php' ? 'active' : ''; ?>">
@@ -78,6 +92,12 @@ $current = basename($_SERVER['PHP_SELF']);
                     <a href="system_monitor.php" class="nav-link <?php echo $current === 'system_monitor.php' ? 'active' : ''; ?>">
                         <i class="nav-icon fas fa-chart-line"></i>
                         <p>System Monitor</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="currency_settings.php" class="nav-link <?php echo $current === 'currency_settings.php' ? 'active' : ''; ?>">
+                        <i class="nav-icon fas fa-exchange-alt"></i>
+                        <p>Currency Settings</p>
                     </a>
                 </li>
                 <li class="nav-item">
