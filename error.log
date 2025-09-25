@@ -1294,3 +1294,15 @@
 [24-Sep-2025 15:39:24 Europe/Berlin] PHP Warning:  Undefined array key "total_field_types" in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/base_types_manager.php on line 382
 {"ts":"2025-09-24T15:39:24+02:00","level":"php_error","msg":"Undefined array key \"types_in_use\"","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"/Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/base_types_manager.php","line":382}}
 [24-Sep-2025 15:39:24 Europe/Berlin] PHP Warning:  Undefined array key "types_in_use" in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/base_types_manager.php on line 382
+{"ts":"2025-09-25T14:23:08+02:00","level":"php_error","msg":"Undefined array key \"base_types_used\"","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"C:\\xampp\\htdocs\\ippc-dashboard\\base_types_manager.php","line":332}}
+[25-Sep-2025 14:23:08 Europe/Berlin] PHP Warning:  Undefined array key "base_types_used" in C:\xampp\htdocs\ippc-dashboard\base_types_manager.php on line 332
+{"ts":"2025-09-25T14:23:08+02:00","level":"php_error","msg":"Undefined array key \"total_field_types\"","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"C:\\xampp\\htdocs\\ippc-dashboard\\base_types_manager.php","line":345}}
+[25-Sep-2025 14:23:08 Europe/Berlin] PHP Warning:  Undefined array key "total_field_types" in C:\xampp\htdocs\ippc-dashboard\base_types_manager.php on line 345
+{"ts":"2025-09-25T14:23:08+02:00","level":"php_error","msg":"Undefined array key \"system_types\"","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"C:\\xampp\\htdocs\\ippc-dashboard\\base_types_manager.php","line":380}}
+[25-Sep-2025 14:23:08 Europe/Berlin] PHP Warning:  Undefined array key "system_types" in C:\xampp\htdocs\ippc-dashboard\base_types_manager.php on line 380
+{"ts":"2025-09-25T14:23:08+02:00","level":"php_error","msg":"Undefined array key \"custom_types\"","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"C:\\xampp\\htdocs\\ippc-dashboard\\base_types_manager.php","line":381}}
+[25-Sep-2025 14:23:08 Europe/Berlin] PHP Warning:  Undefined array key "custom_types" in C:\xampp\htdocs\ippc-dashboard\base_types_manager.php on line 381
+{"ts":"2025-09-25T14:23:08+02:00","level":"php_error","msg":"Undefined array key \"total_field_types\"","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"C:\\xampp\\htdocs\\ippc-dashboard\\base_types_manager.php","line":382}}
+[25-Sep-2025 14:23:08 Europe/Berlin] PHP Warning:  Undefined array key "total_field_types" in C:\xampp\htdocs\ippc-dashboard\base_types_manager.php on line 382
+{"ts":"2025-09-25T14:23:08+02:00","level":"php_error","msg":"Undefined array key \"types_in_use\"","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"C:\\xampp\\htdocs\\ippc-dashboard\\base_types_manager.php","line":382}}
+[25-Sep-2025 14:23:08 Europe/Berlin] PHP Warning:  Undefined array key "types_in_use" in C:\xampp\htdocs\ippc-dashboard\base_types_manager.php on line 382
