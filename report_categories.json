@@ -305,7 +305,117 @@
         "name": "category c churches",
         "description": "",
         "created_at": "2025-09-03 16:12:51",
-        "created_by": "user_68b835b7b58290.58357298"
+        "created_by": "user_68b835b7b58290.58357298",
+        "fields": [
+            {
+                "id": "fld_68b84cdbc90ed9.13821288",
+                "label": "Group",
+                "type": "select",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "zones_groups"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821289",
+                "label": "Name of Group Pastor",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821290",
+                "label": "KingsChat Phone Number",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821291",
+                "label": "Email Address",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821292",
+                "label": "Church Level Category",
+                "type": "text",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821293",
+                "label": "Total Quantity Sponsored",
+                "type": "number",
+                "required": true,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821294",
+                "label": "Total Amount Received for Rhapsody Partnership by the Group Church",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821295",
+                "label": "Kiddies Products",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821296",
+                "label": "Teevo",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821297",
+                "label": "Braille & Sign Language(N OLB)",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821298",
+                "label": "Languages",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            },
+            {
+                "id": "fld_68b84cdbc90ed9.13821299",
+                "label": "Youth Aglow",
+                "type": "number",
+                "required": false,
+                "placeholder": "",
+                "options": [],
+                "source": "manual"
+            }
+        ]
     },
     {
         "id": "cat_68b84d01ab3598.62561714",
