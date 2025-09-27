@@ -3,6 +3,7 @@ require_once 'config.php';
 
 session_start();
 requireAdmin();
+requireCSRFToken();
 
 $message = $_SESSION['flash_message'] ?? '';
 $error = $_SESSION['flash_error'] ?? '';
@@ -102,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $categories = getReportCategories();
+$csrfToken = generateCSRFToken();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -161,6 +163,7 @@ $categories = getReportCategories();
                             <div class="card-header"><h3 class="card-title">Add Category</h3></div>
                             <form method="post">
                                 <div class="card-body">
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                     <input type="hidden" name="action" value="add_category">
                                     <div class="form-group">
                                         <label>Name *</label>
@@ -208,7 +211,8 @@ $categories = getReportCategories();
                                                         data-description="<?php echo htmlspecialchars($cat['description'] ?? ''); ?>">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <form method="post" class="d-inline" data-confirm="Delete this category?" data-confirm-title="Delete category" data-confirm-action="Delete">
+                                                   <form method="post" class="d-inline" data-confirm="Delete this category?" data-confirm-title="Delete category" data-confirm-action="Delete">
+                                                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                                         <input type="hidden" name="action" value="delete_category">
                                                         <input type="hidden" name="category_id" value="<?php echo htmlspecialchars($cat['id']); ?>">
                                                         <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -240,6 +244,7 @@ $categories = getReportCategories();
                 </div>
                 <form method="post">
                     <div class="modal-body">
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                         <input type="hidden" name="action" value="edit_category">
                         <input type="hidden" name="category_id" id="edit_category_id">
                         <div class="form-group">

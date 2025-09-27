@@ -1,6 +1,11 @@
 <?php
 require_once 'config.php';
 
+if (PHP_SAPI !== 'cli') {
+    session_start();
+    requireAdmin();
+}
+
 $users = getUsers();
 $updated = 0;
 
@@ -28,5 +33,4 @@ foreach ($users as $user) {
     echo "- {$user['name']} ({$user['username']}): {$status}\n";
 }
 ?>
-
 

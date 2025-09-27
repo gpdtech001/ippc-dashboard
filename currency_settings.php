@@ -3,6 +3,7 @@ require_once 'config.php';
 
 session_start();
 requireAdmin();
+requireCSRFToken();
 
 $user = getUserById($_SESSION['user_id']);
 $message = $_SESSION['flash_message'] ?? '';
@@ -140,6 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Reload settings after any updates
 $settings = getCurrencySettings();
+$csrfToken = generateCSRFToken();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -275,6 +277,7 @@ $settings = getCurrencySettings();
                 <!-- Bulk Actions -->
                 <div class="bulk-actions">
                     <form method="post" id="bulkForm">
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                         <input type="hidden" name="action" value="bulk_update">
                         <div class="row align-items-center">
                             <div class="col-md-4">
@@ -314,6 +317,7 @@ $settings = getCurrencySettings();
                     </div>
                     <div class="card-body p-0">
                         <form method="post">
+                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                             <input type="hidden" name="action" value="update_rates">
                             <div class="table-responsive" style="max-height: 600px;">
                                 <table class="table table-striped table-hover mb-0">

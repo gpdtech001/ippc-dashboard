@@ -3,6 +3,7 @@ require_once 'config.php';
 
 session_start();
 requireAdmin();
+requireCSRFToken();
 
 $categoryId = $_GET['category_id'] ?? '';
 $category = getCategoryById($categoryId);
@@ -14,6 +15,8 @@ if (!$category) {
 
 // Load available field types
 $fieldTypes = getFieldTypes();
+
+$csrfToken = generateCSRFToken();
 
 $message = $_SESSION['flash_message'] ?? '';
 $error = $_SESSION['flash_error'] ?? '';
@@ -253,7 +256,7 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
         cursor: grabbing !important;
         background-color: #bbdefb;
     }
-    }
+    
     
     /* Smooth transitions */
     #sortable-fields tr {
@@ -317,6 +320,7 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
                             <form method="post">
                                 <div class="card-body">
                                     <?php // Flash messages handled via SweetAlert2 ?>
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                     <input type="hidden" name="action" value="add_field">
                                     <div class="form-group">
                                         <label>Label *</label>
@@ -406,6 +410,7 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                     <form method="post" class="d-inline" data-confirm="Delete this field?" data-confirm-title="Delete field" data-confirm-action="Delete">
+                                                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                                         <input type="hidden" name="action" value="delete_field">
                                                         <input type="hidden" name="field_id" value="<?php echo htmlspecialchars($f['id']); ?>">
                                                         <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -437,6 +442,7 @@ $fields = isset($category['fields']) && is_array($category['fields']) ? $categor
                 </div>
                 <form method="post">
                     <div class="modal-body">
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                         <input type="hidden" name="action" value="edit_field">
                         <input type="hidden" name="field_id" id="edit_field_id">
                         <div class="form-group">
@@ -504,6 +510,7 @@ window.__FLASH_MESSAGES__ = {
 <script>
 // Field types data from PHP
 var fieldTypesData = <?php echo json_encode($fieldTypes); ?>;
+var csrfToken = <?php echo json_encode($csrfToken); ?>;
 
 function getFieldTypeByKey(key) {
     return fieldTypesData.find(function(type) { return type.key === key; }) || null;
@@ -636,6 +643,7 @@ function saveFieldOrder() {
     fieldOrder.forEach(function(fieldId, index) {
         formData.append('field_order[]', fieldId);
     });
+    formData.append('csrf_token', csrfToken);
     
     fetch(window.location.href, {
         method: 'POST',

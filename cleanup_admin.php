@@ -1,6 +1,11 @@
 <?php
 require_once 'config.php';
 
+if (PHP_SAPI !== 'cli') {
+    session_start();
+    requireAdmin();
+}
+
 $users = getUsers();
 echo 'Before cleanup:' . PHP_EOL;
 $adminCount = 0;
@@ -38,5 +43,4 @@ if ($adminCount > 1) {
     echo 'No cleanup needed - only one admin user found.' . PHP_EOL;
 }
 ?>
-
 

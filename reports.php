@@ -110,13 +110,16 @@ foreach ($categories as $c) {
 // Filter for non-admin: show only own submissions
 if (!$isAdmin) {
     $reports = array_values(array_filter($reports, function($r) use ($user) {
-        return isset($r['created_by']) && $r['created_by'] === ($user['id'] ?? null);
+        $ownerId = $r['created_by'] ?? $r['submitted_by'] ?? null;
+        return $ownerId === ($user['id'] ?? null);
     }));
 }
 
 // Sort reports by created_at desc
 usort($reports, function($a, $b){
-    return strcmp($b['created_at'] ?? '', $a['created_at'] ?? '');
+    $timeA = $a['created_at'] ?? $a['submitted_at'] ?? '';
+    $timeB = $b['created_at'] ?? $b['submitted_at'] ?? '';
+    return strcmp($timeB, $timeA);
 });
 
 // Group reports by category_id
@@ -205,8 +208,9 @@ foreach ($reports as $r) {
                                         </thead>
                                         <tbody>
                                             <?php foreach ($items as $r): ?>
+                                            <?php $createdAtDisplay = $r['created_at'] ?? $r['submitted_at'] ?? ''; ?>
                                             <tr>
-                                                <td><?php echo htmlspecialchars($r['created_at'] ?? ''); ?></td>
+                                                <td><?php echo htmlspecialchars($createdAtDisplay); ?></td>
                                                 <td>
                                                     <?php 
                                                     $submitterInfo = $r['submitted_by_name'] ?? $r['submitted_by'] ?? 'Unknown User';
@@ -227,7 +231,7 @@ foreach ($reports as $r) {
                                                     <td><?php echo htmlspecialchars($r['zone'] ?? '—'); ?></td>
                                                 <?php endif; ?>
                                                 <td>
-                                                    <?php $canEdit = $isAdmin || (($r['created_by'] ?? '') === ($user['id'] ?? '')); ?>
+                                                    <?php $ownerId = $r['created_by'] ?? $r['submitted_by'] ?? ''; $canEdit = $isAdmin || ($ownerId === ($user['id'] ?? '')); ?>
                                                     <?php if ($canEdit): ?>
                                                         <a class="btn btn-sm btn-primary" href="report_edit.php?id=<?php echo urlencode($r['id']); ?>">
                                                             <i class="fas fa-edit"></i> Edit

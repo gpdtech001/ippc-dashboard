@@ -8519,3 +8519,26 @@
 {"ts":"2025-09-25T14:23:08+02:00","level":"php_error","msg":"Undefined array key \"types_in_use\"","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"C:\\xampp\\htdocs\\ippc-dashboard\\base_types_manager.php","line":382}}
 [25-Sep-2025 14:23:08 Europe/Berlin] PHP Warning:  Undefined array key "types_in_use" in C:\xampp\htdocs\ippc-dashboard\base_types_manager.php on line 382
 >>>>>>> refs/remotes/origin/main
+{"ts":"2025-09-27T00:45:29+00:00","level":"php_error","msg":"ini_set(): Session ini settings cannot be changed when a session is active","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"/Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php","line":92}}
+[27-Sep-2025 00:45:29 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php on line 92
+{"ts":"2025-09-27T00:45:29+00:00","level":"php_error","msg":"session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"/Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php","line":93}}
+[27-Sep-2025 00:45:29 UTC] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php on line 93
+{"ts":"2025-09-27T00:45:29+00:00","level":"php_error","msg":"session_start(): Ignoring session_start() because a session is already active (started from Command line code on line 2)","user":"user_68b835b7b58290.58357298","context":{"errno":8,"file":"/Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/report_edit.php","line":4}}
+[27-Sep-2025 00:45:29 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from Command line code on line 2) in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/report_edit.php on line 4
+{"ts":"2025-09-27T00:45:29+00:00","level":"validation_error","msg":"Report edit validation errors","user":"user_68b835b7b58290.58357298","context":{"report_id":"rep_68d425fa179ce1.25316824","errors":["Rhapathon With Pastor Chris is required","Currency is required"]}}
+{"ts":"2025-09-27T00:45:51+00:00","level":"php_error","msg":"ini_set(): Session ini settings cannot be changed when a session is active","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"/Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php","line":92}}
+[27-Sep-2025 00:45:51 UTC] PHP Warning:  ini_set(): Session ini settings cannot be changed when a session is active in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php on line 92
+{"ts":"2025-09-27T00:45:51+00:00","level":"php_error","msg":"session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"/Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php","line":93}}
+[27-Sep-2025 00:45:51 UTC] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed when a session is active in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php on line 93
+{"ts":"2025-09-27T00:45:51+00:00","level":"php_error","msg":"session_start(): Ignoring session_start() because a session is already active (started from Command line code on line 4)","user":"user_68b835b7b58290.58357298","context":{"errno":8,"file":"/Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/report_edit.php","line":4}}
+[27-Sep-2025 00:45:51 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from Command line code on line 4) in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/report_edit.php on line 4
+{"ts":"2025-09-27T00:45:51+00:00","level":"php_error","msg":"chmod(): Operation not permitted","user":"user_68b835b7b58290.58357298","context":{"errno":2,"file":"/Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php","line":34}}
+[27-Sep-2025 00:45:51 UTC] ensureWritableFile: File not writable: /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/reports.json
+
+[27-Sep-2025 00:45:51 UTC] Error saving reports: Reports file is not writable
+[27-Sep-2025 00:45:51 UTC] PHP Fatal error:  Uncaught Exception: Reports file is not writable in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php:1136
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/report_edit.php(73): saveReports(Array)
+#1 Command line code(11): include('/Applications/X...')
+#2 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/ippc-dashboard/config.php on line 1136

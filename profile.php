@@ -3,6 +3,7 @@ require_once 'config.php';
 
 session_start();
 requireLogin();
+requireCSRFToken();
 
 $user = getUserById($_SESSION['user_id']);
 $zones = getZones();
@@ -10,12 +11,13 @@ $zones = getZones();
 $message = $_SESSION['flash_message'] ?? '';
 $error = $_SESSION['flash_error'] ?? '';
 unset($_SESSION['flash_message'], $_SESSION['flash_error']);
+$csrfToken = generateCSRFToken();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = sanitizeInput($_POST['name'] ?? '');
-    $email = sanitizeInput($_POST['email'] ?? '');
-    $phone = sanitizeInput($_POST['phone'] ?? '');
-    $kingschat_username = sanitizeInput($_POST['kingschat_username'] ?? '');
+    $name = sanitizeInput($_POST['name'] ?? ($user['name'] ?? ''));
+    $email = sanitizeInput($_POST['email'] ?? ($user['email'] ?? ''));
+    $phone = sanitizeInput($_POST['phone'] ?? ($user['phone'] ?? ''));
+    $kingschat_username = sanitizeInput($_POST['kingschat_username'] ?? ($user['kingschat_username'] ?? ''));
     $current_password = $_POST['current_password'] ?? '';
     $new_password = $_POST['new_password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
@@ -46,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = 'Current password is incorrect.';
             } elseif ($new_password !== $confirm_password) {
                 $error = 'New passwords do not match.';
-            } elseif (strlen($new_password) < 6) {
-                $error = 'New password must be at least 6 characters long.';
+            } elseif (!validatePassword($new_password)) {
+                $error = 'Password must be at least 8 characters long and include uppercase, lowercase, and numeric characters.';
             } else {
                 $updateData['password'] = hashPassword($new_password);
             }
@@ -63,6 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
             saveUsers($users);
+
+            if (isset($updateData['password'])) {
+                clearRememberToken($user['id']);
+            }
 
             // Update session data
             $_SESSION['name'] = $name;
@@ -198,6 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <!-- Profile Information Tab -->
                                     <div class="active tab-pane" id="profile">
                                         <form method="post" class="form-horizontal">
+                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                             <div class="form-group row">
                                                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                                                 <div class="col-sm-10">
@@ -256,6 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <!-- Change Password Tab -->
                                     <div class="tab-pane" id="password">
                                         <form method="post" class="form-horizontal">
+                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                             <div class="form-group row">
                                                 <label for="current_password" class="col-sm-3 col-form-label">Current Password</label>
                                                 <div class="col-sm-9">

@@ -105,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     app_log('error', 'Failed to generate report ID', ['error' => $e->getMessage()]);
                 }
                 if (!$error) {
+                    $timestamp = date('Y-m-d H:i:s');
                     $rep = [
                         'id' => $id,
                         'category_id' => $category['id'],
@@ -114,7 +115,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'role' => $user['role'] ?? '',
                         'region' => $user['region'] ?? null,
                         'zone' => $user['zone'] ?? null,
-                        'submitted_at' => date('Y-m-d H:i:s'),
+                        'submitted_at' => $timestamp,
+                        'created_at' => $timestamp,
+                        'created_by' => $user['id'] ?? null,
+                        'source' => 'manual',
                         'data' => $data
                     ];
                     $reports[] = $rep;

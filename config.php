@@ -318,7 +318,103 @@ function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
+function establishUserSession(array $user): void {
+    $_SESSION['user_id'] = $user['id'] ?? null;
+    $_SESSION['username'] = $user['username'] ?? null;
+    $_SESSION['email'] = $user['email'] ?? null;
+    $_SESSION['role'] = $user['role'] ?? null;
+    $_SESSION['name'] = $user['name'] ?? null;
+}
+
+function rememberCookieOptions(int $expires): array {
+    $isSecure = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+    return [
+        'expires' => $expires,
+        'path' => '/',
+        'secure' => $isSecure,
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ];
+}
+
+function setRememberCookie(?string $token, ?int $expires = null): void {
+    if ($token === null || $expires === null) {
+        setcookie('remember_token', '', rememberCookieOptions(time() - 3600));
+        return;
+    }
+    setcookie('remember_token', $token, rememberCookieOptions($expires));
+}
+
+function persistRememberToken(string $userId): ?string {
+    $users = getUsers();
+    foreach ($users as &$user) {
+        if (($user['id'] ?? '') === $userId) {
+            $token = bin2hex(random_bytes(32));
+            $hash = hash('sha256', $token);
+            $user['remember_token'] = $hash;
+            $user['remember_token_expires_at'] = date('c', time() + (86400 * 30));
+            if (saveUsers($users)) {
+                setRememberCookie($token, time() + (86400 * 30));
+                return $token;
+            }
+            return null;
+        }
+    }
+    return null;
+}
+
+function clearRememberToken(?string $userId = null): void {
+    if ($userId !== null) {
+        $users = getUsers();
+        $updated = false;
+        foreach ($users as &$user) {
+            if (($user['id'] ?? '') === $userId) {
+                if (isset($user['remember_token']) || isset($user['remember_token_expires_at'])) {
+                    unset($user['remember_token'], $user['remember_token_expires_at']);
+                    $updated = true;
+                }
+                break;
+            }
+        }
+        if ($updated) {
+            saveUsers($users);
+        }
+    }
+    setRememberCookie(null, null);
+}
+
+function attemptRememberedLogin(): void {
+    if (isLoggedIn()) {
+        return;
+    }
+    $cookieToken = $_COOKIE['remember_token'] ?? '';
+    if ($cookieToken === '') {
+        return;
+    }
+    $hash = hash('sha256', $cookieToken);
+    $users = getUsers();
+    foreach ($users as $user) {
+        if (!empty($user['remember_token']) && hash_equals($user['remember_token'], $hash)) {
+            $expiresAt = isset($user['remember_token_expires_at']) ? strtotime($user['remember_token_expires_at']) : null;
+            if ($expiresAt !== null && $expiresAt < time()) {
+                break;
+            }
+            if (!isUserApproved($user) || !isUserEnabled($user)) {
+                break;
+            }
+            establishUserSession($user);
+            // Refresh cookie to extend validity without regenerating token.
+            if ($expiresAt !== null) {
+                setRememberCookie($cookieToken, $expiresAt);
+            }
+            return;
+        }
+    }
+    clearRememberToken();
+}
+
 function requireLogin() {
+    attemptRememberedLogin();
     if (!isLoggedIn()) {
         header('Location: login.php');
         exit;
@@ -1052,31 +1148,40 @@ function saveReports($reports) {
             $temp = __DIR__ . '/reports.json.tmp.' . uniqid();
         }
 
+        $writeThrough = function () use ($filepath, $json) {
+            $fp = @fopen($filepath, 'c');
+            if (!$fp) {
+                return false;
+            }
+            $written = false;
+            if (flock($fp, LOCK_EX)) {
+                if (ftruncate($fp, 0) !== false) {
+                    $bytes = fwrite($fp, $json);
+                    if ($bytes === strlen($json)) {
+                        fflush($fp);
+                        $written = true;
+                    }
+                }
+                flock($fp, LOCK_UN);
+            }
+            fclose($fp);
+            return $written;
+        };
+
         if (file_put_contents($temp, $json) === false) {
             if (file_exists($temp)) {
                 @unlink($temp);
             }
-            throw new Exception('Failed to write to temporary file');
+            if ($writeThrough()) {
+                return true;
+            }
+            throw new Exception('Failed to write reports data: temporary file write failed');
         }
 
         // Try atomic rename first. If it fails (e.g. directory not writable for target user), fall back to locked write.
         if (!@rename($temp, $filepath)) {
             $renameError = error_get_last();
-            $writeOk = false;
-            $fp = @fopen($filepath, 'c');
-            if ($fp) {
-                if (flock($fp, LOCK_EX)) {
-                    if (ftruncate($fp, 0) !== false) {
-                        $written = fwrite($fp, $json);
-                        if ($written === strlen($json)) {
-                            fflush($fp);
-                            $writeOk = true;
-                        }
-                    }
-                    flock($fp, LOCK_UN);
-                }
-                fclose($fp);
-            }
+            $writeOk = $writeThrough();
             @unlink($temp);
 
             if ($writeOk) {
@@ -1498,8 +1603,6 @@ function deleteGroup($groupId, $userId) {
 }
 
 // Zone management functions
-define('ZONES_FILE', __DIR__ . '/zones.json');
-
 function getAllZones() {
     if (!file_exists(ZONES_FILE)) {
         return [];

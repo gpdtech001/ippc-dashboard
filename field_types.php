@@ -3,6 +3,7 @@ require_once 'config.php';
 
 session_start();
 requireAdmin();
+requireCSRFToken();
 
 $message = $_SESSION['flash_message'] ?? '';
 $error = $_SESSION['flash_error'] ?? '';
@@ -70,6 +71,7 @@ function discoverTypesFromCategories() {
 }
 
 $discovered = discoverTypesFromCategories();
+$csrfToken = generateCSRFToken();
 
 // JSON download
 if (isset($_GET['download']) && $_GET['download'] === 'json') {
@@ -390,6 +392,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <form method="post">
                                 <div class="card-body">
                                     <?php // Flash messages handled via SweetAlert2 ?>
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                     <input type="hidden" name="action" value="add_type">
                                     <div class="form-group">
                                         <label>Key *</label>
@@ -491,6 +494,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                             <i class="fas fa-edit"></i>
                                                         </button>
                                                         <form method="post" class="d-inline" data-confirm="Delete this type?" data-confirm-title="Delete field type" data-confirm-action="Delete">
+                                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                                             <input type="hidden" name="action" value="delete_type">
                                                             <input type="hidden" name="key" value="<?php echo htmlspecialchars($t['key']); ?>">
                                                             <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -531,6 +535,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                     <td><?php echo htmlspecialchars($meta['source']); ?></td>
                                                     <td>
                                                         <form method="post" class="d-inline">
+                                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                                             <input type="hidden" name="action" value="adopt_discovered">
                                                             <input type="hidden" name="key" value="<?php echo htmlspecialchars($k); ?>">
                                                             <button type="submit" class="btn btn-sm btn-primary">Add</button>
@@ -553,6 +558,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <a class="btn btn-sm btn-secondary" href="field_types.php?download=json"><i class="fas fa-download"></i> Download JSON</a>
                                 </div>
                                 <form method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                     <input type="hidden" name="action" value="import_types">
                                     <div class="form-group">
                                         <label>Upload JSON file</label>
@@ -654,6 +660,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
           <form method="post">
             <div class="modal-body">
+              <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
               <input type="hidden" name="action" value="edit_type">
               <div class="form-group">
                 <label>Key (read-only)</label>

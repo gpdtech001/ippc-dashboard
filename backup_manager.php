@@ -3,6 +3,7 @@ require_once 'config.php';
 
 session_start();
 requireAdmin();
+requireCSRFToken();
 
 $message = $_SESSION['flash_message'] ?? '';
 $error = $_SESSION['flash_error'] ?? '';
@@ -37,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $backups = listBackups();
+$csrfToken = generateCSRFToken();
 ?>
 
 <!DOCTYPE html>
@@ -99,6 +101,7 @@ $backups = listBackups();
                                 <h3 class="card-title">Create New Backup</h3>
                             </div>
                             <form method="POST">
+                                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="description">Description (Optional)</label>
@@ -156,6 +159,7 @@ $backups = listBackups();
                                                     <td><?php echo htmlspecialchars($backup['created_by'] ?? 'system'); ?></td>
                                                     <td>
                                                         <form method="POST" class="d-inline" data-confirm="Are you sure you want to restore this backup? This will overwrite current data." data-confirm-title="Restore backup?" data-confirm-action="Restore">
+                                                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                                                             <input type="hidden" name="backup_name" value="<?php echo htmlspecialchars($backup['name']); ?>">
                                                             <button type="submit" name="action" value="restore_backup" class="btn btn-warning btn-sm">
                                                                 <i class="fas fa-undo"></i> Restore

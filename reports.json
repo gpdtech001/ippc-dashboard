@@ -25,7 +25,9 @@
         "role": "rzm",
         "region": "Region 1",
         "zone": "SA Zone 1",
-        "source": "bulk_upload_update"
+        "source": "bulk_upload_update",
+        "updated_at": "2025-09-27 02:48:56",
+        "updated_by": "user_68b835b7b58290.58357298"
     },
     {
         "id": "rep_68d425fa17a089.20469992",

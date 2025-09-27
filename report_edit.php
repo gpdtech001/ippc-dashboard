@@ -70,10 +70,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $reports[$idx]['data'] = $data;
             $reports[$idx]['updated_at'] = date('Y-m-d H:i:s');
             $reports[$idx]['updated_by'] = $user['id'] ?? null;
-            if (saveReports($reports) === false) {
-                $error = 'Failed to save changes';
-                app_log('write_error', 'Failed to save edited report', ['report_id' => $reportId]);
-            } else {
+            try {
+                $saveResult = saveReports($reports);
+                if ($saveResult === false) {
+                    $error = 'Failed to save changes';
+                    app_log('write_error', 'Failed to save edited report', ['report_id' => $reportId, 'reason' => 'saveReports returned false']);
+                }
+            } catch (Exception $e) {
+                $error = 'Failed to save changes: ' . $e->getMessage();
+                app_log('write_error', 'Failed to save edited report', ['report_id' => $reportId, 'error' => $e->getMessage()]);
+            }
+
+            if (!$error) {
                 $_SESSION['flash_message'] = 'Report updated successfully';
                 header('Location: report_edit.php?id=' . urlencode($reportId));
                 exit;

@@ -3,6 +3,7 @@ require_once 'config.php';
 
 session_start();
 requireAdmin();
+requireCSRFToken();
 
 $users = getUsers();
 $zones = getZones();
@@ -95,8 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header('Location: user_management.php?error=Please enter a valid email address');
                 exit;
             }
-            if (strlen($password) < 6) {
-                header('Location: user_management.php?error=Password must be at least 6 characters long');
+            if (!validatePassword($password)) {
+                header('Location: user_management.php?error=Password must be at least 8 characters long and include uppercase, lowercase, and numeric characters');
                 exit;
             }
             if (getUserByEmail($email)) {
@@ -143,6 +144,8 @@ if (isset($_GET['success'])) {
 if (isset($_GET['error'])) {
     $error = $_GET['error'];
 }
+
+$csrfToken = generateCSRFToken();
 ?>
 
 <!DOCTYPE html>
@@ -337,6 +340,7 @@ if (isset($_GET['error'])) {
                 </div>
                 <form method="post">
                     <div class="modal-body">
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                         <input type="hidden" name="action" value="add_user">
                         <div class="row">
                             <div class="col-md-6">
@@ -362,7 +366,7 @@ if (isset($_GET['error'])) {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Password *</label>
-                                    <input type="password" name="password" class="form-control" required minlength="6">
+                                    <input type="password" name="password" class="form-control" required minlength="8">
                                 </div>
                             </div>
                         </div>
@@ -434,6 +438,7 @@ if (isset($_GET['error'])) {
                 </div>
                 <form id="editUserForm" method="post">
                     <div class="modal-body">
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                         <input type="hidden" name="action" value="update_role">
                         <input type="hidden" name="user_id" id="edit_user_id">
                         <div class="form-group">
@@ -490,6 +495,7 @@ if (isset($_GET['error'])) {
 <script>
 const zones = <?php echo json_encode($zones); ?>;
 const users = <?php echo json_encode($users); ?>;
+const csrfToken = <?php echo json_encode($csrfToken); ?>;
 
 // Show success toast notifications
 <?php if (isset($_GET['success'])): ?>
@@ -578,6 +584,7 @@ function approveUser(userId, userName) {
             const form = document.createElement('form');
             form.method = 'post';
             form.innerHTML = `
+                <input type="hidden" name="csrf_token" value="${csrfToken}">
                 <input type="hidden" name="action" value="approve_user">
                 <input type="hidden" name="user_id" value="${userId}">
             `;
@@ -602,6 +609,7 @@ function rejectUser(userId, userName) {
             const form = document.createElement('form');
             form.method = 'post';
             form.innerHTML = `
+                <input type="hidden" name="csrf_token" value="${csrfToken}">
                 <input type="hidden" name="action" value="reject_user">
                 <input type="hidden" name="user_id" value="${userId}">
             `;
@@ -626,6 +634,7 @@ function disableUser(userId, userName) {
             const form = document.createElement('form');
             form.method = 'post';
             form.innerHTML = `
+                <input type="hidden" name="csrf_token" value="${csrfToken}">
                 <input type="hidden" name="action" value="disable_user">
                 <input type="hidden" name="user_id" value="${userId}">
             `;
@@ -650,6 +659,7 @@ function enableUser(userId, userName) {
             const form = document.createElement('form');
             form.method = 'post';
             form.innerHTML = `
+                <input type="hidden" name="csrf_token" value="${csrfToken}">
                 <input type="hidden" name="action" value="enable_user">
                 <input type="hidden" name="user_id" value="${userId}">
             `;
@@ -674,6 +684,7 @@ function deleteUser(userId, userName) {
             const form = document.createElement('form');
             form.method = 'post';
             form.innerHTML = `
+                <input type="hidden" name="csrf_token" value="${csrfToken}">
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="user_id" value="${userId}">
             `;

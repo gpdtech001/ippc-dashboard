@@ -45,27 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header('Location: login.php');
                 exit;
             } else {
-                // Set session
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['role'] = $user['role'];
-                $_SESSION['name'] = $user['name'];
+                establishUserSession($user);
 
-                // Set remember cookie if requested
+                // Rotate remember token on every login
+                clearRememberToken($user['id']);
                 if ($remember) {
-                    $token = bin2hex(random_bytes(32));
-                    setcookie('remember_token', $token, time() + (86400 * 30), '/'); // 30 days
-
-                    // Store token in user data
-                    $users = getUsers();
-                    foreach ($users as &$u) {
-                        if ($u['id'] == $user['id']) {
-                            $u['remember_token'] = $token;
-                            break;
-                        }
-                    }
-                    saveUsers($users);
+                    persistRememberToken($user['id']);
                 }
 
                 header('Location: dashboard.php');
