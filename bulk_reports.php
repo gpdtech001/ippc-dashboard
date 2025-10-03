@@ -197,6 +197,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // Load report categories
 $categories = getReportCategories();
+$currencies = [];
+$currencyFile = __DIR__ . '/currency.json';
+if (file_exists($currencyFile)) {
+    $currencies = json_decode(@file_get_contents($currencyFile), true) ?: [];
+}
+$currencySettings = getCurrencySettings();
+$preferredCurrencyCode = $currencySettings['base_currency']['code'] ?? ($currencies[0]['code'] ?? 'E');
 
 // Filter categories based on user permissions if needed
 if (!$isAdmin) {
@@ -427,11 +434,20 @@ if (!$isAdmin) {
                                                         </div>
                                                     </div>
                                                     <div class="card-footer bg-white">
-                                                        <a href="report_template_download.php?category=<?php echo urlencode($category['id']); ?>" 
-                                                           class="btn btn-success btn-block">
-                                                            <i class="fas fa-download mr-2"></i>
-                                                            Download Template
-                                                        </a>
+                                                        <div class="d-flex flex-column flex-sm-row">
+                                                            <button type="button"
+                                                                    class="btn btn-success btn-block mb-2 mb-sm-0 mr-sm-2 download-template-btn"
+                                                                    data-category-id="<?php echo htmlspecialchars($category['id']); ?>"
+                                                                    data-category-name="<?php echo htmlspecialchars($category['name']); ?>">
+                                                                <i class="fas fa-download mr-2"></i>
+                                                                Download Template
+                                                            </button>
+                                                            <a href="report_category_fields.php?category_id=<?php echo urlencode($category['id']); ?>"
+                                                               class="btn btn-outline-secondary btn-block">
+                                                                <i class="fas fa-sliders-h mr-2"></i>
+                                                                Manage Fields
+                                                            </a>
+                                                        </div>
                                                         <div class="text-center mt-2">
                                                             <small class="text-muted">
                                                                 <i class="fas fa-info-circle mr-1"></i>
@@ -445,6 +461,55 @@ if (!$isAdmin) {
                                     </div>
                                 <?php endif; ?>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template Download Modal -->
+                <div class="modal fade" id="templateDownloadModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form id="templateDownloadForm" method="get" action="report_template_download.php">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        <i class="fas fa-file-download mr-2"></i>
+                                        Download Template
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="category" id="templateCategoryInput">
+                                    <div class="form-group">
+                                        <label for="templateCategoryLabel">Report Category</label>
+                                        <input type="text" class="form-control" id="templateCategoryLabel" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="templateCurrencySelect">Default Currency</label>
+                                        <select class="form-control" name="currency" id="templateCurrencySelect" required data-preferred="<?php echo htmlspecialchars($preferredCurrencyCode); ?>">
+                                            <?php if (!empty($currencies)): ?>
+                                                <?php foreach ($currencies as $currency): ?>
+                                                    <option value="<?php echo htmlspecialchars($currency['code']); ?>" <?php echo ($currency['code'] === $preferredCurrencyCode) ? 'selected' : ''; ?>>
+                                                        <?php echo htmlspecialchars($currency['code'] . ' - ' . $currency['name']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <option value="E" selected>E - Espees</option>
+                                            <?php endif; ?>
+                                        </select>
+                                        <small class="form-text text-muted">
+                                            This value will pre-fill all currency fields in the downloaded template.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-download mr-2"></i>Download
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -783,16 +848,36 @@ $(document).ready(function() {
             $(this).find('.card-footer .btn').removeClass('btn-hover');
         }
     );
-    
-    // Track template downloads
-    $('.template-card .btn').click(function() {
-        const categoryName = $(this).closest('.template-card').find('.card-title').text().trim();
-        const format = $(this).text().includes('Excel') ? 'Excel' : 'CSV';
-        
-        // Optional: Send analytics event
-        console.log(`Template downloaded: ${categoryName} - ${format}`);
-        
-        // Show brief success message
+
+    const $currencySelect = $('#templateCurrencySelect');
+    if ($currencySelect.length) {
+        const preferred = $currencySelect.data('preferred');
+        if (preferred && $currencySelect.find(`option[value="${preferred}"]`).length) {
+            $currencySelect.val(preferred);
+        }
+    }
+
+    // Handle template download modal
+    $('.download-template-btn').on('click', function() {
+        const categoryId = $(this).data('category-id');
+        const categoryName = $(this).data('category-name');
+        $('#templateCategoryInput').val(categoryId);
+        $('#templateCategoryLabel').val(categoryName);
+
+        if ($currencySelect.length) {
+            const preferred = $currencySelect.data('preferred');
+            if (preferred && $currencySelect.find(`option[value="${preferred}"]`).length) {
+                $currencySelect.val(preferred);
+            } else {
+                $currencySelect.prop('selectedIndex', 0);
+            }
+        }
+
+        $('#templateDownloadModal').modal('show');
+    });
+
+    $('#templateDownloadForm').on('submit', function() {
+        $('#templateDownloadModal').modal('hide');
         setTimeout(function() {
             Swal.fire({
                 toast: true,
@@ -801,9 +886,9 @@ $(document).ready(function() {
                 timer: 2000,
                 timerProgressBar: true,
                 icon: 'success',
-                title: `${format} template downloaded successfully!`
+                title: 'Template download started'
             });
-        }, 500);
+        }, 400);
     });
     
     // Handle file upload UI

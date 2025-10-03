@@ -3,6 +3,7 @@ require_once 'config.php';
 
 session_start();
 requireLogin();
+requireCSRFToken();
 
 $user = getUserById($_SESSION['user_id']);
 $isAdmin = ($user['role'] === 'admin');
@@ -424,6 +425,7 @@ if ($searchTerm) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCSRFToken()); ?>">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createGroupModalLabel">Create New Group</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -468,6 +470,7 @@ if ($searchTerm) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCSRFToken()); ?>">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editGroupModalLabel">Edit Group</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -521,6 +524,7 @@ if ($searchTerm) {
                 </button>
             </div>
             <form method="POST" id="deleteForm">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCSRFToken()); ?>">
                 <div class="modal-body text-center">
                     <input type="hidden" name="action" value="delete_group">
                     <input type="hidden" name="group_id" id="delete_group_id">

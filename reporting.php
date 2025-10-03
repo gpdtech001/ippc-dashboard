@@ -18,16 +18,13 @@ $categories = getReportCategories();
 
 // Handle submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate CSRF token for all POST requests on this page
-    requireCSRFToken();
-
-    $categoryId = htmlspecialchars(trim($_POST['category_id'] ?? ''), ENT_QUOTES, 'UTF-8');
+    $categoryId = filter_var($_POST['category_id'] ?? '', FILTER_SANITIZE_STRING);
     if (!isset($_POST['field']) || !is_array($_POST['field'])) {
         $error = 'Invalid form data';
         app_log('validation_error', 'Invalid POST field data', ['category_id' => $categoryId]);
     } else {
         foreach ($_POST['field'] as $key => $value) {
-            $_POST['field'][$key] = htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8');
+            $_POST['field'][$key] = filter_var(trim($value), FILTER_SANITIZE_STRING);
         }
         $category = getCategoryById($categoryId);
         if (strlen($categoryId) > 100) {
@@ -51,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $inputType = resolveFieldInputType($fieldType);
 
             // Validate select options when applicable
-            if ($inputType === 'select' || $fieldType === 'groups' || $fieldType === 'currency') {
+            if ($inputType === 'select' || $fieldType === 'groups') {
                 try {
                     $opts = resolveFieldOptions($f, $user);
                 } catch (Exception $e) {
@@ -105,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     app_log('error', 'Failed to generate report ID', ['error' => $e->getMessage()]);
                 }
                 if (!$error) {
-                    $timestamp = date('Y-m-d H:i:s');
                     $rep = [
                         'id' => $id,
                         'category_id' => $category['id'],
@@ -115,10 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'role' => $user['role'] ?? '',
                         'region' => $user['region'] ?? null,
                         'zone' => $user['zone'] ?? null,
-                        'submitted_at' => $timestamp,
-                        'created_at' => $timestamp,
-                        'created_by' => $user['id'] ?? null,
-                        'source' => 'manual',
+                        'submitted_at' => date('Y-m-d H:i:s'),
                         'data' => $data
                     ];
                     $reports[] = $rep;
@@ -143,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Determine selected category (for rendering form)
-$selectedCategoryId = htmlspecialchars(trim($_GET['category_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?: htmlspecialchars(trim($_POST['category_id'] ?? ''), ENT_QUOTES, 'UTF-8');
+$selectedCategoryId = filter_var($_GET['category_id'] ?? '', FILTER_SANITIZE_STRING) ?: filter_var($_POST['category_id'] ?? '', FILTER_SANITIZE_STRING);
 $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) : null;
 
 ?>
@@ -221,10 +214,9 @@ $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) :
                         <div class="card card-primary">
                             <div class="card-header"><h3 class="card-title">Report Form</h3></div>
                             <form method="post">
-                                <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
                                 <div class="card-body">
-                                    <?php // Flash messages handled via SweetAlert2 ?>
-                                    <?php if ($selectedCategory): ?>
+                                                                        <?php // Flash messages handled via SweetAlert2 ?>
+<?php if ($selectedCategory): ?>
                                         <input type="hidden" name="category_id" value="<?php echo htmlspecialchars($selectedCategory['id']); ?>">
                                         <div class="mb-3">
                                             <span class="badge badge-secondary">Category: <?php echo htmlspecialchars($selectedCategory['name']); ?></span>
@@ -249,7 +241,7 @@ $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) :
                                                     <label><?php echo htmlspecialchars($label); ?><?php echo !empty($f['required']) ? ' *' : ''; ?></label>
                                                     <?php if ($inputType === 'textarea'): ?>
                                                         <textarea class="form-control" name="field[<?php echo htmlspecialchars($fid); ?>]" rows="3" placeholder="<?php echo htmlspecialchars($f['placeholder'] ?? ''); ?>"><?php echo htmlspecialchars($_POST['field'][$fid] ?? ''); ?></textarea>
-                                                    <?php elseif ($inputType === 'select' || $fieldType === 'groups' || $fieldType === 'currency'): ?>
+                                                    <?php elseif ($inputType === 'select' || $fieldType === 'groups'): ?>
                                                         <?php $opts = resolveFieldOptions($f, $user); ?>
                                                         <select class="form-control" name="field[<?php echo htmlspecialchars($fid); ?>]">
                                                             <option value="">-- Select --</option>
@@ -285,6 +277,8 @@ $selectedCategory = $selectedCategoryId ? getCategoryById($selectedCategoryId) :
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+</body>
+</html>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="assets/js/sweetalert-init.js"></script>
 <script>
@@ -294,5 +288,3 @@ window.__FLASH_MESSAGES__ = {
     errorTitle: 'Error'
 };
 </script>
-</body>
-</html>

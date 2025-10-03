@@ -36,10 +36,21 @@ $categoryName = $category['name'] ?? 'Unknown';
 $safeFileName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $categoryName);
 $timestamp = date('Y-m-d_H-i-s');
 
-// Only one template format now - the enhanced version
-generateEnhancedTemplate($category, $fields, $safeFileName, $timestamp, $user);
+$requestedCurrency = $_GET['currency'] ?? '';
+$availableCurrencies = json_decode(@file_get_contents(__DIR__ . '/currency.json'), true) ?: [];
+$currencyCodes = array_column($availableCurrencies, 'code');
 
-function generateEnhancedTemplate($category, $fields, $safeFileName, $timestamp, $user) {
+if ($requestedCurrency && in_array($requestedCurrency, $currencyCodes, true)) {
+    $selectedCurrency = $requestedCurrency;
+} else {
+    $settings = getCurrencySettings();
+    $selectedCurrency = $settings['base_currency']['code'] ?? ($currencyCodes[0] ?? 'E');
+}
+
+// Only one template format now - the enhanced version
+generateEnhancedTemplate($category, $fields, $safeFileName, $timestamp, $user, $selectedCurrency);
+
+function generateEnhancedTemplate($category, $fields, $safeFileName, $timestamp, $user, $selectedCurrency) {
     $filename = "template_{$safeFileName}_{$timestamp}.csv";
     
     // Set headers for Excel-compatible CSV
@@ -98,9 +109,9 @@ function generateEnhancedTemplate($category, $fields, $safeFileName, $timestamp,
             // Add sample/default values for each field
             foreach ($fieldMap as $field) {
                 if ($field['type'] === 'currency' || ($field['type'] === 'select' && ($field['source'] ?? '') === 'currency')) {
-                    $row[] = 'USD'; // Default currency, user can change
+                    $row[] = $selectedCurrency;
                 } else {
-                    $row[] = getSampleValue($field, $user);
+                    $row[] = getSampleValue($field, $user, $selectedCurrency);
                 }
             }
             
@@ -110,7 +121,7 @@ function generateEnhancedTemplate($category, $fields, $safeFileName, $timestamp,
         // Fallback if no groups available
         $row = ['Your Group Name']; // Placeholder
         foreach ($fieldMap as $field) {
-            $row[] = getSampleValue($field, $user);
+            $row[] = getSampleValue($field, $user, $selectedCurrency);
         }
         fputcsv($output, $row);
     }
@@ -125,7 +136,7 @@ function needsDropdownValidation($field) {
            ($field['type'] === 'select' && in_array($field['source'], ['zones_groups', 'currency']));
 }
 
-function getSampleValue($field, $user = null) {
+function getSampleValue($field, $user = null, $selectedCurrency = 'E') {
     switch ($field['type']) {
         case 'text':
             return 'Sample text';
@@ -133,9 +144,9 @@ function getSampleValue($field, $user = null) {
             return 'Sample description';
         case 'number':
         case 'quantity':
-            return '100';
+            return '0';
         case 'currency_amount':
-            return '1000.00';
+            return '0';
         case 'date':
             return date('Y-m-d');
         case 'email':
@@ -144,7 +155,18 @@ function getSampleValue($field, $user = null) {
         case 'groups':
         case 'currency':
             $options = getFieldOptions($field, $user);
-            return !empty($options) ? $options[0]['id'] : 'Select option';
+            if (!empty($options)) {
+                foreach ($options as $option) {
+                    if (($option['id'] ?? null) === $selectedCurrency) {
+                        return $selectedCurrency;
+                    }
+                }
+                return $options[0]['id'];
+            }
+            if ($field['type'] === 'currency') {
+                return $selectedCurrency;
+            }
+            return 'Select option';
         default:
             return $field['placeholder'] ?? 'Enter value';
     }
@@ -261,8 +283,22 @@ class SimpleExcelGenerator {
         
         $zip = new ZipArchive();
         $tempFile = tempnam(sys_get_temp_dir(), 'excel_template_');
+        if ($tempFile === false) {
+            $fallbackDir = __DIR__ . '/temp';
+            if (!is_dir($fallbackDir)) {
+                @mkdir($fallbackDir, 0755, true);
+            }
+            $tempFilePath = $fallbackDir . '/excel_template_' . uniqid();
+            $fh = @fopen($tempFilePath, 'w');
+            if ($fh === false) {
+                throw new Exception('Cannot create temporary file for Excel export');
+            }
+            fclose($fh);
+            $tempFile = $tempFilePath;
+        }
         
-        if ($zip->open($tempFile, ZipArchive::CREATE) !== TRUE) {
+        if ($zip->open($tempFile, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
+            @unlink($tempFile);
             throw new Exception('Cannot create Excel file');
         }
         
@@ -271,8 +307,11 @@ class SimpleExcelGenerator {
         
         $zip->close();
         
-        readfile($tempFile);
-        unlink($tempFile);
+        if (!@readfile($tempFile)) {
+            @unlink($tempFile);
+            throw new Exception('Failed to stream generated Excel file');
+        }
+        @unlink($tempFile);
     }
     
     private function addExcelStructure($zip) {

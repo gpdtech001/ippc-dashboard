@@ -2,8 +2,9 @@
 require_once 'config.php';
 
 if (PHP_SAPI !== 'cli') {
-    session_start();
-    requireAdmin();
+    http_response_code(405);
+    echo 'This maintenance script must be run from the command line.';
+    exit;
 }
 
 $users = getUsers();
@@ -43,4 +44,3 @@ if ($adminCount > 1) {
     echo 'No cleanup needed - only one admin user found.' . PHP_EOL;
 }
 ?>
-

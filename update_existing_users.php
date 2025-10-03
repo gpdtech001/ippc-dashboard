@@ -2,8 +2,9 @@
 require_once 'config.php';
 
 if (PHP_SAPI !== 'cli') {
-    session_start();
-    requireAdmin();
+    http_response_code(405);
+    echo 'This maintenance script must be run from the command line.';
+    exit;
 }
 
 $users = getUsers();
@@ -33,4 +34,3 @@ foreach ($users as $user) {
     echo "- {$user['name']} ({$user['username']}): {$status}\n";
 }
 ?>
-

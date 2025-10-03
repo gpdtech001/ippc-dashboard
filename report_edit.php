@@ -37,9 +37,6 @@ $error = $_SESSION['flash_error'] ?? '';
 unset($_SESSION['flash_message'], $_SESSION['flash_error']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate CSRF token on edit submission
-    requireCSRFToken();
-
     if (!$category) {
         $error = 'Category not found';
     } else {
@@ -52,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($f['required']) && $val === '') {
                 $errors[] = ($f['label'] ?? $fid) . ' is required';
             }
-            if (($f['type'] === 'select' || $f['type'] === 'groups' || $f['type'] === 'currency')) {
+            if (($f['type'] === 'select' || $f['type'] === 'groups')) {
                 $opts = resolveFieldOptions($f, $user);
                 if (!empty($opts)) {
                     $allowed = array_column($opts, 'id');
@@ -70,18 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $reports[$idx]['data'] = $data;
             $reports[$idx]['updated_at'] = date('Y-m-d H:i:s');
             $reports[$idx]['updated_by'] = $user['id'] ?? null;
-            try {
-                $saveResult = saveReports($reports);
-                if ($saveResult === false) {
-                    $error = 'Failed to save changes';
-                    app_log('write_error', 'Failed to save edited report', ['report_id' => $reportId, 'reason' => 'saveReports returned false']);
-                }
-            } catch (Exception $e) {
-                $error = 'Failed to save changes: ' . $e->getMessage();
-                app_log('write_error', 'Failed to save edited report', ['report_id' => $reportId, 'error' => $e->getMessage()]);
-            }
-
-            if (!$error) {
+            if (saveReports($reports) === false) {
+                $error = 'Failed to save changes';
+                app_log('write_error', 'Failed to save edited report', ['report_id' => $reportId]);
+            } else {
                 $_SESSION['flash_message'] = 'Report updated successfully';
                 header('Location: report_edit.php?id=' . urlencode($reportId));
                 exit;
@@ -147,9 +136,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="card card-primary">
                             <div class="card-header"><h3 class="card-title">Update Fields</h3></div>
                             <form method="post">
-                                <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
                                 <div class="card-body">
-                                    <?php // Flash messages handled via SweetAlert2 ?>
+                                                                        <?php // Flash messages handled via SweetAlert2 ?>
 
                                     <?php $fields = isset($category['fields']) && is_array($category['fields']) ? $category['fields'] : []; ?>
                                     <?php if (empty($fields)): ?>
@@ -166,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <?php elseif ($type === 'date'): ?>
                                                     <input type="date" class="form-control" name="field[<?php echo htmlspecialchars($fid); ?>]" value="<?php echo htmlspecialchars($value); ?>">
                                                 <?php else: ?>
-                                                    <?php $isSelect = ($type === 'select' || $type === 'groups' || $type === 'currency'); ?>
+                                                    <?php $isSelect = ($type === 'select' || $type === 'groups'); ?>
                                                     <?php if ($isSelect): ?>
                                                         <?php $opts = resolveFieldOptions($f, $user); ?>
                                                         <select class="form-control" name="field[<?php echo htmlspecialchars($fid); ?>]">

@@ -338,6 +338,7 @@ $csrfToken = generateCSRFToken();
                                             <?php 
                                             $code = $currency['code'];
                                             $rate = $settings['exchange_rates'][$code] ?? 1;
+                                            $rateValue = is_numeric($rate) ? (float)$rate : 1.0;
                                             $isBase = $code === 'E';
                                             ?>
                                             <tr class="currency-row <?php echo $isBase ? 'base-currency' : ''; ?>">
@@ -369,7 +370,7 @@ $csrfToken = generateCSRFToken();
                                                                    class="form-control rate-input" 
                                                                    step="0.001" 
                                                                    min="0.001" 
-                                                                   value="<?php echo number_format($rate, 3); ?>"
+                                                                   value="<?php echo htmlspecialchars(number_format($rateValue, 3, '.', '')); ?>"
                                                                    data-currency="<?php echo htmlspecialchars($code); ?>"
                                                                    oninput="updatePreview('<?php echo htmlspecialchars($code); ?>')">
                                                         </div>
@@ -379,7 +380,7 @@ $csrfToken = generateCSRFToken();
                                                     <small class="text-muted">
                                                         <span id="preview_<?php echo htmlspecialchars($code); ?>">
                                                             <?php if (!$isBase): ?>
-                                                                E 1 = <?php echo htmlspecialchars($currency['symbol']); ?> <?php echo number_format($rate, 2); ?>
+                                                                E 1 = <?php echo htmlspecialchars($currency['symbol']); ?> <?php echo number_format($rateValue, 2); ?>
                                                             <?php endif; ?>
                                                         </span>
                                                     </small>

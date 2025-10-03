@@ -1519,16 +1519,22 @@ function deleteGroup($groupId, $userId) {
     
     // Check if group is used in any reports
     $reports = getReports();
-    $isGroupUsed = false;
+    $groupInUse = false;
     foreach ($reports as $report) {
-        if (isset($report['group_id']) && $report['group_id'] === $groupId) {
-            $isGroupUsed = true;
-            break;
+        $data = $report['data'] ?? [];
+        if (!is_array($data)) {
+            continue;
+        }
+        foreach ($data as $value) {
+            if ($value === $groupId) {
+                $groupInUse = true;
+                break 2;
+            }
         }
     }
-    
-    if ($isGroupUsed) {
-        return ['success' => false, 'message' => 'Cannot delete group as it is used in existing reports'];
+
+    if ($groupInUse) {
+        return ['success' => false, 'message' => 'Cannot delete group as it is referenced by existing reports'];
     }
     
     if ($currentGroup['source'] === 'zones.json') {
